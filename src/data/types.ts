@@ -63,6 +63,12 @@ export interface AppQuestion {
     memoryAid?: string
   }
   imageRef?: string
+  generatedBy?: {
+    model: string
+    at: string
+    provenance: 'app-authored-llm' | 'app-authored-human' | 'human-reviewed'
+    reviewed: boolean
+  }
 }
 
 export interface AppCatalogue {

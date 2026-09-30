@@ -11,13 +11,17 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "import-elwis": "python3 tools/import-elwis.py"
+    "import-elwis": "python3 tools/import-elwis.py",
+    "generate-translations": "tsx tools/generate-translations.ts"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.130.0",
+    "tsx": "^4.23.15",
     "typescript": "^5.6.3",
     "vite": "^5.4.10",
     "vite-plugin-pwa": "^0.20.5",
     "vitest": "^2.1.4",
-    "workbox-window": "^7.3.0"
+    "workbox-window": "^7.3.0",
+    "zod": "^4.6.5"
   }
 }

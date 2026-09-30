@@ -41,7 +41,7 @@ export function renderQuiz(): void {
     </div>
     <div id="why" class="card" hidden></div>
     <div class="pane en">
-      <small>🇬🇧 ENGLISH • MIRROR</small>
+      <small>🇬🇧 ENGLISH • APP-AUTHORED STUDY AID (not official exam text)</small>
       <h2 id="qen"></h2>
       <div id="aen" class="answers"></div>
       <p class="muted" id="en-missing" hidden>
