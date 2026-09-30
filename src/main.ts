@@ -11,6 +11,7 @@ app.innerHTML = `
     <section id="knots" class="screen"></section>
     <section id="nav" class="screen"></section>
     <section id="mock" class="screen"></section>
+    <section id="guide" class="screen"></section>
     <footer class="muted">
       <p>
         <b>v1.3 Crew Edition — foundation.</b> Unofficial study tool.
@@ -22,4 +23,11 @@ app.innerHTML = `
 `
 
 show('home')
+
+// First-run: auto-open the Guide on the very first visit
+if (!localStorage.getItem('sbf.guideSeen')) {
+  localStorage.setItem('sbf.guideSeen', '1')
+  show('guide')
+}
+
 registerPwa()

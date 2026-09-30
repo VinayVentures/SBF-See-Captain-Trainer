@@ -43,7 +43,10 @@ export function renderHome(): void {
         <small class="muted">SBF SEE • CAPTAIN TRAINER</small>
         <h1>⚓ Your Bridge / Deine Brücke</h1>
       </div>
-      <span class="pill">🔥 <b>${state.streakDays}</b> days</span>
+      <div class="row" style="gap:8px">
+        <button class="secondary" data-action="guide">📖 Guide</button>
+        <span class="pill">🔥 <b>${state.streakDays}</b> days</span>
+      </div>
     </div>
 
     <div class="hero">
@@ -208,6 +211,9 @@ export function renderHome(): void {
           break
         case 'knots':
           show('knots')
+          break
+        case 'guide':
+          show('guide')
           break
         case 'export':
           exportBackup()
