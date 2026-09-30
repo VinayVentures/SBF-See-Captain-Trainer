@@ -1,5 +1,24 @@
 import type { Knot } from './types'
 
+/**
+ * SVG paths and step-by-step instructions are ported verbatim from the
+ * pre-refactor prototype. Per spec §20/§37, these paths have NOT been
+ * mechanically validated against real knot geometry — they are visually
+ * plausible schematic representations. Before v1.3 goes into wide use
+ * this deck should be reviewed by an experienced sailor or SBF
+ * instructor against a standard reference (Ashley Book of Knots).
+ *
+ * The step-by-step text was cross-checked against Ashley numbers and
+ * reads correctly for each knot, but the animated SVG is decorative
+ * more than diagrammatic.
+ */
+const KNOT_PATHS_ARE_VALIDATED = false
+export const KNOT_VALIDATION_STATUS = {
+  pathsValidated: KNOT_PATHS_ARE_VALIDATED,
+  stepsValidated: true, // bilingual step text is factually correct
+  reviewedBy: null as string | null,
+} as const
+
 // Ported verbatim from the pre-refactor prototype. Path data and step text
 // preserved. Spec §20 requires per-knot mechanical validation before v1.3
 // is called complete — that lives in Milestone G. Do not adjust paths here

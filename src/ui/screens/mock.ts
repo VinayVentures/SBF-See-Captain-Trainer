@@ -11,6 +11,9 @@ import {
 } from '../../engine/mockSession'
 import { applyPermutation } from '../../engine/randomiser'
 import { XP_PER_RANK } from '../../engine/xp'
+import { ACHIEVEMENTS } from '../../engine/achievements'
+import { joinedQuestions } from '../../data/catalogue'
+import { checkAchievements } from '../../engine/achievements'
 import { loadState, saveState } from '../../services/persistence'
 import type { AppCatalogue, NavTemplate, OfficialQuestion } from '../../data/types'
 import { show } from '../router'
@@ -418,6 +421,19 @@ function persistResult(): void {
   // Counters
   state.answered += totalCorrect + view.gradeResult.wrongMcqIds.length
   state.correct += totalCorrect
+
+  // Achievements check post-mock (First Voyage, catalogue milestones, etc.)
+  const all = joinedQuestions()
+  const unlocked = checkAchievements(all, state)
+  state.achievements = state.achievements ?? {}
+  for (const id of unlocked) {
+    if (!state.achievements[id]) {
+      state.achievements[id] = new Date().toISOString()
+      const ach = ACHIEVEMENTS.find((a) => a.id === id)
+      if (ach) state.xp += ach.xpReward
+    }
+  }
+
   saveState(state)
   // Approach XP rank cap gracefully
   void XP_PER_RANK

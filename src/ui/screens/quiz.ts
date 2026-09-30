@@ -15,6 +15,14 @@ import {
   type Permutation,
 } from '../../engine/randomiser'
 import { XP_REWARDS } from '../../engine/xp'
+import {
+  checkAchievements,
+  ACHIEVEMENTS,
+  ensureTodayMissions,
+  recordMissionEvent,
+  claimReadyMissions,
+  updateWindStreak,
+} from '../../engine/achievements'
 import { loadState, questionStateFor, saveState } from '../../services/persistence'
 import type { JoinedQuestion } from '../../data/types'
 import { show } from '../router'
@@ -208,6 +216,11 @@ function handleAnswer(slot: number): void {
   const { question, perm } = ctx.current
   const correct = isCorrect(slot, perm, question.officialCorrectIndex)
   const state = loadState()
+
+  const prevQState = state.questions[question.id]
+  const wasWeak = prevQState?.mastery === 'weak' || (prevQState?.wrongStreak ?? 0) > 0
+  const wasUnseen = !prevQState || prevQState.seen === 0
+
   state.answered += 1
   if (correct) {
     state.correct += 1
@@ -215,10 +228,48 @@ function handleAnswer(slot: number): void {
   } else {
     state.xp += XP_REWARDS.wrongAnswer
   }
-  state.questions[question.id] = updateQuestionState(
-    state.questions[question.id],
+  state.questions[question.id] = updateQuestionState(prevQState, correct)
+
+  // Wind streak
+  const wind = updateWindStreak(state.windStreak ?? 0, correct)
+  state.windStreak = wind.streak
+  state.windStreakBest = Math.max(state.windStreakBest ?? 0, wind.streak)
+  state.xp += wind.bonusXp
+
+  // Daily missions
+  state.dailyMissions = ensureTodayMissions(state.dailyMissions as never)
+  state.dailyMissions = recordMissionEvent(state.dailyMissions as never, {
+    kind: 'question_answered',
     correct,
-  )
+    wasUnseen,
+    wasWeak,
+  })
+  const claimResult = claimReadyMissions(state.dailyMissions as never)
+  state.dailyMissions = claimResult.state
+  state.xp += claimResult.totalXp
+
+  // Achievements
+  const all = joinedQuestions()
+  const unlocked = checkAchievements(all, state)
+  state.achievements = state.achievements ?? {}
+  const newlyUnlocked: string[] = []
+  for (const id of unlocked) {
+    if (!state.achievements[id]) {
+      state.achievements[id] = new Date().toISOString()
+      const ach = ACHIEVEMENTS.find((a) => a.id === id)
+      if (ach) {
+        state.xp += ach.xpReward
+        newlyUnlocked.push(ach.title + ' (+' + ach.xpReward + ' XP)')
+      }
+    }
+  }
+  // Also unlock wind_streak_50 if hit
+  if (wind.crossedMilestone === 50 && !state.achievements['wind_streak_50']) {
+    state.achievements['wind_streak_50'] = new Date().toISOString()
+    state.xp += ACHIEVEMENTS.find((a) => a.id === 'wind_streak_50')!.xpReward
+    newlyUnlocked.push('Fair Winds (+150 XP)')
+  }
+
   saveState(state)
 
   const buttons = document.querySelectorAll<HTMLButtonElement>('#ade .answer')
@@ -235,8 +286,20 @@ function handleAnswer(slot: number): void {
 
   const why = document.getElementById('why') as HTMLElement
   const explanation = question.app.explanation
+  const bonusLine = wind.bonusXp > 0
+    ? `<p class="gold">🌬 Wind Streak ${wind.streak}! +${wind.bonusXp} XP</p>`
+    : wind.streak >= 3
+      ? `<p class="muted">🌬 Wind streak: ${wind.streak}</p>`
+      : ''
+  const missionsLine = claimResult.totalXp > 0
+    ? `<p class="gold">🎯 Mission complete! +${claimResult.totalXp} XP</p>`
+    : ''
+  const achievementsLine = newlyUnlocked.length > 0
+    ? `<p class="gold">🏆 ${newlyUnlocked.join(', ')}</p>`
+    : ''
   why.innerHTML =
     `<b>${correct ? '✓ Correct +' + XP_REWARDS.correctAnswer + ' XP' : '✕ Not yet +' + XP_REWARDS.wrongAnswer + ' XP'}</b>` +
+    bonusLine + missionsLine + achievementsLine +
     (explanation
       ? `<p>${escapeHtml(explanation.de)}</p><p class="muted">${escapeHtml(explanation.en)}</p>` +
         (explanation.memoryAid
