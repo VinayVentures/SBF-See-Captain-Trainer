@@ -3,8 +3,9 @@ import { renderQuiz } from './screens/quiz'
 import { renderKnots } from './screens/knots'
 import { renderNav } from './screens/nav'
 import { renderMock } from './screens/mock'
+import { renderGuide } from './screens/guide'
 
-export type ScreenId = 'home' | 'quiz' | 'knots' | 'nav' | 'mock'
+export type ScreenId = 'home' | 'quiz' | 'knots' | 'nav' | 'mock' | 'guide'
 
 const renderers: Record<ScreenId, () => void> = {
   home: renderHome,
@@ -12,6 +13,7 @@ const renderers: Record<ScreenId, () => void> = {
   knots: renderKnots,
   nav: renderNav,
   mock: renderMock,
+  guide: renderGuide,
 }
 
 export function show(id: ScreenId): void {
