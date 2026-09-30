@@ -1,5 +1,12 @@
 import { joinedQuestions } from '../../data/catalogue'
-import { bilgeQueue, learnQueue, type QuestionQueue } from '../../engine/learning'
+import {
+  bilgeQueue,
+  bookmarkedQueue,
+  learnQueue,
+  toggleBookmark,
+  updateQuestionState,
+  type QuestionQueue,
+} from '../../engine/learning'
 import {
   applyPermutation,
   isCorrect,
@@ -8,11 +15,14 @@ import {
   type Permutation,
 } from '../../engine/randomiser'
 import { XP_REWARDS } from '../../engine/xp'
-import { loadState, saveState } from '../../services/persistence'
+import { loadState, questionStateFor, saveState } from '../../services/persistence'
 import type { JoinedQuestion } from '../../data/types'
 import { show } from '../router'
 
+export type QuizMode = 'learn' | 'bilge' | 'bookmarks'
+
 interface QuizContext {
+  mode: QuizMode
   queue: QuestionQueue
   seed: number
   current?: { question: JoinedQuestion; perm: Permutation }
@@ -20,6 +30,11 @@ interface QuizContext {
 }
 
 let ctx: QuizContext | null = null
+
+export function setQuizMode(mode: QuizMode): void {
+  ;(window as unknown as { __quizMode?: QuizMode }).__quizMode = mode
+  ctx = null
+}
 
 export function renderQuiz(): void {
   if (!ctx) startQuiz()
@@ -32,8 +47,11 @@ export function renderQuiz(): void {
     </div>
     <div class="pane">
       <small>🇩🇪 DEUTSCH • PRÜFUNGSSPRACHE</small>
-      <h2 id="qde"></h2>
-      <div id="ade" class="answers"></div>
+      <div class="row" style="align-items:flex-start">
+        <h2 id="qde" style="flex:1;margin:0"></h2>
+        <button class="secondary" id="bookmark-btn" title="Bookmark"></button>
+      </div>
+      <div id="ade" class="answers" style="margin-top:12px"></div>
     </div>
     <div class="notes">
       <b>📝 Meine Notizen / My Notes</b>
@@ -68,6 +86,9 @@ export function renderQuiz(): void {
   root
     .querySelector<HTMLButtonElement>('[data-action=next]')!
     .addEventListener('click', nextQuestion)
+  root
+    .querySelector<HTMLButtonElement>('#bookmark-btn')!
+    .addEventListener('click', handleBookmarkToggle)
   const note = root.querySelector<HTMLTextAreaElement>('#note')!
   note.addEventListener('input', () => {
     if (!ctx?.current) return
@@ -79,19 +100,34 @@ export function renderQuiz(): void {
 }
 
 function startQuiz(): void {
-  const mode = (window as unknown as { __quizMode?: 'learn' | 'bilge' }).__quizMode ??
+  const mode = (window as unknown as { __quizMode?: QuizMode }).__quizMode ??
     'learn'
   const all = joinedQuestions()
   const state = loadState()
-  const wrongIds = Object.keys(state.wrong).map((k) => Number(k))
-  const queue =
-    mode === 'bilge' ? bilgeQueue(all, wrongIds) : learnQueue(all)
+  let queue: QuestionQueue
+  switch (mode) {
+    case 'bilge':
+      queue = bilgeQueue(all, state)
+      break
+    case 'bookmarks':
+      queue = bookmarkedQueue(all, state)
+      break
+    case 'learn':
+    default:
+      queue = learnQueue(all, state)
+      break
+  }
   if (queue.total() === 0) {
-    alert(mode === 'bilge' ? 'Bilge cleared. Nothing to review.' : 'No questions.')
+    const messages: Record<QuizMode, string> = {
+      learn: 'No questions available.',
+      bilge: 'Bilge cleared. Nothing to review.',
+      bookmarks: 'No bookmarked questions yet — bookmark from the Bridge or during learn.',
+    }
+    alert(messages[mode])
     show('home')
     return
   }
-  ctx = { queue, seed: newSessionSeed(), locked: false }
+  ctx = { mode, queue, seed: newSessionSeed(), locked: false }
   advance()
 }
 
@@ -110,11 +146,17 @@ function advance(): void {
 function drawCurrent(): void {
   if (!ctx?.current) return
   const { question, perm } = ctx.current
+  const state = loadState()
+  const qState = questionStateFor(state, question.id)
+
   const cat = document.getElementById('quiz-cat')!
-  cat.textContent = `${question.category.toUpperCase()} • Q${question.id}`
+  cat.textContent = `${question.category.toUpperCase()} • Q${question.id} • ${qState.mastery}`
 
   const qde = document.getElementById('qde')!
   qde.textContent = question.de.question
+
+  const bookmarkBtn = document.getElementById('bookmark-btn') as HTMLButtonElement
+  bookmarkBtn.textContent = qState.bookmarked ? '★' : '☆'
 
   const ade = document.getElementById('ade')!
   const shuffledDe = applyPermutation(question.de.answers, perm)
@@ -150,7 +192,6 @@ function drawCurrent(): void {
   }
 
   const note = document.getElementById('note') as HTMLTextAreaElement
-  const state = loadState()
   note.value = state.notes[question.id] ?? ''
 
   const why = document.getElementById('why') as HTMLElement
@@ -171,11 +212,13 @@ function handleAnswer(slot: number): void {
   if (correct) {
     state.correct += 1
     state.xp += XP_REWARDS.correctAnswer
-    delete state.wrong[question.id]
   } else {
     state.xp += XP_REWARDS.wrongAnswer
-    state.wrong[question.id] = (state.wrong[question.id] ?? 0) + 1
   }
+  state.questions[question.id] = updateQuestionState(
+    state.questions[question.id],
+    correct,
+  )
   saveState(state)
 
   const buttons = document.querySelectorAll<HTMLButtonElement>('#ade .answer')
@@ -195,10 +238,29 @@ function handleAnswer(slot: number): void {
   why.innerHTML =
     `<b>${correct ? '✓ Correct +' + XP_REWARDS.correctAnswer + ' XP' : '✕ Not yet +' + XP_REWARDS.wrongAnswer + ' XP'}</b>` +
     (explanation
-      ? `<p>${escapeHtml(explanation.de)}</p><p class="muted">${escapeHtml(explanation.en)}</p>`
+      ? `<p>${escapeHtml(explanation.de)}</p><p class="muted">${escapeHtml(explanation.en)}</p>` +
+        (explanation.memoryAid
+          ? `<p><b>💡</b> ${escapeHtml(explanation.memoryAid)}</p>`
+          : '')
       : `<p class="muted">Explanation not yet authored for this question.</p>`)
   why.hidden = false
   ;(document.querySelector('[data-action=next]') as HTMLElement).hidden = false
+
+  // Update mastery pill in the category label
+  const state2 = loadState()
+  const cat = document.getElementById('quiz-cat')!
+  const newMastery = questionStateFor(state2, question.id).mastery
+  cat.textContent = `${question.category.toUpperCase()} • Q${question.id} • ${newMastery}`
+}
+
+function handleBookmarkToggle(): void {
+  if (!ctx?.current) return
+  const state = loadState()
+  const id = ctx.current.question.id
+  state.questions[id] = toggleBookmark(state.questions[id])
+  saveState(state)
+  const btn = document.getElementById('bookmark-btn') as HTMLButtonElement
+  btn.textContent = state.questions[id]!.bookmarked ? '★' : '☆'
 }
 
 function toggleExplain(): void {
@@ -206,7 +268,10 @@ function toggleExplain(): void {
   const why = document.getElementById('why') as HTMLElement
   const explanation = ctx.current.question.app.explanation
   why.innerHTML = explanation
-    ? `<b>ⓘ Erklärung / Explanation</b><p>${escapeHtml(explanation.de)}</p><p class="muted">${escapeHtml(explanation.en)}</p>`
+    ? `<b>ⓘ Erklärung / Explanation</b><p>${escapeHtml(explanation.de)}</p><p class="muted">${escapeHtml(explanation.en)}</p>` +
+      (explanation.memoryAid
+        ? `<p><b>💡</b> ${escapeHtml(explanation.memoryAid)}</p>`
+        : '')
     : `<b>ⓘ Erklärung / Explanation</b><p class="muted">Explanation not yet authored.</p>`
   why.hidden = !why.hidden
 }
