@@ -1,0 +1,23 @@
+{
+  "name": "sbf-see-captain-trainer",
+  "private": true,
+  "version": "1.3.0-alpha.1",
+  "type": "module",
+  "description": "Bilingual SBF-See study PWA — Crew Edition",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "import-elwis": "python3 tools/import-elwis.py"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vite-plugin-pwa": "^0.20.5",
+    "vitest": "^2.1.4",
+    "workbox-window": "^7.3.0"
+  }
+}
