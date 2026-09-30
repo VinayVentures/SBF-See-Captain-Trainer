@@ -43,6 +43,16 @@ export interface UserState {
   mocks: MockRecord[]
   knotsMastered: Record<number, boolean>
   questions: Record<number, QuestionState>
+  windStreak?: number
+  windStreakBest?: number
+  achievements?: Record<string, string> // achievementId -> ISO date claimed
+  dailyMissions?: {
+    date: string
+    progress: Record<string, number>
+    claimed: Record<string, boolean>
+    seed: number
+    missionIds: string[]
+  }
 }
 
 interface PersistedV1 {

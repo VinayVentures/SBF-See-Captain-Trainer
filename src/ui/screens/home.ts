@@ -5,6 +5,11 @@ import { bookmarkedQueue } from '../../engine/learning'
 import { masterySummary } from '../../engine/learning'
 import { computeReadiness } from '../../engine/readiness'
 import { rankForXp, xpProgressInCurrentRank } from '../../engine/xp'
+import {
+  ACHIEVEMENTS,
+  ALL_MISSIONS,
+  ensureTodayMissions,
+} from '../../engine/achievements'
 import { exportBackup, importBackup } from '../../services/backup'
 import { loadState, saveState } from '../../services/persistence'
 import type { AppCatalogue } from '../../data/types'
@@ -21,6 +26,14 @@ export function renderHome(): void {
   const readiness = computeReadiness(all, state, cov)
   const bookmarkCount = bookmarkedQueue(all, state).total()
   const bilgeCount = summary.weak
+
+  // Refresh today's missions (rolls over at local midnight)
+  const dailyMissions = ensureTodayMissions(state.dailyMissions as never)
+  if (!state.dailyMissions || state.dailyMissions.date !== dailyMissions.date) {
+    state.dailyMissions = dailyMissions as never
+    saveState(state)
+  }
+  const claimedAchievements = Object.entries(state.achievements ?? {})
 
   const root = document.getElementById('home')
   if (!root) return
@@ -81,6 +94,42 @@ export function renderHome(): void {
         <h3>🧭 Navigation Academy</h3>
         <p class="muted">Structured written answers + Exam Desk mode.</p>
         <button data-action="nav">Open chart room</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎯 Daily Missions</h3>
+      <p class="muted" style="margin-top:0">${dailyMissions.date} · ${dailyMissions.missionIds.filter((id) => dailyMissions.claimed[id]).length}/${dailyMissions.missionIds.length} claimed</p>
+      ${dailyMissions.missionIds.map((id) => {
+        const m = ALL_MISSIONS.find((x) => x.id === id)!
+        const done = dailyMissions.progress[id] ?? 0
+        const pct = Math.min(100, (done / m.target) * 100)
+        const claimed = dailyMissions.claimed[id]
+        return `
+          <div style="margin:10px 0">
+            <div class="row" style="align-items:baseline">
+              <b>${m.title}</b>
+              <span class="muted">${done}/${m.target} · +${m.xpReward} XP ${claimed ? '✓' : ''}</span>
+            </div>
+            <p class="muted" style="margin:2px 0 4px">${m.description}</p>
+            <div class="bar"><i style="width:${pct}%${claimed ? ';background:var(--ok)' : ''}"></i></div>
+          </div>
+        `
+      }).join('')}
+    </div>
+
+    <div class="card">
+      <h3>🏆 Achievements</h3>
+      <p class="muted">${claimedAchievements.length} / ${ACHIEVEMENTS.length} unlocked${state.windStreakBest ? ` · best wind streak: ${state.windStreakBest}` : ''}</p>
+      <div class="coverage">
+        ${ACHIEVEMENTS.map((a) => {
+          const claimed = state.achievements?.[a.id]
+          return `
+            <div class="stat pill ${claimed ? 'ok' : ''}" title="${escapeHtml(a.description)}">
+              <b>${claimed ? '✓' : '🔒'}</b> ${escapeHtml(a.title)}
+            </div>
+          `
+        }).join('')}
       </div>
     </div>
 
@@ -169,4 +218,12 @@ export function renderHome(): void {
       }
     })
   })
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
 }

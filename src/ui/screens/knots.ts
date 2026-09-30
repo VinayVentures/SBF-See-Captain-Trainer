@@ -1,4 +1,6 @@
 import { KNOTS } from '../../data/knots'
+import { ACHIEVEMENTS, checkAchievements } from '../../engine/achievements'
+import { joinedQuestions } from '../../data/catalogue'
 import { loadState, saveState } from '../../services/persistence'
 import { show } from '../router'
 
@@ -51,6 +53,17 @@ export function renderKnots(): void {
         const on = (ev.target as HTMLInputElement).checked
         const s = loadState()
         s.knotsMastered[k.id] = on
+        // Check knot_master achievement
+        const all = joinedQuestions()
+        const unlocked = checkAchievements(all, s)
+        s.achievements = s.achievements ?? {}
+        for (const id of unlocked) {
+          if (!s.achievements[id]) {
+            s.achievements[id] = new Date().toISOString()
+            const ach = ACHIEVEMENTS.find((a) => a.id === id)
+            if (ach) s.xp += ach.xpReward
+          }
+        }
         saveState(s)
       })
   })
