@@ -1,22 +1,26 @@
 import appJson from '../../../data/catalogue.app.json'
-import { CATALOGUE } from '../../data/catalogue'
+import { CATALOGUE, joinedQuestions } from '../../data/catalogue'
 import { computeCoverage } from '../../engine/coverage'
+import { bookmarkedQueue } from '../../engine/learning'
+import { masterySummary } from '../../engine/learning'
+import { computeReadiness } from '../../engine/readiness'
 import { rankForXp, xpProgressInCurrentRank } from '../../engine/xp'
 import { exportBackup, importBackup } from '../../services/backup'
 import { loadState, saveState } from '../../services/persistence'
 import type { AppCatalogue } from '../../data/types'
 import { show } from '../router'
+import { setQuizMode } from './quiz'
 
 export function renderHome(): void {
   const state = loadState()
   const cov = computeCoverage(CATALOGUE, appJson as AppCatalogue)
   const rank = rankForXp(state.xp)
   const progress = xpProgressInCurrentRank(state.xp)
-  const accuracy = state.answered
-    ? Math.round((state.correct / state.answered) * 100)
-    : 0
-  const wrongCount = Object.keys(state.wrong).length
-  const readiness = computeReadiness(cov.translatedPct, accuracy, state.mocks)
+  const all = joinedQuestions()
+  const summary = masterySummary(all, state)
+  const readiness = computeReadiness(all, state, cov)
+  const bookmarkCount = bookmarkedQueue(all, state).total()
+  const bilgeCount = summary.weak
 
   const root = document.getElementById('home')
   if (!root) return
@@ -33,13 +37,18 @@ export function renderHome(): void {
       <div class="gold">${rank}</div>
       <div class="big"><span>${state.xp}</span> XP</div>
       <div class="bar"><i style="width:${progress.progressPct}%"></i></div>
-      <h2><span>${readiness}</span>% Exam readiness</h2>
+      <h2><span>${readiness.overall}</span>% Exam readiness</h2>
+      <p class="muted" style="margin:6px 0 0">
+        ${readiness.masteredCount} mastered · ${readiness.weakCount} weak ·
+        mock avg ${Math.round(readiness.mockPct)}% · accuracy ${Math.round(readiness.accuracyPct)}%
+        ${readiness.cappedByCoverage ? '· (capped by content coverage)' : ''}
+      </p>
       <div class="coverage">
         <div class="stat pill ${cov.officialTotal === 285 ? 'ok' : 'warn'}">
           <b>${cov.officialTotal} / 285</b> official catalogue
         </div>
         <div class="stat pill ${cov.translatedPct === 100 ? 'ok' : 'warn'}">
-          <b>${cov.translated} / ${cov.officialTotal}</b> translated (EN)
+          <b>${cov.translated} / ${cov.officialTotal}</b> translated
         </div>
         <div class="stat pill ${cov.explainedPct === 100 ? 'ok' : 'warn'}">
           <b>${cov.explained} / ${cov.officialTotal}</b> explained
@@ -50,23 +59,46 @@ export function renderHome(): void {
     <div class="grid">
       <div class="card">
         <h3>⚓ Continue learning</h3>
-        <p class="muted">Bilingual adaptive practice.</p>
+        <p class="muted">SRS-prioritised: overdue → new → future.</p>
         <button data-action="learn">Start voyage</button>
       </div>
       <div class="card">
         <h3>🛢 The Bilge</h3>
-        <p><b>${wrongCount}</b> weak questions</p>
-        <button data-action="bilge"${wrongCount === 0 ? ' disabled' : ''}>Review</button>
+        <p><b>${bilgeCount}</b> weak questions</p>
+        <button data-action="bilge"${bilgeCount === 0 ? ' disabled' : ''}>Review</button>
+      </div>
+      <div class="card">
+        <h3>★ Bookmarks</h3>
+        <p><b>${bookmarkCount}</b> flagged</p>
+        <button data-action="bookmarks"${bookmarkCount === 0 ? ' disabled' : ''}>Study</button>
       </div>
       <div class="card">
         <h3>📝 Mock exam</h3>
-        <p class="muted">60 min · 7 Basis · 23 See · 9 navigation answers</p>
+        <p class="muted">60 min · 7 Basis · 23 See · 9 nav</p>
         <button data-action="mock">Captain's Challenge</button>
       </div>
       <div class="card">
         <h3>🧭 Navigation Academy</h3>
         <p class="muted">Structured written answers + Exam Desk mode.</p>
         <button data-action="nav">Open chart room</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>📊 Mastery breakdown</h3>
+      <div class="coverage">
+        <div class="stat pill">
+          <b>${summary.unseen}</b> unseen
+        </div>
+        <div class="stat pill warn">
+          <b>${summary.weak}</b> weak
+        </div>
+        <div class="stat pill">
+          <b>${summary.learning}</b> learning
+        </div>
+        <div class="stat pill ok">
+          <b>${summary.mastered}</b> mastered
+        </div>
       </div>
     </div>
 
@@ -96,7 +128,7 @@ export function renderHome(): void {
     if (!file) return
     try {
       await importBackup(file)
-      saveState(loadState()) // ensure persisted
+      saveState(loadState())
       renderHome()
     } catch (e) {
       alert('Invalid backup: ' + (e as Error).message)
@@ -108,10 +140,16 @@ export function renderHome(): void {
       const action = btn.dataset.action
       switch (action) {
         case 'learn':
-          startLearn(false)
+          setQuizMode('learn')
+          show('quiz')
           break
         case 'bilge':
-          startLearn(true)
+          setQuizMode('bilge')
+          show('quiz')
+          break
+        case 'bookmarks':
+          setQuizMode('bookmarks')
+          show('quiz')
           break
         case 'mock':
           show('mock')
@@ -131,21 +169,4 @@ export function renderHome(): void {
       }
     })
   })
-}
-
-function computeReadiness(translatedPct: number, accuracyPct: number, mocks: number[]): number {
-  // Milestone A readiness: honest and cautious. Blends coverage (30%),
-  // accuracy (35%), and mock average (35%). Cap at coverage so a user with
-  // 0% translated content can never show 100% ready.
-  const avgMock = mocks.length
-    ? mocks.slice(-3).reduce((a, b) => a + b, 0) / Math.min(3, mocks.length)
-    : 0
-  const raw = translatedPct * 0.3 + accuracyPct * 0.35 + avgMock * 0.35
-  return Math.min(Math.round(raw), Math.round(translatedPct))
-}
-
-function startLearn(bilgeOnly: boolean): void {
-  ;(window as unknown as { __quizMode?: 'learn' | 'bilge' }).__quizMode =
-    bilgeOnly ? 'bilge' : 'learn'
-  show('quiz')
 }
