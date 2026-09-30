@@ -2,7 +2,7 @@ import { loadState, saveState, type UserState } from './persistence'
 
 interface BackupFile {
   format: 'sbf-captain-backup'
-  version: 1
+  version: 2
   exportedAt: string
   state: UserState
 }
@@ -10,7 +10,7 @@ interface BackupFile {
 export function exportBackup(): void {
   const file: BackupFile = {
     format: 'sbf-captain-backup',
-    version: 1,
+    version: 2,
     exportedAt: new Date().toISOString(),
     state: loadState(),
   }
@@ -28,29 +28,29 @@ export function exportBackup(): void {
 export async function importBackup(file: File): Promise<UserState> {
   const text = await file.text()
   const parsed = JSON.parse(text) as Partial<BackupFile> & {
-    // tolerate the pre-refactor top-level state shape too
+    // tolerate the pre-refactor flat shape as well
     xp?: number
     n?: number
     ok?: number
     wrong?: Record<number, number>
     notes?: Record<number, string>
     streak?: number
-    mocks?: number[]
     knots?: Record<number, boolean>
   }
   let state: UserState
   if (parsed.format === 'sbf-captain-backup' && parsed.state) {
-    state = parsed.state
+    state = parsed.state as UserState
   } else if (typeof parsed.xp === 'number') {
+    // Very old flat backup — reset SRS state, keep xp/notes/knots
     state = {
-      xp: parsed.xp ?? 0,
+      xp: parsed.xp,
       answered: parsed.n ?? 0,
       correct: parsed.ok ?? 0,
-      wrong: parsed.wrong ?? {},
       notes: parsed.notes ?? {},
       streakDays: parsed.streak ?? 1,
-      mocks: parsed.mocks ?? [],
+      mocks: [],
       knotsMastered: parsed.knots ?? {},
+      questions: {},
     }
   } else {
     throw new Error('Unrecognised backup file')
