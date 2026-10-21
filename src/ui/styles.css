@@ -259,6 +259,16 @@ input {
   padding: 6px;
 }
 
+.toolbtn {
+  background: #1c3a52;
+  color: white;
+}
+
+.toolbtn.active {
+  background: var(--gold);
+  color: #06111c;
+}
+
 footer {
   padding: 24px 12px;
   text-align: center;
