@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "import-elwis": "python3 tools/import-elwis.py",
+    "import-elwis": "python3 tools/import-elwis.py && python3 tools/extract-images.py",
+    "extract-images": "python3 tools/extract-images.py",
     "generate-translations": "tsx tools/generate-translations.ts"
   },
   "devDependencies": {
