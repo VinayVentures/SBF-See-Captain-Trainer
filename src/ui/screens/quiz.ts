@@ -1,4 +1,5 @@
 import { joinedQuestions } from '../../data/catalogue'
+import { resolveImageUrl } from '../../data/images'
 import {
   bilgeQueue,
   bookmarkedQueue,
@@ -59,6 +60,7 @@ export function renderQuiz(): void {
         <h2 id="qde" style="flex:1;margin:0"></h2>
         <button class="secondary" id="bookmark-btn" title="Bookmark"></button>
       </div>
+      <div id="qimages" class="qimages" hidden></div>
       <div id="ade" class="answers" style="margin-top:12px"></div>
     </div>
     <div class="notes">
@@ -162,6 +164,22 @@ function drawCurrent(): void {
 
   const qde = document.getElementById('qde')!
   qde.textContent = question.de.question
+
+  const qimages = document.getElementById('qimages') as HTMLElement
+  const images = question.images ?? []
+  if (images.length === 0) {
+    qimages.hidden = true
+    qimages.innerHTML = ''
+  } else {
+    qimages.hidden = false
+    qimages.innerHTML = images
+      .map((filename) => {
+        const url = resolveImageUrl(filename)
+        if (!url) return ''
+        return `<img src="${url}" alt="Figure for Q${question.id}" loading="lazy" />`
+      })
+      .join('')
+  }
 
   const bookmarkBtn = document.getElementById('bookmark-btn') as HTMLButtonElement
   bookmarkBtn.textContent = qState.bookmarked ? '★' : '☆'

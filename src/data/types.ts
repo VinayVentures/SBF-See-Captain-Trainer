@@ -25,6 +25,8 @@ export interface OfficialQuestion {
   /** ELWIS convention: the correct answer is always index 0 in the raw catalogue. */
   officialCorrectIndex: 0
   source: OfficialSource
+  /** Filenames (under /data/images/) for any images referenced by this question. */
+  images?: string[]
 }
 
 export interface NavTemplate {
@@ -33,6 +35,7 @@ export interface NavTemplate {
   answerShape: AnswerShape
   en?: string
   source: OfficialSource
+  images?: string[]
 }
 
 export interface NavScenario {

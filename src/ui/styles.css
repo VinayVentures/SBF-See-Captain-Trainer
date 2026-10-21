@@ -238,6 +238,27 @@ input {
   padding-left: 12px;
 }
 
+.qimages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0 4px;
+  padding: 10px;
+  background: #06111c;
+  border: 1px solid #294c65;
+  border-radius: 12px;
+  justify-content: center;
+}
+
+.qimages img {
+  max-width: 100%;
+  max-height: 220px;
+  height: auto;
+  border-radius: 6px;
+  background: white;
+  padding: 6px;
+}
+
 footer {
   padding: 24px 12px;
   text-align: center;

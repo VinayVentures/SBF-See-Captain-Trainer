@@ -50,4 +50,17 @@ describe('official catalogue integrity', () => {
       expect(s.neCorner.lon).toMatch(/^E\d+°/)
     }
   })
+
+  it('questions with images reference well-formed filenames', () => {
+    const withImages = CATALOGUE.questions.filter((q) => q.images && q.images.length > 0)
+    expect(withImages.length).toBeGreaterThan(50)
+    for (const q of withImages) {
+      for (const filename of q.images!) {
+        expect(filename).toMatch(/^q\d{3}(-\d+)?\.png$/)
+        // filename should reference its own question id
+        const prefix = `q${q.id.toString().padStart(3, '0')}`
+        expect(filename.startsWith(prefix)).toBe(true)
+      }
+    }
+  })
 })
