@@ -1,5 +1,6 @@
 import appJson from '../../../data/catalogue.app.json'
 import { CATALOGUE } from '../../data/catalogue'
+import { resolveImageUrl } from '../../data/images'
 import { computeCoverage } from '../../engine/coverage'
 import { MOCK_COUNTS, MOCK_DURATION_MINUTES, MOCK_THRESHOLDS } from '../../engine/exam'
 import {
@@ -239,10 +240,17 @@ function drawItem(item: OrderedItem): void {
     const perm = permutationFor(session, q.id)
     const shuffled = applyPermutation(q.de.answers, perm)
     const selected = session.answers[q.id]
+    const imagesHtml = (q.images ?? [])
+      .map((filename) => {
+        const url = resolveImageUrl(filename)
+        return url ? `<img src="${url}" alt="Figure for Q${q.id}" loading="lazy" />` : ''
+      })
+      .join('')
     body.innerHTML = `
       <div class="pane">
         <small>${q.category.toUpperCase()} • Q${q.id}</small>
         <h2>${escapeHtml(q.de.question)}</h2>
+        ${imagesHtml ? `<div class="qimages">${imagesHtml}</div>` : ''}
         <div class="answers">
           ${shuffled.map((a, i) =>
             `<button class="answer ${selected === i ? 'correct' : ''}" data-pick="${i}">${String.fromCharCode(65 + i)}. ${escapeHtml(a)}</button>`,
