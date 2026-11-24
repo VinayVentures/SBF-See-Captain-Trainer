@@ -118,7 +118,7 @@ export function renderHome(): void {
       </div>
       <div class="card">
         <h3>📝 Mock exam</h3>
-        <p class="muted">60 min · ${comp.basis} Basis · ${comp.specific} ${
+        <p class="muted">60 min · ${comp.basis > 0 ? `${comp.basis} Basis · ` : ''}${comp.specific} ${
           mode === 'see' ? 'See' : 'Binnen'
         }${comp.segeln ? ` · ${comp.segeln} Segeln` : ''}${
           comp.navigation ? ` · ${comp.navigation} nav` : ''

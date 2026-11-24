@@ -43,13 +43,17 @@ export function joinedQuestionById(id: number): JoinedQuestion | undefined {
 
 /**
  * Map a question's category to the set of modes (licences) in which it appears.
- * Basis questions are shared across all three modes; mode-specific categories
- * are gated accordingly.
+ *
+ * Basis questions appear ONLY on the See tab. Binnen-Motor and Binnen-Segeln
+ * learners are assumed to already hold (or be preparing for) the SBF-See, so
+ * per the Sportbootführerscheinverordnung the Basis portion of the Binnen
+ * theoretical exam is waived — those 72 questions are intentionally dropped
+ * from the Binnen pools.
  */
 export function licencesOf(category: OfficialQuestion['category']): readonly Mode[] {
   switch (category) {
     case 'basis':
-      return ['see', 'binnen-motor', 'binnen-segeln']
+      return ['see']
     case 'see':
       return ['see']
     case 'binnen':

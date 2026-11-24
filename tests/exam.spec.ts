@@ -83,20 +83,22 @@ describe('mock exam generator (See mode)', () => {
 })
 
 describe('mock exam generator (Binnen modes)', () => {
-  it('Binnen-Motor draws Basis + Binnen-specific, no nav, no Segeln', () => {
+  it('Binnen-Motor draws ONLY Binnen-specific (Basis is waived for See holders)', () => {
     const paper = generateMock('binnen-motor', CATALOGUE.questions, CATALOGUE.navTemplates)
     const counts = countsFor('binnen-motor')
-    expect(paper.basis).toHaveLength(counts.basis)
+    expect(counts.basis).toBe(0)
+    expect(paper.basis).toHaveLength(0)
     expect(paper.specific).toHaveLength(counts.specific)
     expect(paper.navigation).toHaveLength(0)
     expect(paper.segeln).toHaveLength(0)
     expect(paper.specific.every((q) => q.category === 'binnen')).toBe(true)
   })
 
-  it('Binnen-Segeln draws Basis + Binnen-specific + Segeln-specific', () => {
+  it('Binnen-Segeln draws ONLY Binnen-specific + Segeln (Basis is waived)', () => {
     const paper = generateMock('binnen-segeln', CATALOGUE.questions, CATALOGUE.navTemplates)
     const counts = countsFor('binnen-segeln')
-    expect(paper.basis).toHaveLength(counts.basis)
+    expect(counts.basis).toBe(0)
+    expect(paper.basis).toHaveLength(0)
     expect(paper.specific).toHaveLength(counts.specific)
     expect(paper.segeln).toHaveLength(counts.segeln)
     expect(paper.navigation).toHaveLength(0)
@@ -104,15 +106,16 @@ describe('mock exam generator (Binnen modes)', () => {
     expect(paper.segeln.every((q) => q.category === 'segeln')).toBe(true)
   })
 
-  it('Binnen-Motor passes on Basis + Specific only (no vacuous nav/Segeln failure)', () => {
+  it('Binnen-Motor passes on Specific alone (Basis + nav + Segeln all vacuous)', () => {
     const thr = thresholdsFor('binnen-motor')
     const r = evaluate('binnen-motor', {
-      basis: thr.basis,
+      basis: 0,
       specific: thr.specific,
       navigation: 0,
       segeln: 0,
     })
     expect(r.passed).toBe(true)
+    expect(r.passedBasis).toBe(true)
     expect(r.passedNavigation).toBe(true)
     expect(r.passedSegeln).toBe(true)
   })

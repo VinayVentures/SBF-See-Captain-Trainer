@@ -102,8 +102,7 @@ function renderIntro(): void {
       <h2>Captain's Challenge — ${MODE_LABELS[mode].long}</h2>
       <p class="muted" style="margin:4px 0 12px">${MOCK_DURATION_MINUTES} minutes</p>
       <p>
-        ${counts.basis} Basis (pass ≥ ${thr.basis}/${counts.basis}) ·
-        ${counts.specific} ${specificLabel} (pass ≥ ${thr.specific}/${counts.specific})${
+        ${counts.basis > 0 ? `${counts.basis} Basis (pass ≥ ${thr.basis}/${counts.basis}) · ` : ''}${counts.specific} ${specificLabel} (pass ≥ ${thr.specific}/${counts.specific})${
           thirdCount
             ? ` · ${thirdCount} ${thirdLabel} (pass ≥ ${thirdThr}/${thirdCount})`
             : ''
@@ -152,13 +151,13 @@ function renderIntro(): void {
       <h3>Recent mocks</h3>
       <table style="width:100%;border-collapse:collapse">
         <thead><tr style="text-align:left;color:var(--muted)">
-          <th>Date</th><th>Basis</th><th>${specificLabel}</th>${thirdCount ? `<th>${thirdLabel}</th>` : ''}<th>Overall</th><th>Result</th>
+          <th>Date</th>${counts.basis > 0 ? '<th>Basis</th>' : ''}<th>${specificLabel}</th>${thirdCount ? `<th>${thirdLabel}</th>` : ''}<th>Overall</th><th>Result</th>
         </tr></thead>
         <tbody>
           ${recentMocks.map((m) => `
             <tr>
               <td>${new Date(m.at).toLocaleDateString()}</td>
-              <td>${m.score.basis}/${counts.basis}${m.passedBasis ? ' ✓' : ''}</td>
+              ${counts.basis > 0 ? `<td>${m.score.basis}/${counts.basis}${m.passedBasis ? ' ✓' : ''}</td>` : ''}
               <td>${m.score.specific}/${counts.specific}${m.passedSpecific ? ' ✓' : ''}</td>
               ${thirdCount
                 ? `<td>${m.score.navigation ?? 0}/${thirdCount}${m.passedNavigation ? ' ✓' : ''}</td>`
@@ -357,10 +356,12 @@ function renderReviewing(): void {
     <div class="hero">
       <h2>${Math.round(gradeResult.record.overallPct)}% overall</h2>
       <div class="coverage">
+        ${counts.basis > 0 ? `
         <div class="stat pill ${gradeResult.record.passedBasis ? 'ok' : 'warn'}">
           <b>${gradeResult.record.score.basis} / ${counts.basis}</b>
           Basis (need ${thr.basis})
         </div>
+        ` : ''}
         <div class="stat pill ${gradeResult.record.passedSpecific ? 'ok' : 'warn'}">
           <b>${gradeResult.record.score.specific} / ${counts.specific}</b>
           ${specificLabel} (need ${thr.specific})
