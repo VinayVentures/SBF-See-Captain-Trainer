@@ -1,18 +1,18 @@
-import { loadState, saveState, type UserState } from './persistence'
+import { loadAllModes, saveAllModes, type ModeStates, type UserState } from './persistence'
 
-interface BackupFile {
+interface BackupFileV3 {
   format: 'sbf-captain-backup'
-  version: 2
+  version: 3
   exportedAt: string
-  state: UserState
+  modes: ModeStates
 }
 
 export function exportBackup(): void {
-  const file: BackupFile = {
+  const file: BackupFileV3 = {
     format: 'sbf-captain-backup',
-    version: 2,
+    version: 3,
     exportedAt: new Date().toISOString(),
-    state: loadState(),
+    modes: loadAllModes(),
   }
   const blob = new Blob([JSON.stringify(file, null, 2)], {
     type: 'application/json',
@@ -25,10 +25,13 @@ export function exportBackup(): void {
   URL.revokeObjectURL(url)
 }
 
-export async function importBackup(file: File): Promise<UserState> {
+export async function importBackup(file: File): Promise<ModeStates> {
   const text = await file.text()
-  const parsed = JSON.parse(text) as Partial<BackupFile> & {
-    // tolerate the pre-refactor flat shape as well
+  const parsed = JSON.parse(text) as {
+    format?: string
+    version?: number
+    modes?: ModeStates
+    state?: UserState
     xp?: number
     n?: number
     ok?: number
@@ -37,24 +40,46 @@ export async function importBackup(file: File): Promise<UserState> {
     streak?: number
     knots?: Record<number, boolean>
   }
-  let state: UserState
-  if (parsed.format === 'sbf-captain-backup' && parsed.state) {
-    state = parsed.state as UserState
+  let modes: ModeStates
+  if (parsed.format === 'sbf-captain-backup' && parsed.version === 3 && parsed.modes) {
+    modes = parsed.modes
+  } else if (parsed.format === 'sbf-captain-backup' && parsed.version === 2 && parsed.state) {
+    modes = {
+      see: parsed.state,
+      'binnen-motor': emptyUserState(),
+      'binnen-segeln': emptyUserState(),
+    }
   } else if (typeof parsed.xp === 'number') {
-    // Very old flat backup — reset SRS state, keep xp/notes/knots
-    state = {
-      xp: parsed.xp,
-      answered: parsed.n ?? 0,
-      correct: parsed.ok ?? 0,
-      notes: parsed.notes ?? {},
-      streakDays: parsed.streak ?? 1,
-      mocks: [],
-      knotsMastered: parsed.knots ?? {},
-      questions: {},
+    modes = {
+      see: {
+        xp: parsed.xp,
+        answered: parsed.n ?? 0,
+        correct: parsed.ok ?? 0,
+        notes: parsed.notes ?? {},
+        streakDays: parsed.streak ?? 1,
+        mocks: [],
+        knotsMastered: parsed.knots ?? {},
+        questions: {},
+      },
+      'binnen-motor': emptyUserState(),
+      'binnen-segeln': emptyUserState(),
     }
   } else {
     throw new Error('Unrecognised backup file')
   }
-  saveState(state)
-  return state
+  saveAllModes(modes)
+  return modes
+}
+
+function emptyUserState(): UserState {
+  return {
+    xp: 0,
+    answered: 0,
+    correct: 0,
+    notes: {},
+    streakDays: 1,
+    mocks: [],
+    knotsMastered: {},
+    questions: {},
+  }
 }

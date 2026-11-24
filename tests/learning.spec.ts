@@ -14,6 +14,7 @@ import type { UserState } from '../src/services/persistence'
 function mkQuestion(id: number, category: 'basis' | 'see' = 'basis'): JoinedQuestion {
   return {
     id,
+    displayId: String(id),
     category,
     de: {
       question: `Q${id}`,

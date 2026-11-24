@@ -1,4 +1,4 @@
-import { joinedQuestions } from '../../data/catalogue'
+import { joinedQuestionsForMode } from '../../data/catalogue'
 import { resolveImageUrl } from '../../data/images'
 import {
   bilgeQueue,
@@ -25,6 +25,7 @@ import {
   updateWindStreak,
 } from '../../engine/achievements'
 import { loadState, questionStateFor, saveState } from '../../services/persistence'
+import { currentMode, onModeChange } from '../../services/mode'
 import type { JoinedQuestion } from '../../data/types'
 import { show } from '../router'
 
@@ -39,6 +40,12 @@ interface QuizContext {
 }
 
 let ctx: QuizContext | null = null
+
+// Reset any in-flight quiz when the licence mode changes — a Binnen session
+// must not continue scoring against See state after the user switches tabs.
+onModeChange(() => {
+  ctx = null
+})
 
 export function setQuizMode(mode: QuizMode): void {
   ;(window as unknown as { __quizMode?: QuizMode }).__quizMode = mode
@@ -68,7 +75,7 @@ export function renderQuiz(): void {
       <textarea id="note" rows="3"></textarea>
     </div>
     <div id="why" class="card" hidden></div>
-    <div class="pane en">
+    <div id="en-pane" class="pane en">
       <small>🇬🇧 ENGLISH • APP-AUTHORED STUDY AID (not official exam text)</small>
       <h2 id="qen"></h2>
       <div id="aen" class="answers"></div>
@@ -112,7 +119,7 @@ export function renderQuiz(): void {
 function startQuiz(): void {
   const mode = (window as unknown as { __quizMode?: QuizMode }).__quizMode ??
     'learn'
-  const all = joinedQuestions()
+  const all = joinedQuestionsForMode(currentMode())
   const state = loadState()
   let queue: QuestionQueue
   switch (mode) {
@@ -160,7 +167,7 @@ function drawCurrent(): void {
   const qState = questionStateFor(state, question.id)
 
   const cat = document.getElementById('quiz-cat')!
-  cat.textContent = `${question.category.toUpperCase()} • Q${question.id} • ${qState.mastery}`
+  cat.textContent = `${question.category.toUpperCase()} • Q${question.displayId} • ${qState.mastery}`
 
   const qde = document.getElementById('qde')!
   qde.textContent = question.de.question
@@ -176,7 +183,7 @@ function drawCurrent(): void {
       .map((filename) => {
         const url = resolveImageUrl(filename)
         if (!url) return ''
-        return `<img src="${url}" alt="Figure for Q${question.id}" loading="lazy" />`
+        return `<img src="${url}" alt="Figure for Q${question.displayId}" loading="lazy" />`
       })
       .join('')
   }
@@ -201,7 +208,12 @@ function drawCurrent(): void {
   const qen = document.getElementById('qen')!
   const aen = document.getElementById('aen')!
   const enMissing = document.getElementById('en-missing')!
-  if (question.app.en) {
+  const enPane = document.getElementById('en-pane') as HTMLElement
+  // Binnen and Segeln questions are German-only by design — hide the whole
+  // bilingual pane rather than render it empty / "translation not authored".
+  const isDeOnly = isGermanOnly(question)
+  enPane.hidden = isDeOnly
+  if (!isDeOnly && question.app.en) {
     qen.textContent = question.app.en.question
     const shuffledEn = applyPermutation(question.app.en.answers, perm)
     aen.innerHTML = shuffledEn
@@ -211,7 +223,7 @@ function drawCurrent(): void {
       )
       .join('')
     enMissing.hidden = true
-  } else {
+  } else if (!isDeOnly) {
     qen.textContent = '—'
     aen.innerHTML = ''
     enMissing.hidden = false
@@ -267,7 +279,7 @@ function handleAnswer(slot: number): void {
   state.xp += claimResult.totalXp
 
   // Achievements
-  const all = joinedQuestions()
+  const all = joinedQuestionsForMode(currentMode())
   const unlocked = checkAchievements(all, state)
   state.achievements = state.achievements ?? {}
   const newlyUnlocked: string[] = []
@@ -318,12 +330,7 @@ function handleAnswer(slot: number): void {
   why.innerHTML =
     `<b>${correct ? '✓ Correct +' + XP_REWARDS.correctAnswer + ' XP' : '✕ Not yet +' + XP_REWARDS.wrongAnswer + ' XP'}</b>` +
     bonusLine + missionsLine + achievementsLine +
-    (explanation
-      ? `<p>${escapeHtml(explanation.de)}</p><p class="muted">${escapeHtml(explanation.en)}</p>` +
-        (explanation.memoryAid
-          ? `<p><b>💡</b> ${escapeHtml(explanation.memoryAid)}</p>`
-          : '')
-      : `<p class="muted">Explanation not yet authored for this question.</p>`)
+    renderExplanationBody(question, explanation)
   why.hidden = false
   ;(document.querySelector('[data-action=next]') as HTMLElement).hidden = false
 
@@ -331,7 +338,7 @@ function handleAnswer(slot: number): void {
   const state2 = loadState()
   const cat = document.getElementById('quiz-cat')!
   const newMastery = questionStateFor(state2, question.id).mastery
-  cat.textContent = `${question.category.toUpperCase()} • Q${question.id} • ${newMastery}`
+  cat.textContent = `${question.category.toUpperCase()} • Q${question.displayId} • ${newMastery}`
 }
 
 function handleBookmarkToggle(): void {
@@ -347,14 +354,40 @@ function handleBookmarkToggle(): void {
 function toggleExplain(): void {
   if (!ctx?.current) return
   const why = document.getElementById('why') as HTMLElement
-  const explanation = ctx.current.question.app.explanation
-  why.innerHTML = explanation
-    ? `<b>ⓘ Erklärung / Explanation</b><p>${escapeHtml(explanation.de)}</p><p class="muted">${escapeHtml(explanation.en)}</p>` +
-      (explanation.memoryAid
-        ? `<p><b>💡</b> ${escapeHtml(explanation.memoryAid)}</p>`
-        : '')
-    : `<b>ⓘ Erklärung / Explanation</b><p class="muted">Explanation not yet authored.</p>`
+  const q = ctx.current.question
+  const heading = isGermanOnly(q)
+    ? `<b>ⓘ Erklärung</b>`
+    : `<b>ⓘ Erklärung / Explanation</b>`
+  why.innerHTML = heading + renderExplanationBody(q, q.app.explanation)
   why.hidden = !why.hidden
+}
+
+/**
+ * Render the explanation body. For German-only categories (Binnen, Segeln)
+ * show only the DE text + memory aid — these questions ship without English
+ * translations by design.
+ */
+function renderExplanationBody(
+  question: JoinedQuestion,
+  explanation: JoinedQuestion['app']['explanation'],
+): string {
+  if (!explanation || (!explanation.de && !explanation.en)) {
+    return `<p class="muted">Explanation not yet authored for this question.</p>`
+  }
+  const germanOnly = isGermanOnly(question)
+  const parts: string[] = []
+  if (explanation.de) parts.push(`<p>${escapeHtml(explanation.de)}</p>`)
+  if (!germanOnly && explanation.en) {
+    parts.push(`<p class="muted">${escapeHtml(explanation.en)}</p>`)
+  }
+  if (explanation.memoryAid) {
+    parts.push(`<p><b>💡</b> ${escapeHtml(explanation.memoryAid)}</p>`)
+  }
+  return parts.join('')
+}
+
+function isGermanOnly(q: JoinedQuestion): boolean {
+  return q.category === 'binnen' || q.category === 'segeln'
 }
 
 function nextQuestion(): void {

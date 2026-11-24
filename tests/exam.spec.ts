@@ -1,50 +1,119 @@
 import { describe, expect, it } from 'vitest'
 import { CATALOGUE } from '../src/data/catalogue'
 import {
+  countsFor,
   evaluate,
   generateMock,
-  MOCK_COUNTS,
-  MOCK_THRESHOLDS,
+  thresholdsFor,
 } from '../src/engine/exam'
 
-describe('mock exam generator', () => {
-  it('produces exactly 7 Basis + 23 See + 9 nav answers', () => {
+describe('mock exam generator (See mode)', () => {
+  it('produces the See composition: 7 Basis + 23 See + 9 nav', () => {
+    const counts = countsFor('see')
     for (let i = 0; i < 20; i++) {
-      const paper = generateMock(CATALOGUE.questions, CATALOGUE.navTemplates)
-      expect(paper.basis).toHaveLength(MOCK_COUNTS.basis)
-      expect(paper.see).toHaveLength(MOCK_COUNTS.see)
-      expect(paper.navigation).toHaveLength(MOCK_COUNTS.navigation)
+      const paper = generateMock('see', CATALOGUE.questions, CATALOGUE.navTemplates)
+      expect(paper.basis).toHaveLength(counts.basis)
+      expect(paper.specific).toHaveLength(counts.specific)
+      expect(paper.navigation).toHaveLength(counts.navigation)
+      expect(paper.segeln).toHaveLength(0)
       expect(paper.basis.every((q) => q.category === 'basis')).toBe(true)
-      expect(paper.see.every((q) => q.category === 'see')).toBe(true)
+      expect(paper.specific.every((q) => q.category === 'see')).toBe(true)
     }
   })
 
   it('never picks duplicate questions in a single paper', () => {
+    const counts = countsFor('see')
     for (let i = 0; i < 10; i++) {
-      const paper = generateMock(CATALOGUE.questions, CATALOGUE.navTemplates)
+      const paper = generateMock('see', CATALOGUE.questions, CATALOGUE.navTemplates)
       const basisIds = new Set(paper.basis.map((q) => q.id))
-      const seeIds = new Set(paper.see.map((q) => q.id))
+      const specificIds = new Set(paper.specific.map((q) => q.id))
       const navIds = new Set(paper.navigation.map((t) => t.id))
-      expect(basisIds.size).toBe(MOCK_COUNTS.basis)
-      expect(seeIds.size).toBe(MOCK_COUNTS.see)
-      expect(navIds.size).toBe(MOCK_COUNTS.navigation)
+      expect(basisIds.size).toBe(counts.basis)
+      expect(specificIds.size).toBe(counts.specific)
+      expect(navIds.size).toBe(counts.navigation)
     }
   })
 
-  it('evaluates with independent section thresholds 5/7, 18/23, 7/9', () => {
+  it('evaluates with independent section thresholds', () => {
+    const thr = thresholdsFor('see')
+    // Passing baseline
     expect(
-      evaluate({
-        basis: MOCK_THRESHOLDS.basis,
-        see: MOCK_THRESHOLDS.see,
-        navigation: MOCK_THRESHOLDS.navigation,
+      evaluate('see', {
+        basis: thr.basis,
+        specific: thr.specific,
+        navigation: thr.navigation,
+        segeln: 0,
       }).passed,
     ).toBe(true)
-    expect(evaluate({ basis: 7, see: 23, navigation: 6 }).passed).toBe(false)
-    expect(evaluate({ basis: 4, see: 23, navigation: 9 }).passed).toBe(false)
-    expect(evaluate({ basis: 7, see: 17, navigation: 9 }).passed).toBe(false)
-    const r = evaluate({ basis: 4, see: 17, navigation: 6 })
+    // One short in each section separately → fails that section
+    expect(
+      evaluate('see', {
+        basis: thr.basis,
+        specific: thr.specific,
+        navigation: thr.navigation - 1,
+        segeln: 0,
+      }).passed,
+    ).toBe(false)
+    expect(
+      evaluate('see', {
+        basis: thr.basis - 1,
+        specific: thr.specific,
+        navigation: thr.navigation,
+        segeln: 0,
+      }).passed,
+    ).toBe(false)
+    expect(
+      evaluate('see', {
+        basis: thr.basis,
+        specific: thr.specific - 1,
+        navigation: thr.navigation,
+        segeln: 0,
+      }).passed,
+    ).toBe(false)
+    const r = evaluate('see', {
+      basis: thr.basis - 1,
+      specific: thr.specific - 1,
+      navigation: thr.navigation - 1,
+      segeln: 0,
+    })
     expect(r.passedBasis).toBe(false)
-    expect(r.passedSee).toBe(false)
+    expect(r.passedSpecific).toBe(false)
     expect(r.passedNavigation).toBe(false)
+  })
+})
+
+describe('mock exam generator (Binnen modes)', () => {
+  it('Binnen-Motor draws Basis + Binnen-specific, no nav, no Segeln', () => {
+    const paper = generateMock('binnen-motor', CATALOGUE.questions, CATALOGUE.navTemplates)
+    const counts = countsFor('binnen-motor')
+    expect(paper.basis).toHaveLength(counts.basis)
+    expect(paper.specific).toHaveLength(counts.specific)
+    expect(paper.navigation).toHaveLength(0)
+    expect(paper.segeln).toHaveLength(0)
+    expect(paper.specific.every((q) => q.category === 'binnen')).toBe(true)
+  })
+
+  it('Binnen-Segeln draws Basis + Binnen-specific + Segeln-specific', () => {
+    const paper = generateMock('binnen-segeln', CATALOGUE.questions, CATALOGUE.navTemplates)
+    const counts = countsFor('binnen-segeln')
+    expect(paper.basis).toHaveLength(counts.basis)
+    expect(paper.specific).toHaveLength(counts.specific)
+    expect(paper.segeln).toHaveLength(counts.segeln)
+    expect(paper.navigation).toHaveLength(0)
+    expect(paper.specific.every((q) => q.category === 'binnen')).toBe(true)
+    expect(paper.segeln.every((q) => q.category === 'segeln')).toBe(true)
+  })
+
+  it('Binnen-Motor passes on Basis + Specific only (no vacuous nav/Segeln failure)', () => {
+    const thr = thresholdsFor('binnen-motor')
+    const r = evaluate('binnen-motor', {
+      basis: thr.basis,
+      specific: thr.specific,
+      navigation: 0,
+      segeln: 0,
+    })
+    expect(r.passed).toBe(true)
+    expect(r.passedNavigation).toBe(true)
+    expect(r.passedSegeln).toBe(true)
   })
 })

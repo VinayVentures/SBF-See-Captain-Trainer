@@ -14,6 +14,7 @@ import type { UserState } from '../src/services/persistence'
 function mk(id: number, topic?: string): JoinedQuestion {
   return {
     id,
+    displayId: String(id),
     category: 'basis',
     de: { question: '', answers: ['a', 'b', 'c', 'd'] as [string, string, string, string] },
     officialCorrectIndex: 0,
@@ -115,8 +116,8 @@ describe('achievements', () => {
   it('unlocks first_mock_pass on first passed mock', () => {
     const state = emptyState()
     state.mocks = [{
-      at: '2026-01-01', score: { basis: 7, see: 23, navigation: 9 },
-      passed: true, passedBasis: true, passedSee: true, passedNavigation: true,
+      at: '2026-01-01', score: { basis: 7, specific: 23, navigation: 9 },
+      passed: true, passedBasis: true, passedSpecific: true, passedNavigation: true,
       overallPct: 100,
     }]
     const unlocked = checkAchievements([mk(1)], state)

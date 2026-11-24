@@ -6668,16 +6668,16 @@
       "en": {
         "question": "Which distress signals may be used?",
         "answers": [
-          "Rocket flare with red star or red hand flare, continuous sounding of a fog signal device, three flashes or blasts repeated, the word MAYDAY spoken three times by radiotelephone, lateral raising and lowering of arms, flag signal NC, EPIRB, DSC, radar transponder.",
-          "Rocket flare with red star or red hand flare, continuous sounding of a fog signal device, three flashes or blasts repeated, sea dye marker, lateral raising and lowering of arms, ball over or under flag signal NC, EPIRB, DSC, radar transponder.",
-          "Rocket flare with orange star or orange hand flare, red smoke signal, continuous sounding of a fog signal device, three flashes or blasts repeated, the word MAYDAY spoken three times by radiotelephone, lateral raising and lowering of arms, flag signal NC, EPIRB, DSC, radar transponder.",
-          "Rocket flare with red star or red hand flare, continuous sounding of a fog signal device, three flashes or blasts repeated, the word MAYDAY spoken three times by radiotelephone, lateral raising and lowering of arms, flag signal NC, EPIRB, DSC, radar transponder."
+          "Rocket flare with red star or red hand flare, continuous sounding of a fog signal device, three identical signals by light or sound (SOS: · · · ─ ─ ─ · · ·), the word MAYDAY spoken three times by radiotelephone, lateral raising and lowering of arms, flag signal NC, EPIRB, DSC, radar transponder.",
+          "Rocket flare with red star or red hand flare, continuous sounding of a fog signal device, three identical signals by light or sound (SOS: · · · ─ ─ ─ · · ·), sea dye marker, lateral raising and lowering of arms, ball over or under flag signal NC, EPIRB, DSC, radar transponder.",
+          "Rocket flare with orange star or orange hand flare, red smoke signal, continuous sounding of a fog signal device, three identical signals by light or sound (SOS: · · · ─ ─ ─ · · ·), the word MAYDAY spoken three times by radiotelephone, lateral raising and lowering of arms, flag signal NC, EPIRB, DSC, radar transponder.",
+          "Rocket flare with red star or red hand flare, continuous sounding of a fog signal device, three identical signals by light or sound (invalid Morse pattern: ─ ─ ─ · · · ─ ─ ─), the word MAYDAY spoken three times by radiotelephone, lateral raising and lowering of arms, flag signal NC, EPIRB, DSC, radar transponder."
         ]
       },
       "explanation": {
-        "de": "Laut COLREG Anlage IV sind die offiziellen Notsignale u.a. rote Leuchtraketen oder rote Handfackeln, anhaltendes Nebelsignal, SOS per Licht/Ton, dreimal MAYDAY per Funk, seitliches Armschwingen, Flaggensignal NC, EPIRB, DSC und Radartransponder. Antwort (b) enthält fehlerhafte Elemente (Seewasserfärber und 'Ball über/unter NC'), und Antwort (c) nennt fälschlicherweise orange statt rote Signale. Antwort (a) und (d) sind identisch und korrekt.",
-        "en": "According to COLREG Annex IV, the recognised distress signals include red rocket flares or red hand flares, continuous fog signals, SOS by light or sound, MAYDAY three times by radiotelephony, lateral arm waving, flag signal NC, EPIRB, DSC, and radar transponder. Answer (b) incorrectly includes a sea dye marker and a ball above/below NC, which are not in this combination. Answer (c) incorrectly states orange instead of red signals.",
-        "memoryAid": "Distress = RED: red flares, red flag signal NC — orange and dye markers are NOT part of this standard COLREG list."
+        "de": "Laut COLREG Anlage IV sind die offiziellen Notsignale u. a. rote Leuchtraketen oder rote Handfackeln, anhaltendes Nebelsignal, SOS per Licht oder Schall (· · · ─ ─ ─ · · ·), dreimal MAYDAY per Funk, seitliches Armschwingen, Flaggensignal NC, EPIRB, DSC und Radartransponder. Antwort (b) enthält falsche Elemente (Seewasserfärber und 'Ball über/unter NC'). Antwort (c) nennt fälschlicherweise orange statt rote Signale. Antwort (d) zeigt ein falsches Morsezeichen (─ ─ ─ · · · ─ ─ ─ ist nicht SOS).",
+        "en": "Per COLREG Annex IV the recognised distress signals include red rocket flares or red hand flares, continuous fog signals, SOS by light or sound (· · · ─ ─ ─ · · ·), MAYDAY three times by radiotelephony, lateral arm waving, flag signal NC, EPIRB, DSC, and radar transponder. Answer (b) wrongly includes a sea dye marker and a ball above/below NC. Answer (c) states orange instead of red. Answer (d) shows an invalid Morse pattern (─ ─ ─ · · · ─ ─ ─ is not SOS).",
+        "memoryAid": "Distress = RED + real SOS. Red flares, red hand flares, flag signal NC, Morse SOS (three dots, three dashes, three dots)."
       },
       "generatedBy": {
         "model": "claude-sonnet-4-6",
@@ -6828,6 +6828,2058 @@
         "at": "2026-09-30T22:21:45.692Z",
         "provenance": "app-authored-llm",
         "reviewed": false
+      }
+    },
+    {
+      "id": 1073,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Der SBF-Binnen ist vorgeschrieben für Sportboote mit mehr als 11,03 kW (15 PS) Nutzleistung bei Verbrennungsmotor bzw. mehr als 7,5 kW bei Elektromotor Betriebsart S1 und weniger als 20 m Länge. Oberhalb dieser Längengrenze gilt das Binnenschifferpatent, nicht mehr der Sportbootführerschein.",
+        "en": "",
+        "memoryAid": "SBF-Binnen: >15 PS UND <20 m Länge — beides muss zutreffen."
+      }
+    },
+    {
+      "id": 1074,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Der SBF-Binnen gilt auf den Bundeswasserstraßen im Binnenbereich (z. B. Rhein, Donau, Elbe, Weser, Kanäle). Landesgewässer (z. B. Alpenseen, kleine Flüsse in Bayern) haben eigene landesrechtliche Regelungen und erfordern andere Führerscheine. Seewasserstraßen fallen unter den SBF-See.",
+        "en": "",
+        "memoryAid": "Bundeswasserstraßen = Bund regelt — Landesgewässer = Land regelt."
+      }
+    },
+    {
+      "id": 1075,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Der SBF-Binnen muss entzogen werden, wenn entweder die körperliche/geistige Tauglichkeit oder die Zuverlässigkeit nicht mehr gegeben ist. Nur zweifelhafte Tauglichkeit oder eine einzelne Ordnungswidrigkeit genügen nicht — es muss definitiv keine Tauglichkeit bzw. Zuverlässigkeit vorliegen.",
+        "en": "",
+        "memoryAid": "Fehlend ≠ zweifelhaft — Entzug nur bei klarem Mangel."
+      }
+    },
+    {
+      "id": 1076,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Die allgemeine Sorgfaltspflicht (§ 1.04 BinSchStrO) umfasst vier Schutzgüter: Menschenleben, Sachwerte (Fahrzeuge, Anlagen, Ufer), die Schifffahrt selbst und die Umwelt. Antwort (a) nennt alle vier korrekt und mit dem richtigen Wortlaut der Vermeidung.",
+        "en": "",
+        "memoryAid": "Vier Schutzgüter: Leben, Sachen, Schifffahrt, Umwelt."
+      }
+    },
+    {
+      "id": 1077,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Von den Verkehrsregeln darf nur abgewichen werden bei unmittelbar drohender Gefahr für sich oder andere (§ 1.05 BinSchStrO — 'Verhalten unter besonderen Umständen'). Eine bloße Begegnung oder ein Überholvorgang sind normale Verkehrssituationen, keine Gefahrenlage.",
+        "en": "",
+        "memoryAid": "Nur bei echter Gefahr darf man die Regel brechen."
+      }
+    },
+    {
+      "id": 1078,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Für Sportboote bis 11,03 kW (15 PS) Verbrennungs- bzw. 7,5 kW Elektromotor ist kein Führerschein nötig — aber das Mindestalter beträgt 16 Jahre, zusätzlich zu Tauglichkeit und fachlicher Eignung.",
+        "en": "",
+        "memoryAid": "Führerscheinfrei trotzdem ab 16 Jahren."
+      }
+    },
+    {
+      "id": 1079,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Auf dem Rhein (und allen Bundeswasserstraßen im Binnenbereich) ist ab mehr als 11,03 kW der SBF-Binnen oder ein gleichgestelltes Patent erforderlich. Das Mindestalter (16) ist in dieser Frage vorausgesetzt — hier geht es um das zusätzliche Dokument.",
+        "en": "",
+        "memoryAid": ">15 PS auf dem Rhein = SBF-Binnen Pflicht."
+      }
+    },
+    {
+      "id": 1080,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Ein Rudergänger (nicht der Schiffsführer selbst) muss mindestens 16 Jahre alt sowie körperlich, geistig und fachlich geeignet sein — ein eigener Führerschein ist NICHT erforderlich, weil der Schiffsführer die Verantwortung behält.",
+        "en": "",
+        "memoryAid": "Rudergänger: 16 + geeignet, kein Schein nötig."
+      }
+    },
+    {
+      "id": 1081,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Verkehrsbeschränkungen und Nachrichten für die Binnenschifffahrt werden offiziell bei der Wasserstraßen- und Schifffahrtsverwaltung (WSV), unter www.elwis.de sowie bei der Wasserschutzpolizei veröffentlicht. Wasserwirtschaftsämter zuständig für Gewässergüte, nicht Schifffahrt.",
+        "en": "",
+        "memoryAid": "WSV + ELWIS + WSP — die drei offiziellen Quellen."
+      }
+    },
+    {
+      "id": 1082,
+      "topic": "Seemannschaft",
+      "explanation": {
+        "de": "Zur sicheren Steuerung muss der Rudergänger drei Dinge gleichzeitig können: Informationen/Weisungen empfangen UND geben, alle Schallzeichen wahrnehmen und nach allen Seiten freie Sicht haben. Die anderen Antworten fehlen jeweils eine dieser drei Anforderungen.",
+        "en": "",
+        "memoryAid": "Hören + sprechen + sehen — alles gleichzeitig."
+      }
+    },
+    {
+      "id": 1083,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Der SBF-Binnen berechtigt zum Führen von Sportbooten bis unter 20 m Länge, gemessen OHNE Ruder und Bugspriet. Darüber ist ein Binnenschifferpatent erforderlich.",
+        "en": "",
+        "memoryAid": "SBF-Binnen bis <20 m, Rumpflänge zählt."
+      }
+    },
+    {
+      "id": 1084,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Die allgemeinen Verkehrsregeln für Binnenschifffahrtsstraßen und Rhein stehen in der Binnenschifffahrtsstraßen-Ordnung (BinSchStrO) bzw. der Rheinschifffahrtspolizeiverordnung (RheinSchPV). Mosel und Donau haben eigene Verordnungen (siehe Q1085).",
+        "en": "",
+        "memoryAid": "Allgemein = BinSchStrO; Rhein hat eigene RheinSchPV."
+      }
+    },
+    {
+      "id": 1085,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Mosel und Donau haben jeweils eigene Schifffahrtspolizeiverordnungen (MoselSchPV, DonauSchPV), analog zum Rhein. Grund: internationale Schifffahrtswege mit Sonderregelungen.",
+        "en": "",
+        "memoryAid": "Große internationale Flüsse — eigene Verordnung."
+      }
+    },
+    {
+      "id": 1086,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Für Wassermotorräder (Jetskis) und Wasserskilaufen gibt es jeweils eigene Bundesverordnungen (WasMotRdrV, WaSkiV), zusätzlich zur BinSchStrO. Grund: höhere Gefährdung und spezielle Nutzungsregeln.",
+        "en": "",
+        "memoryAid": "Jet-Ski + Wasserski = eigene Verordnungen."
+      }
+    },
+    {
+      "id": 1087,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Bei Grundberührung im Fahrwasser oder in der Fahrrinne ist die WSV oder die Wasserschutzpolizei mit GENAUER ANGABE DER HINDERNISSTELLE zu benachrichtigen — damit andere Schiffe gewarnt werden können. Nicht Schiffsdaten (b) und nicht einfach weiterfahren oder einen Bagger rufen.",
+        "en": "",
+        "memoryAid": "Grundberührung melden — WO ist das Hindernis?"
+      }
+    },
+    {
+      "id": 1088,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "'Fahrwasser' ist der Teil der Wasserstraße, der TATSÄCHLICH vom durchgehenden Schiffsverkehr nach den örtlichen Umständen benutzt wird — es ist also ein faktischer, nicht festgelegter Bereich. Zur Abgrenzung von Fahrrinne (Q1089): dort werden Breite/Tiefe amtlich vorgehalten.",
+        "en": "",
+        "memoryAid": "Fahrwasser = wird benutzt (faktisch)."
+      }
+    },
+    {
+      "id": 1089,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "'Fahrrinne' ist der Teil der Wasserstraße, in dem für den durchgehenden Schiffsverkehr bestimmte Breiten und Tiefen amtlich vorgehalten bzw. angestrebt werden. Im Unterschied zum Fahrwasser (Q1088) ist die Fahrrinne also definiert und gewartet.",
+        "en": "",
+        "memoryAid": "Fahrrinne = wird vorgehalten (definiert)."
+      }
+    },
+    {
+      "id": 1090,
+      "topic": "Wetter",
+      "explanation": {
+        "de": "Über Wasserstände und Hochwassermarken informiert der Nautische Informationsfunk (NIF) sowie Rundfunk, Fernsehen und Internet (z. B. ELWIS, Pegelonline). Aushänge an Häfen oder Polizeistationen sind nicht die offiziellen Informationsquellen.",
+        "en": "",
+        "memoryAid": "NIF + Medien — informieren die Schifffahrt."
+      }
+    },
+    {
+      "id": 1091,
+      "topic": "Wetter",
+      "explanation": {
+        "de": "Vor Ort kann der Sportbootfahrer den Wasserstand direkt an den Pegeln und den amtlich ausgewiesenen Hochwassermarken ablesen. Einsenkungsmarken (d) geben den Tiefgang eines Fahrzeugs an, nicht den Wasserstand.",
+        "en": "",
+        "memoryAid": "Pegel + Hochwassermarken = vor Ort ablesbar."
+      }
+    },
+    {
+      "id": 1092,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Bei Hochwassermarke I (HWM I) gilt eine Geschwindigkeitsbeschränkung UND ein Fahrverbot für Fahrzeuge ohne Sprechfunk. Die Schifffahrt läuft also weiter, aber nur noch langsam und mit Funkpflicht. Einstellung erst bei HWM II (siehe Q1093).",
+        "en": "",
+        "memoryAid": "HWM I = Tempo runter + Funk Pflicht."
+      }
+    },
+    {
+      "id": 1093,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Bei Hochwassermarke II (HWM II) wird die Schifffahrt komplett eingestellt — die Lage ist zu gefährlich. HWM I hingegen (Q1092) bedeutet nur Tempolimit und Funkpflicht.",
+        "en": "",
+        "memoryAid": "HWM II = Schifffahrt aus."
+      }
+    },
+    {
+      "id": 1094,
+      "topic": "Navigation",
+      "explanation": {
+        "de": "Flüsse werden immer in Fließrichtung betrachtet, also von der QUELLE BIS ZUR MÜNDUNG. Das rechte Ufer liegt dann rechts, das linke links — unabhängig von der Fahrtrichtung (Berg- oder Talfahrt).",
+        "en": "",
+        "memoryAid": "Blick mit dem Strom — rechts bleibt rechts."
+      }
+    },
+    {
+      "id": 1095,
+      "topic": "Navigation",
+      "explanation": {
+        "de": "Auf Flüssen bedeutet 'Bergfahrt' die Fahrt STROMAUFWÄRTS, also in Richtung Quelle. Talfahrt ist das Gegenteil — Richtung Mündung. 'Fahrt über Grund' oder 'mit der Strömung' sind andere Konzepte.",
+        "en": "",
+        "memoryAid": "Berg = aufwärts zur Quelle."
+      }
+    },
+    {
+      "id": 1096,
+      "topic": "Navigation",
+      "explanation": {
+        "de": "Auf Kanälen gibt es keine natürliche Fließrichtung, daher ist 'Bergfahrt' künstlich in Teil II der BinSchStrO festgelegt (dort steht für jeden Kanal, welche Richtung Bergfahrt heißt). Teil I enthält nur allgemeine Regeln.",
+        "en": "",
+        "memoryAid": "Kanäle: Bergfahrt steht in BinSchStrO Teil II."
+      }
+    },
+    {
+      "id": 1097,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Die Fahrrinne wird zum rechten Ufer durch ROTE STUMPFTONNEN (flache Oberseite) oder Schwimmstangen begrenzt. Merksatz der Binnenschifffahrt: rechts rot, links grün — umgekehrt zur See.",
+        "en": "",
+        "memoryAid": "Binnen: rechts ROT stumpf."
+      }
+    },
+    {
+      "id": 1098,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Die Fahrrinne wird zum linken Ufer durch GRÜNE SPITZTONNEN oder Schwimmstangen begrenzt. Spitz = links, stumpf = rechts. Spierentonnen sind schlanke Hilfstonnen, kein Standardzeichen.",
+        "en": "",
+        "memoryAid": "Binnen: links GRÜN spitz."
+      }
+    },
+    {
+      "id": 1099,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Ein Bergfahrer (stromaufwärts) hat seine Steuerbordseite (rechts) am LINKEN Ufer, weil rechtes/linkes Ufer immer von der Quelle aus betrachtet werden (Q1094). Das linke Ufer wird durch grüne Spitztonnen gekennzeichnet.",
+        "en": "",
+        "memoryAid": "Bergfahrer: Steuerbord = linkes Ufer = grün spitz."
+      }
+    },
+    {
+      "id": 1100,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Eine rot-grün gestreifte Tonne (oder Schwimmstange) kennzeichnet eine Fahrrinnenspaltung — die Fahrrinne teilt sich. Die Vorbeifahrt ist an beiden Seiten möglich; der Schiffsführer wählt den passenden Zweig.",
+        "en": "",
+        "memoryAid": "Rot-grün gestreift = Abzweig, beide Seiten erlaubt."
+      }
+    },
+    {
+      "id": 1101,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Hindernisse an der RECHTEN Seite (z. B. Buhnen, Kribben) sind mit Stangen gekennzeichnet, die einen ROTEN KEGEL mit Spitze NACH UNTEN tragen, oder mit einer rot-weiß gestreiften Schwimmstange mit rotem Zylinder. Spitze nach unten ist charakteristisch für die rechte Seite.",
+        "en": "",
+        "memoryAid": "Rechts: roter Kegel, Spitze unten."
+      }
+    },
+    {
+      "id": 1102,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Eine grün-weiß gestreifte Schwimmstange mit grünem Kegel (Spitze nach OBEN) markiert ein HINDERNIS an der LINKEN Seite der Wasserstraße — nicht nur den Fahrrinnenrand. Hindernisse und Fahrrinnenränder werden durch leicht unterschiedliche Symbolik unterschieden.",
+        "en": "",
+        "memoryAid": "Links: grüner Kegel, Spitze oben = Hindernis."
+      }
+    },
+    {
+      "id": 1103,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "In Kanälen ist das ANKERN grundsätzlich verboten — der Kanalboden ist oft dicht oder empfindlich, und ein Anker könnte die Infrastruktur beschädigen. Wenden, Überholen und Begegnen sind erlaubt, wenn die örtlichen Gegebenheiten es zulassen.",
+        "en": "",
+        "memoryAid": "Kanal = kein Anker."
+      }
+    },
+    {
+      "id": 1104,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Zwei weiße Lichter übereinander auf einem stillliegenden Fahrzeug bedeuten: Ankerlieger, dessen Anker die SCHIFFFAHRT GEFÄHRDEN KANN (z. B. weit ausgebrachter Anker im Fahrwasser). Der normale Ankerlieger führt nur EIN weißes Rundumlicht.",
+        "en": "",
+        "memoryAid": "Zwei weiße übereinander = Anker gefährlich."
+      }
+    },
+    {
+      "id": 1105,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Ein stillliegendes Fahrzeug setzt EIN von allen Seiten sichtbares weißes Rundumlicht auf der FAHRWASSERSEITE — damit vorbeifahrende Schiffe sehen, wo das Hindernis liegt. Topplicht und Hecklicht gehören zum fahrenden Betrieb.",
+        "en": "",
+        "memoryAid": "Stillliegend: ein weißes Rundumlicht, Fahrwasserseite."
+      }
+    },
+    {
+      "id": 1106,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Anker, die die Schifffahrt behindern können, werden tagsüber durch einen GELBEN DÖPPER (Schwimmkörper auf der Ankertrosse) gekennzeichnet. Der Döpper macht die Ankerlage von außen sichtbar.",
+        "en": "",
+        "memoryAid": "Gelber Döpper = Vorsicht, Anker ausgelegt."
+      }
+    },
+    {
+      "id": 1107,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Dieses Tafelzeichen weist eine Liegestelle für Fahrzeuge mit EXPLOSIVEN STOFFEN aus, für Kleinfahrzeuge (Sportboote) verboten. Explosivstoffe sind die gefährlichste Kategorie und werden räumlich getrennt.",
+        "en": "",
+        "memoryAid": "Explosiv = separat ankern, Sportboote weg."
+      }
+    },
+    {
+      "id": 1108,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Diese Tafelzeichen kennzeichnen eine Liegestelle für Fahrzeuge OHNE gefährliche Güter, auch für Kleinfahrzeuge geeignet — also der normale, sichere Liegeplatz.",
+        "en": "",
+        "memoryAid": "Ohne Gefahrgut, auch für Sportboote."
+      }
+    },
+    {
+      "id": 1109,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Ein allgemeines Liegeverbot gilt OHNE besondere Beschilderung AUF Schifffahrtskanälen und AUF Schleusenkanälen (dem Bereich der Schleusenzufahrt). Vor Brücken dürfen Sie liegen, sofern die Durchfahrt frei bleibt.",
+        "en": "",
+        "memoryAid": "Kanäle + Schleusenkanäle = nie liegen."
+      }
+    },
+    {
+      "id": 1110,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Das Tafelzeichen (rotes Quadrat über weißem Quadrat o. ä. empfohlene Durchfahrt) markiert eine EMPFOHLENE Durchfahrtsöffnung einer Brücke, Durchfahrt in beide Richtungen erlaubt. 'Empfohlen' = nicht zwingend, aber vorteilhaft.",
+        "en": "",
+        "memoryAid": "Empfohlene Durchfahrt, beide Richtungen."
+      }
+    },
+    {
+      "id": 1111,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Diese Tafelzeichen zeigen eine empfohlene Durchfahrt mit VERBOT der Durchfahrt in Gegenrichtung — also Einbahnregelung. Unterschied zu Q1110: hier ist Gegenverkehr untersagt.",
+        "en": "",
+        "memoryAid": "Empfohlen + Gegenrichtung verboten = Einbahn."
+      }
+    },
+    {
+      "id": 1112,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Zwei Tafeln an einer Brücke, die den erlaubten Durchfahrtsbereich einrahmen: die Durchfahrt ist NUR ZWISCHEN den beiden Tafeln erlaubt — die Brückenöffnung ist seitlich markiert.",
+        "en": "",
+        "memoryAid": "Zwischen den Tafeln durchfahren."
+      }
+    },
+    {
+      "id": 1113,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Die Tafelzeichen rahmen den empfohlenen Durchfahrtsbereich ein: Durchfahrt ist NUR ZWISCHEN den Tafeln empfohlen. Unterschied zu Q1112: dort war die Durchfahrt zwischen den Tafeln VORGESCHRIEBEN, hier nur EMPFOHLEN.",
+        "en": "",
+        "memoryAid": "Zwischen den Tafeln — empfohlen."
+      }
+    },
+    {
+      "id": 1114,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Dieses Tafelzeichen bedeutet: empfohlene Durchfahrt MIT Gegenverkehr — also beide Richtungen sind zugelassen, Vorsicht geboten.",
+        "en": "",
+        "memoryAid": "Empfohlen, aber Gegenverkehr möglich."
+      }
+    },
+    {
+      "id": 1115,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Die Tafelzeichen signalisieren: empfohlene Durchfahrt OHNE Gegenverkehr — Einbahnregelung. Unterschied zu Q1114 (mit Gegenverkehr) und Q1110 (Durchfahrt in beide Richtungen erlaubt).",
+        "en": "",
+        "memoryAid": "Empfohlen und einbahnig."
+      }
+    },
+    {
+      "id": 1116,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Im Bereich eines Wehres bedeutet dieses Tafelzeichen Durchfahrtsverbot und komplette Sperrung der Schifffahrt — unabhängig von Fahrzeugtyp oder Antriebsart. Wehre sind lebensgefährlich (Sog, Wasserwalzen).",
+        "en": "",
+        "memoryAid": "Wehr gesperrt — keine Ausnahmen."
+      }
+    },
+    {
+      "id": 1117,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Ein rotes Licht (oder rot + grün) vor einer Schleuse bedeutet: Einfahrt verboten, aber die Schleuse wird gerade GEÖFFNET — also kurz warten, die grüne Phase kommt. Zwei rote Lichter dagegen = längere Sperrung.",
+        "en": "",
+        "memoryAid": "Rot/rot-grün: warten, Öffnung läuft."
+      }
+    },
+    {
+      "id": 1118,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Kleinfahrzeuge (Sportboote) fahren erst NACH den großen Fahrzeugen in die Schleuse ein und nur NACH Aufforderung durch die Schleusenaufsicht. Grund: große Fahrzeuge brauchen ihren Platz zuerst, Kleinfahrzeuge füllen die Lücken.",
+        "en": "",
+        "memoryAid": "Große zuerst, Kleine auf Zuruf."
+      }
+    },
+    {
+      "id": 1119,
+      "topic": "Seemannschaft",
+      "explanation": {
+        "de": "Beim Schleusen Oberwasser→Unterwasser (also Schleuse wird GELEERT) muss das LETZTE Kleinfahrzeug weit genug einfahren, damit es nicht auf dem Drempel (Schwelle am Schleusentor) aufsetzt. Festmacherleinen müssen so bedient werden, dass sicheres Fieren möglich ist.",
+        "en": "",
+        "memoryAid": "Talfahrt + leeren: letztes Boot weit vorn, nicht auf Drempel."
+      }
+    },
+    {
+      "id": 1120,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Diese Lichterführung (drei weiße Topplichter im Dreieck + zwei Seitenlichter + Hecklicht) kennzeichnet ein Fahrzeug mit Maschinenantrieb länger als 110 m. Die Länge wird über die Anzahl bestimmter Lichter kommuniziert.",
+        "en": "",
+        "memoryAid": "Drei Topplichter dreieckig = >110 m Maschine."
+      }
+    },
+    {
+      "id": 1121,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Das Sichtzeichen (gelber Ball) kennzeichnet das SCHLEPPFAHRZEUG an der Spitze eines Schleppverbandes — es signalisiert anderen, dass hinter ihm geschleppt wird.",
+        "en": "",
+        "memoryAid": "Gelber Ball an der Spitze = ich ziehe."
+      }
+    },
+    {
+      "id": 1122,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Dieses Sichtzeichen kennzeichnet ein FAHRZEUG EINES SCHLEPPVERBANDES — also einen geschleppten Anhang hinter dem Schleppfahrzeug (Q1121).",
+        "en": "",
+        "memoryAid": "Geschlepptes Teil des Verbandes."
+      }
+    },
+    {
+      "id": 1123,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Diese Lichterführung (Topplichter in Reihe + Seitenlichter) zeigt einen Schubverband in Fahrt VON VORNE betrachtet. Von achtern sähe man das Hecklicht.",
+        "en": "",
+        "memoryAid": "Topplichter + Seitenlichter = Schubverband von vorn."
+      }
+    },
+    {
+      "id": 1124,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Diese Lichter (grünes Rundumlicht über weißem Rundumlicht) markieren eine NICHT FREI FAHRENDE Fähre — eine, die an einem Seil oder Kabel geführt wird und daher nicht ausweichen kann.",
+        "en": "",
+        "memoryAid": "Grün über weiß = seilgeführte Fähre."
+      }
+    },
+    {
+      "id": 1125,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Diese Lichter (grünes Rundumlicht über weißem Rundumlicht + Seitenlichter + Hecklicht) markieren eine FREI FAHRENDE Fähre — motorbetrieben, kann manövrieren, hat aber dennoch Vorrang in ihrer Verbindung.",
+        "en": "",
+        "memoryAid": "Fähre mit Seitenlichtern = frei fahrend."
+      }
+    },
+    {
+      "id": 1126,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "EIN blaues Licht (oder blauer Kegel am Tag) bedeutet: Fahrzeug hat BRENNBARE Stoffe geladen. Mindestabstand beim Stillliegen 10 m. Siehe auch Q1128 (zwei blaue = gesundheitsgefährlich) und Q1130 (drei blaue = explosiv).",
+        "en": "",
+        "memoryAid": "1 blau = brennbar, 10 m."
+      }
+    },
+    {
+      "id": 1127,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Dieses Sichtzeichen (ein blauer Kegel) ist die Tagvariante zu Q1126: Fahrzeug mit brennbaren Stoffen, 10 m Abstand.",
+        "en": "",
+        "memoryAid": "1 blauer Kegel = brennbar, 10 m."
+      }
+    },
+    {
+      "id": 1128,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Zwei blaue Lichter übereinander (oder zwei blaue Kegel am Tag) bedeuten: Fahrzeug hat GESUNDHEITSSCHÄDLICHE Stoffe geladen. Mindestabstand beim Stillliegen 50 m.",
+        "en": "",
+        "memoryAid": "2 blau = giftig, 50 m."
+      }
+    },
+    {
+      "id": 1129,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Zwei blaue Kegel sind die Tagvariante zu Q1128: Fahrzeug mit gesundheitsgefährlichen Stoffen, 50 m Abstand.",
+        "en": "",
+        "memoryAid": "2 Kegel = giftig, 50 m."
+      }
+    },
+    {
+      "id": 1130,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Drei blaue Lichter übereinander (oder drei Kegel am Tag) bedeuten: Fahrzeug hat EXPLOSIVE Stoffe geladen. Mindestabstand beim Stillliegen 100 m — die höchste Gefahrenkategorie.",
+        "en": "",
+        "memoryAid": "3 blau = explosiv, 100 m."
+      }
+    },
+    {
+      "id": 1131,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Drei blaue Kegel sind die Tagvariante zu Q1130: Fahrzeug mit explosiven Stoffen, 100 m Abstand.",
+        "en": "",
+        "memoryAid": "3 Kegel = explosiv, 100 m."
+      }
+    },
+    {
+      "id": 1132,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Die Tagbezeichnung (rote Flagge o. ä.) kennzeichnet ein Fahrzeug mit behördlich eingeräumtem VORRANG zur Durchfahrt — z. B. an Engstellen oder Schleusen, wo sonst eine Reihenfolge gilt. Nicht Schleppverband (c), nicht festgefahren (d).",
+        "en": "",
+        "memoryAid": "Rote Flagge = Vorrang von der Behörde."
+      }
+    },
+    {
+      "id": 1133,
+      "topic": "Seemannschaft",
+      "explanation": {
+        "de": "Ein nachts fahrendes Segel-Kleinfahrzeug mit nur weißem Rundumlicht leuchtet bei Annäherung anderer Fahrzeuge zweckmäßigerweise die EIGENEN SEGEL an — so wird die Position und Fahrtrichtung sofort erkennbar. Andere anleuchten würde blenden, nach oben halten bringt nichts.",
+        "en": "",
+        "memoryAid": "Segel anleuchten, nicht blenden."
+      }
+    },
+    {
+      "id": 1134,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Wird der Motor zusätzlich zum Segel angeworfen, gilt das Boot als Maschinenfahrzeug und muss zusätzlich Seitenlichter (rot BB / grün SB) führen — unmittelbar nebeneinander oder in einer kombinierten Laterne.",
+        "en": "",
+        "memoryAid": "Motor an = Seitenlichter dazu."
+      }
+    },
+    {
+      "id": 1135,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Ein Kleinfahrzeug, das ein anderes schleppt, führt seine normalen Kleinfahrzeug-mit-Maschine-Lichter — es wird nicht zum großen Schleppverband. Ein zweites Topplicht oder Sonderlichter sind nicht erforderlich.",
+        "en": "",
+        "memoryAid": "Kleinfahrzeug schleppt = normale Lichter."
+      }
+    },
+    {
+      "id": 1136,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Ein geschlepptes Kleinfahrzeug führt ein weißes Rundumlicht — gut sichtbar, kennzeichnet seine Position hinter dem Schlepper. Es führt keine Seitenlichter, weil es nicht aktiv manövriert.",
+        "en": "",
+        "memoryAid": "Geschleppt = ein weißes Rundumlicht."
+      }
+    },
+    {
+      "id": 1137,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Als Kleinfahrzeug gilt ein Fahrzeug unter 20 m Länge. Ab 20 m oder länger ist es kein Kleinfahrzeug mehr und unterliegt strengeren Regeln (Lichter, Schallsignale, Schleusenreihenfolge).",
+        "en": "",
+        "memoryAid": "Kleinfahrzeug: <20 m."
+      }
+    },
+    {
+      "id": 1138,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Vorgeschriebene Lichtsektoren: Topplicht 225° weiß (vorn und seitlich), Hecklicht 135° weiß (hinten), Seitenlichter je 112,5° (BB rot, SB grün). Zusammen 225+135 = 360°. Seitenlichter 2×112,5° = 225°, ergänzen das Hecklicht.",
+        "en": "",
+        "memoryAid": "225 + 135 = 360; Seitenlichter 112,5°."
+      }
+    },
+    {
+      "id": 1139,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Ein Kleinfahrzeug ohne Maschinenantrieb (Ruderboot, Segler ohne Motor) muss MINDESTENS ein weißes Rundumlicht führen — einfachste rechtzeitig sichtbare Markierung. Dreifarbenlaterne ist nur bei Segelfahrzeugen zulässig, nicht erforderlich.",
+        "en": "",
+        "memoryAid": "Ohne Motor = ein weißes Rundumlicht."
+      }
+    },
+    {
+      "id": 1140,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Auf Binnenschifffahrtsstraßen hat ein Segelfahrzeug Vorrang vor einem Maschinen-Kleinfahrzeug und HÄLT KURS UND GESCHWINDIGKEIT bei. Der Maschinenfahrer muss ausweichen. Wichtig: auf Binnen gilt diese Regel auch für kleine Motorboote — anders als auf See.",
+        "en": "",
+        "memoryAid": "Binnen: Segel vor Motor, Kurs halten."
+      }
+    },
+    {
+      "id": 1141,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Ein Fahrzeug mit Topplicht und Seitenlichtern ist ein NICHT-Kleinfahrzeug (Berufsschiff). Es hat Vorrang vor dem Kleinfahrzeug mit nur Seitenlichtern — hält also Kurs und Geschwindigkeit. Das Kleinfahrzeug muss ausweichen.",
+        "en": "",
+        "memoryAid": "Großes mit Topplicht = Vorrang."
+      }
+    },
+    {
+      "id": 1142,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Ein Kleinfahrzeug mit Maschinenantrieb muss einem SEGELSURFER ausweichen — Surfer gelten wie Segelfahrzeuge und haben in dieser Konstellation Vorrang.",
+        "en": "",
+        "memoryAid": "Motor muss Surfer ausweichen."
+      }
+    },
+    {
+      "id": 1143,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Ein schwarzer Kegel (Spitze nach unten) signalisiert: Segelyacht fährt mit Maschine UND Segel — gilt dann als Kleinfahrzeug mit Maschinenantrieb. Also muss sie ausweichen, nicht die reine Segelyacht mit Wind von Backbord.",
+        "en": "",
+        "memoryAid": "Schwarzer Kegel = Motor an = Maschinenfahrzeug."
+      }
+    },
+    {
+      "id": 1144,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Grundregel 1 der BinSchStrO für Segler: Wind von Backbord weicht Wind von Steuerbord. Das Luv-Lee-Prinzip und die Backbord/Steuerbord-Regel kommen aus den COLREG und sind weltweit gleich.",
+        "en": "",
+        "memoryAid": "BB weicht SB — immer."
+      }
+    },
+    {
+      "id": 1145,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Ein weißes Rundumlicht + zwei grüne Rundumlichter beiderseits = schwimmendes Gerät bei der Arbeit, Vorbeifahrt an JEDER Seite erlaubt. Sog und Wellenschlag müssen vermieden werden (langsam vorbei).",
+        "en": "",
+        "memoryAid": "Weiß + grün beidseits = beide Seiten OK, langsam."
+      }
+    },
+    {
+      "id": 1146,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Tagvariante zu Q1145: schwimmendes Gerät bei der Arbeit, beidseitige Vorbeifahrt erlaubt, Sog/Wellenschlag vermeiden.",
+        "en": "",
+        "memoryAid": "Tagszeichen für das Nachtsignal aus Q1145."
+      }
+    },
+    {
+      "id": 1147,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Diese Lichter kennzeichnen ein festgefahrenes/gesunkenes Fahrzeug: Vorbeifahrt ist nur an der ROT-WEISSEN Seite gestattet — die rote Seite ist gesperrt. Zusätzlich muss Sog und Wellenschlag vermieden werden.",
+        "en": "",
+        "memoryAid": "Festgefahren: rot-weiß OK, rot gesperrt, langsam."
+      }
+    },
+    {
+      "id": 1148,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Tagvariante zu Q1147 (Tafelzeichen): festgefahrenes/gesunkenes Fahrzeug, Vorbeifahrt an rot-weißer Seite, rote Seite gesperrt, langsam.",
+        "en": "",
+        "memoryAid": "Tagszeichen = Nachtsignal Q1147."
+      }
+    },
+    {
+      "id": 1149,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Schwimmendes Gerät bei der Arbeit mit einseitiger Sperrung: Vorbeifahrt nur an der GRÜNEN Seite erlaubt, rote Seite gesperrt. Unterschied zu Q1145: dort beide Seiten offen.",
+        "en": "",
+        "memoryAid": "Grün OK, rot gesperrt."
+      }
+    },
+    {
+      "id": 1150,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Tagvariante zu Q1149: Tafelzeichen für einseitig passierbares Arbeitsgerät, grün ja, rot nein.",
+        "en": "",
+        "memoryAid": "Tagszeichen = Nacht Q1149."
+      }
+    },
+    {
+      "id": 1151,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Spezielle Fahrwasser-Tafelzeichen: grün-weiß-grün = passierbar, rot-weiß-rot = gesperrt. Es handelt sich um ein ARBEITSGERÄT (nicht gesunken), also Sog/Wellenschlag vermeiden ist in Antwort (a) nicht genannt — aber aus Kontext selbstverständlich.",
+        "en": "",
+        "memoryAid": "Grün-weiß-grün = frei; rot-weiß-rot = Stopp."
+      }
+    },
+    {
+      "id": 1152,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Diese Lichter (weiß + grüne Rundumlichter beiderseits, ohne Zusatz) markieren schwimmendes Gerät bei der Arbeit mit Vorbeifahrt AN JEDER SEITE — ohne weitere Einschränkung. Unterschied zu Q1145 war dort die Sog-Vermeidung explizit erwähnt.",
+        "en": "",
+        "memoryAid": "Weiß + grün beidseits = frei vorbei."
+      }
+    },
+    {
+      "id": 1153,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Tagvariante zu einem Nachtlicht-Signal: schwimmendes Gerät bei der Arbeit, Vorbeifahrt an jeder Seite gestattet. Keine Sog-Pflicht hier — Unterschied zu Q1146.",
+        "en": "",
+        "memoryAid": "Tagszeichen, beide Seiten offen."
+      }
+    },
+    {
+      "id": 1154,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Ähnlich zu Q1153 — schwimmendes Gerät bei der Arbeit, Vorbeifahrt an jeder Seite erlaubt. Die Formulierung in Antwort (a) ist dieselbe wie in der Nachtvariante.",
+        "en": "",
+        "memoryAid": "Schwimmendes Gerät, beide Seiten frei."
+      }
+    },
+    {
+      "id": 1155,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Diese Tag- und Nachtbezeichnung markiert ein SCHUTZBEDÜRFTIGES Fahrzeug (z. B. Rettung, Behörde im Einsatz, Taucher an Bord). Vorbeifahrt in möglichst großem Abstand, Geschwindigkeit vermindern, Sog und Wellenschlag vermeiden.",
+        "en": "",
+        "memoryAid": "Schutzbedürftig: Abstand, langsam, keine Welle."
+      }
+    },
+    {
+      "id": 1156,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Dieses Tafelzeichen zeigt eine GESPERRTE Wasserfläche, die aber von Kleinfahrzeugen OHNE ANTRIEBSMASCHINE (Ruderboote, Segler ohne Motor) befahren werden darf — z. B. bestimmte Naturschutzzonen.",
+        "en": "",
+        "memoryAid": "Gesperrt — außer manuell/unter Segel."
+      }
+    },
+    {
+      "id": 1157,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Dieses Tafelzeichen bedeutet Fahrverbot für ALLE Fahrzeuge mit Maschinenantrieb — unabhängig von der Größe. Auch Kleinfahrzeuge mit Motor dürfen nicht hinein.",
+        "en": "",
+        "memoryAid": "Kein Motor = egal welche Größe."
+      }
+    },
+    {
+      "id": 1158,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Geschützte Badezonen werden durch GELBE Tonnen abgegrenzt. Rot/grün sind Fahrwasser-Markierungen, rot-grün gestreift sind Spaltungen. Gelb ist die typische Badezonen-/Sonderzonen-Farbe.",
+        "en": "",
+        "memoryAid": "Gelbe Tonne = Badezone."
+      }
+    },
+    {
+      "id": 1159,
+      "topic": "Signale",
+      "explanation": {
+        "de": "Ein langer Ton bedeutet ACHTUNG — ein generelles Warnsignal, z. B. vor einer Begegnungssituation oder zur Aufmerksamkeitserregung.",
+        "en": "",
+        "memoryAid": "1 langer Ton = Achtung!"
+      }
+    },
+    {
+      "id": 1160,
+      "topic": "Signale",
+      "explanation": {
+        "de": "Vier kurze Töne = Fahrzeug ist MANÖVRIERUNFÄHIG. Siehe auch Q1170: Tag- und Nachtzusatzzeichen dazu.",
+        "en": "",
+        "memoryAid": "4 kurz = kann nicht manövrieren."
+      }
+    },
+    {
+      "id": 1161,
+      "topic": "Signale",
+      "explanation": {
+        "de": "Fünf kurze Töne bedeuten ÜBERHOLEN NICHT MÖGLICH — Signal des Vorausfahrenden an den Überholenden, dass die Lage es derzeit nicht erlaubt.",
+        "en": "",
+        "memoryAid": "5 kurz = nicht überholen."
+      }
+    },
+    {
+      "id": 1162,
+      "topic": "Signale",
+      "explanation": {
+        "de": "Ein langer + drei kurze Töne = WENDEN über Steuerbord. Das Manöver ist deutlich stärker als eine bloße Kursänderung, daher das längere Signal.",
+        "en": "",
+        "memoryAid": "lang + 3 kurz = wenden StB."
+      }
+    },
+    {
+      "id": 1163,
+      "topic": "Signale",
+      "explanation": {
+        "de": "Ein langer + vier kurze Töne = WENDEN über Backbord. Spiegelbild zu Q1162.",
+        "en": "",
+        "memoryAid": "lang + 4 kurz = wenden BB."
+      }
+    },
+    {
+      "id": 1164,
+      "topic": "Signale",
+      "explanation": {
+        "de": "Ein kurzer Ton = ich ändere meinen Kurs nach Steuerbord. In der Konstellation 'Überholen': Überholen an der STEUERBORDSEITE des Vorausfahrenden.",
+        "en": "",
+        "memoryAid": "1 kurz = Richtung StB / Überholen StB."
+      }
+    },
+    {
+      "id": 1165,
+      "topic": "Signale",
+      "explanation": {
+        "de": "Zwei kurze Töne = Kurs nach Backbord / Überholen an der BACKBORDSEITE des Vorausfahrenden.",
+        "en": "",
+        "memoryAid": "2 kurz = Richtung BB / Überholen BB."
+      }
+    },
+    {
+      "id": 1166,
+      "topic": "Signale",
+      "explanation": {
+        "de": "Drei lange + ein kurzer Ton = Einfahrt/Ausfahrt aus Hafen oder Nebenwasserstraße mit Kursänderung nach STEUERBORD.",
+        "en": "",
+        "memoryAid": "3 lang + 1 kurz = Hafen + StB."
+      }
+    },
+    {
+      "id": 1167,
+      "topic": "Signale",
+      "explanation": {
+        "de": "Drei lange + zwei kurze Töne = Hafen-/Nebenwasserstraße mit Kursänderung nach BACKBORD. Spiegelbild zu Q1166.",
+        "en": "",
+        "memoryAid": "3 lang + 2 kurz = Hafen + BB."
+      }
+    },
+    {
+      "id": 1168,
+      "topic": "Signale",
+      "explanation": {
+        "de": "Eine Folge sehr kurzer Töne besteht aus MINDESTENS 6 Tönen, jeweils ca. ¼ Sekunde lang mit ¼ Sekunde Pause — insgesamt ca. 3 Sekunden Signaldauer.",
+        "en": "",
+        "memoryAid": "Mindestens 6, je ¼ s."
+      }
+    },
+    {
+      "id": 1169,
+      "topic": "Signale",
+      "explanation": {
+        "de": "Eine Folge sehr kurzer Töne signalisiert GEFAHR EINES ZUSAMMENSTOSSES — das dringlichste akustische Signal auf dem Wasser.",
+        "en": "",
+        "memoryAid": "Sehr kurze Tonfolge = Kollisionsgefahr!"
+      }
+    },
+    {
+      "id": 1170,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Manövrierunfähigkeit: akustisch VIER KURZE TÖNE (Q1160) + optisch eine rote Flagge bei Tag bzw. ein rotes Licht bei Nacht im UNTEREN Halbkreis schwenken (nicht oben — unten, da aus niedriger Position besser sichtbar).",
+        "en": "",
+        "memoryAid": "4 kurz + rot schwenken (unten)."
+      }
+    },
+    {
+      "id": 1171,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Eine blaue Tafel + weißes Funkellicht an Steuerbord bedeutet: Fahrzeuge begegnen sich an STEUERBORD (statt wie üblich an Backbord). Für Kleinfahrzeuge gilt das Zeichen NICHT bindend, aber erhöhte Aufmerksamkeit ist Pflicht.",
+        "en": "",
+        "memoryAid": "Blaue Tafel + Funkel = Steuerbord-Begegnung."
+      }
+    },
+    {
+      "id": 1172,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Vor einer Schleuse: das blaue Tafelzeichen zeigt, dass sich das ausfahrende und die einfahrenden Fahrzeuge an der STEUERBORDSEITE passieren. Kleinfahrzeuge sind zu erhöhter Aufmerksamkeit verpflichtet, aber nicht wartepflichtig.",
+        "en": "",
+        "memoryAid": "Blaue Tafel an Schleuse = StB passieren."
+      }
+    },
+    {
+      "id": 1173,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Höchstgeschwindigkeiten findet man in der BinSchStrO (und Rhein-/Mosel-/Donau-SchPV) sowie bei der WSV und der Wasserschutzpolizei. Nicht in der Binnenschiffsuntersuchungsordnung (die regelt Schiffsuntersuchungen) oder Sportbootführerscheinverordnung (Ausbildung).",
+        "en": "",
+        "memoryAid": "Tempo: BinSchStrO + WSV + WSP."
+      }
+    },
+    {
+      "id": 1174,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Beim Überholen: zügig vorbei, andere nicht behindern, Verkehrslage und Schallzeichen beachten, ausreichend Abstand halten. Kein Drängeln, kein starkes Beschleunigen, kein Vorbeifahren dicht am Ufer.",
+        "en": "",
+        "memoryAid": "Zügig + rücksichtsvoll + Abstand."
+      }
+    },
+    {
+      "id": 1175,
+      "topic": "Navigation",
+      "explanation": {
+        "de": "Kollisionsgefahr besteht, wenn zwei Fahrzeuge sich bei GLEICHBLEIBENDER PEILUNG einander nähern — die relative Peilung ändert sich nicht, also treffen die Kurse genau im gleichen Punkt aufeinander.",
+        "en": "",
+        "memoryAid": "Peilung steht = Kollisionskurs."
+      }
+    },
+    {
+      "id": 1176,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Ausweichmanöver müssen RECHTZEITIG, KLAR ERKENNBAR und ENTSCHLOSSEN durchgeführt werden — nicht zögerlich, sondern eindeutig für den anderen lesbar. Nicht zwingend nach Steuerbord oder Backbord.",
+        "en": "",
+        "memoryAid": "Früh + klar + entschlossen."
+      }
+    },
+    {
+      "id": 1177,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Ein Kleinfahrzeug ist IMMER gegenüber großen Fahrzeugen (>20 m) ausweichpflichtig — unabhängig von der Kursrichtung. Die Steuerbord/Backbord-Regel greift nur zwischen gleichrangigen Fahrzeugen.",
+        "en": "",
+        "memoryAid": "Klein immer vor Groß weichen."
+      }
+    },
+    {
+      "id": 1178,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Ein weißes Rundumlicht (allein) wird nachts geführt von: geschleppten oder längsseits gekuppelten Kleinfahrzeugen. Kleinfahrzeuge mit Motor führen Seitenlichter + Topp- oder Hecklicht; geschobene Fahrzeuge haben andere Signatur.",
+        "en": "",
+        "memoryAid": "Nur weißes Rundumlicht = geschleppt/gekuppelt."
+      }
+    },
+    {
+      "id": 1179,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Ein am Wind kreuzendes Segel-Kleinfahrzeug darf ein anderes, das sein STEUERBORDSEITIGES Ufer ANHÄLT (hinfährt), NICHT zum Ausweichen zwingen — das andere Boot ist in schwierigerer Lage.",
+        "en": "",
+        "memoryAid": "Nicht zwingen, wenn er am Ufer klebt."
+      }
+    },
+    {
+      "id": 1180,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "In dieser Konstellation ist das Fahrzeug UNTER SEGEL ausweichpflichtig — vermutlich weil es sich hier um ein Begegnen mit einem großen Berufsfahrzeug handelt, dem auch Segler ausweichen müssen (siehe Q1177).",
+        "en": "",
+        "memoryAid": "Segel vor Groß = Segel weicht."
+      }
+    },
+    {
+      "id": 1181,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Beim Begegnen mit Nicht-Kleinfahrzeugen gilt: Kleinfahrzeuge sind AUSWEICHPFLICHTIG und müssen dem großen Fahrzeug ZUSÄTZLICH Raum zum Manövrieren lassen — bloßes Ausweichen reicht nicht.",
+        "en": "",
+        "memoryAid": "Weichen UND Raum geben."
+      }
+    },
+    {
+      "id": 1182,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Schwarzer Kegel (Spitze nach unten) am Segelfahrzeug = Motor läuft parallel → gilt rechtlich als Maschinenfahrzeug. Zwei Maschinenfahrzeuge auf kreuzenden Kursen → das von Backbord kommende ist ausweichpflichtig.",
+        "en": "",
+        "memoryAid": "Kegel = Motor = Maschinenfahrzeug."
+      }
+    },
+    {
+      "id": 1183,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Fahrzeug A führt einen schwarzen Kegel = Motor an = gilt als Maschinenfahrzeug. Zwischen einem Maschinen- und einem reinen Segelfahrzeug ist das Maschinenfahrzeug ausweichpflichtig.",
+        "en": "",
+        "memoryAid": "A hat Kegel = A weicht."
+      }
+    },
+    {
+      "id": 1184,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Ein Segelfahrzeug, das quer zur Fahrwasser-Richtung kreuzt, hat gegenüber einem Kleinfahrzeug mit Motor Vorrang — also muss das Maschinenfahrzeug (Berg- oder Talfahrer) ausweichen.",
+        "en": "",
+        "memoryAid": "Motor weicht Segel beim Queren."
+      }
+    },
+    {
+      "id": 1185,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Grundregel: Wind von Backbord weicht Wind von Steuerbord. A hat laut Skizze Wind von Backbord → A ist ausweichpflichtig.",
+        "en": "",
+        "memoryAid": "BB weicht SB."
+      }
+    },
+    {
+      "id": 1186,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Haben zwei Segler den Wind von der GLEICHEN Seite, muss das LUVSEITIGE (höher am Wind liegende) Boot dem LEESEITIGEN ausweichen — Luvschiff kann besser manövrieren.",
+        "en": "",
+        "memoryAid": "Gleicher Wind: Luv weicht Lee."
+      }
+    },
+    {
+      "id": 1187,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Fahrzeug A: Vorwindkurs, Großsegel an Steuerbord → Wind von Backbord. Boot B ist nicht eindeutig identifizierbar (nur grünes Seitenlicht sichtbar, kein Topplicht = anderes Segelboot). Regel: Wer Wind von Backbord hat und nicht sicher feststellen kann, auf welcher Seite der andere den Wind hat, muss AUSWEICHEN — also A weicht.",
+        "en": "",
+        "memoryAid": "Unklar + BB-Wind = ich weiche."
+      }
+    },
+    {
+      "id": 1188,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Bei drei Booten muss geprüft werden, welches am weitesten leeseitig liegt. Das LEESEITIGE Boot darf seinen Kurs beibehalten (ist kurshaltepflichtig gegenüber den luvseitigen).",
+        "en": "",
+        "memoryAid": "Lee hält Kurs."
+      }
+    },
+    {
+      "id": 1189,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Die Kurshaltepflichten entstehen aus der Luv-Lee-Hierarchie: das jeweils leeseitige Boot ist gegenüber den luvseitigen kurshaltepflichtig. Reihenfolge laut Skizze: A gegenüber B und C, B gegenüber C.",
+        "en": "",
+        "memoryAid": "Leeseitig = Kurshaltepflicht nach oben."
+      }
+    },
+    {
+      "id": 1190,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Bei gekenterter Jolle: ZUERST Vollständigkeit der Crew prüfen und Hilfe leisten. Am Boot festhalten oder darauf legen (nicht ans Ufer schwimmen — Unterkühlungs- und Entfernungsgefahr), Hilfe abwarten. Hochhalten des Bootes ist nicht möglich bei schwerer Kenterung.",
+        "en": "",
+        "memoryAid": "Crew zählen, am Boot bleiben, Hilfe warten."
+      }
+    },
+    {
+      "id": 1191,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Als unbeteiligter Segler im Regattafeld gilt: GEGENÜBER REGATTATEILNEHMERN die Wettfahrtregeln, gegenüber anderen Fahrzeugen weiterhin die BinSchStrO. Doppelte Rolle, situationsabhängig.",
+        "en": "",
+        "memoryAid": "Teilnehmer: Regattaregeln; Rest: BinSchStrO."
+      }
+    },
+    {
+      "id": 1192,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Die Lichterführung (weißes Topplicht + Seitenlichter + Hecklicht, kein grüner Zusatz etc.) kennzeichnet ein Kleinfahrzeug mit MASCHINENANTRIEB — nicht Fähre, nicht Schubverband, nicht geschleppt.",
+        "en": "",
+        "memoryAid": "Topp + Seiten + Heck = Motor-Kleinfahrzeug."
+      }
+    },
+    {
+      "id": 1193,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Ein Kleinfahrzeug mit MASCHINENANTRIEB ist ausweichpflichtig gegenüber einem Kleinfahrzeug unter SEGEL. Diese Hierarchie gilt zwischen gleichrangigen Kleinfahrzeugen — Segel vor Motor.",
+        "en": "",
+        "memoryAid": "Motor-Kleinfahrzeug weicht Segel-Kleinfahrzeug."
+      }
+    },
+    {
+      "id": 1194,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "EIN weißes Rundumlicht (allein, ohne Seitenlichter) kennzeichnet nachts ein Kleinfahrzeug OHNE Maschinenantrieb — also Ruderboot, Segler ohne Motor, Paddelboot. Mit Motor wären Seitenlichter dabei.",
+        "en": "",
+        "memoryAid": "Nur weiß = ohne Motor."
+      }
+    },
+    {
+      "id": 1195,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Zweifarbenlaterne (= Seitenlichter in einer Einheit) + Topplicht = Kleinfahrzeug mit MASCHINENANTRIEB. Reine Segelfahrzeuge führen keine Topplichter; ein ohne-Motor-Fahrzeug hätte nur das weiße Rundumlicht.",
+        "en": "",
+        "memoryAid": "Topplicht = Motor."
+      }
+    },
+    {
+      "id": 1196,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Diese Lichter (meist rote Rundumlichter in bestimmter Anordnung) signalisieren: SOG UND WELLENSCHLAG VERMEIDEN — also langsam vorbeifahren. Keine Sperrung der Schifffahrt, keine Durchfahrtsregel.",
+        "en": "",
+        "memoryAid": "Signalisiert: langsam, bitte."
+      }
+    },
+    {
+      "id": 1197,
+      "topic": "Seemannschaft",
+      "explanation": {
+        "de": "Geschwindigkeit zu vermindern ist Pflicht VOR HAFENEINMÜNDUNGEN, an Lade-/Lösch-/Liegeplätzen, in der Nähe NICHT FREI FAHRENDER Fähren, auf gekennzeichneten Strecken und in der Nähe schwimmender Geräte bei der Arbeit. Frei fahrende Fähren sind nicht geschützt (die manövrieren selbst).",
+        "en": "",
+        "memoryAid": "Häfen, Liegeplätze, Seilfähren, Baustellen = langsam."
+      }
+    },
+    {
+      "id": 1198,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Dieses Tafelzeichen (rechteckiges Schild mit Pfeil) bedeutet VORGESCHRIEBENE Fahrtrichtung — also Pflicht, nicht Empfehlung. Alle Fahrzeuge müssen in die angegebene Richtung fahren.",
+        "en": "",
+        "memoryAid": "Gebotspfeil = Fahrtrichtung Pflicht."
+      }
+    },
+    {
+      "id": 1199,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Ein rotes Licht an diesem Tafelzeichen bedeutet: Verbot der EINFAHRT in einen Hafen oder eine Nebenwasserstraße. Rot = Stopp, Grün würde Einfahrt freigeben.",
+        "en": "",
+        "memoryAid": "Rot = keine Einfahrt."
+      }
+    },
+    {
+      "id": 1200,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Dieses Tafelzeichen gibt eine Höchstgeschwindigkeit von 10 km/h GEGENÜBER DEM UFER vor (Fahrt über Grund). Nicht gegen Strömung — sonst würde ein Bergfahrer durch die Strömung auf 0 km/h gezwungen.",
+        "en": "",
+        "memoryAid": "Tempolimit gegenüber Ufer, nicht Strömung."
+      }
+    },
+    {
+      "id": 1201,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Dieses Tafelzeichen gebietet BESONDERE VORSICHT walten zu lassen — eine generelle Warnung, nicht spezifisch Geradeausfahrt oder Signalton.",
+        "en": "",
+        "memoryAid": "Allgemeines Vorsicht-Gebot."
+      }
+    },
+    {
+      "id": 1202,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Dieses Tafelzeichen signalisiert WENDEVERBOT — das Boot darf nicht wenden. Nicht Verbot bestimmter Richtungen.",
+        "en": "",
+        "memoryAid": "Nicht wenden."
+      }
+    },
+    {
+      "id": 1203,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Dieses Tafelzeichen weist einen EMPFOHLENEN Wendeplatz aus. Stillliegen ist dort für alle Fahrzeuge VERBOTEN — der Platz dient dem Wenden, nicht dem Ankern.",
+        "en": "",
+        "memoryAid": "Wendeplatz = kein Stillliegen."
+      }
+    },
+    {
+      "id": 1204,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Dieses Tafelzeichen kennzeichnet ein WEHR — gefährlich, Durchfahrt verboten (siehe Q1116). Nicht Schleuse oder Hubbrücke.",
+        "en": "",
+        "memoryAid": "Wehr-Symbol = Lebensgefahr."
+      }
+    },
+    {
+      "id": 1205,
+      "topic": "Wetter",
+      "explanation": {
+        "de": "Unsichtiges Wetter liegt vor bei Nebel, Schneefall oder starkem Regen — nicht bei bloßer Dunkelheit oder Dämmerung (das ist Nacht, nicht unsichtiges Wetter). Die Definition folgt Sichtweite, nicht Tageszeit.",
+        "en": "",
+        "memoryAid": "Nebel, Schnee, Regen — nicht Nacht."
+      }
+    },
+    {
+      "id": 1206,
+      "topic": "Sicherheit",
+      "explanation": {
+        "de": "Um bei unsichtigem Wetter zu fahren, braucht das Fahrzeug eine für die BINNENSCHIFFFAHRT zugelassene Radaranlage UND eine Sprechfunkanlage für den BINNENSCHIFFFAHRTSFUNK — kein Seefunk, kein Funk ohne ATIS.",
+        "en": "",
+        "memoryAid": "Radar + Binnen-Funk (mit ATIS)."
+      }
+    },
+    {
+      "id": 1207,
+      "topic": "Sicherheit",
+      "explanation": {
+        "de": "Tritt während der Fahrt unsichtiges Wetter ein und das Boot hat kein Radar+Funk, muss die Fahrt auf BESTIMMTEN Wasserstraßen unverzüglich eingestellt werden. 'Alle' ist zu weitgehend; die Pflicht hängt vom Gewässer ab.",
+        "en": "",
+        "memoryAid": "Bestimmte Strecken: ohne Radar = sofort stoppen."
+      }
+    },
+    {
+      "id": 1208,
+      "topic": "Sicherheit",
+      "explanation": {
+        "de": "Ein Radarreflektor verbessert die SICHTBARKEIT DES SPORTBOOTES AUF RADARBILDSCHIRMEN anderer Fahrzeuge — besonders wichtig bei unsichtigem Wetter oder Nacht. Er hat keine Wirkung auf die optische Sichtbarkeit.",
+        "en": "",
+        "memoryAid": "Reflektor = sichtbar im Radar."
+      }
+    },
+    {
+      "id": 1209,
+      "topic": "Sicherheit",
+      "explanation": {
+        "de": "Beim Anschluss an Landstrom (230 V) ist ein FEHLERSTROMSCHUTZSCHALTER (FI/RCD) zwingend — er unterbricht den Strom bei Fehlerstrom zum Wasser und verhindert tödliche Stromschläge. Überspannungsschutz schützt die Elektronik, nicht die Person.",
+        "en": "",
+        "memoryAid": "FI-Schutzschalter = Lebensretter bei Landstrom."
+      }
+    },
+    {
+      "id": 1210,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "In einer Notsituation werden WIEDERHOLTE LANGE TÖNE oder Gruppen von GLOCKENSCHLÄGEN gegeben — beide signalisieren universell 'Hilfe benötigt'. Drei kurze Töne haben eine andere Bedeutung (Maschine rückwärts).",
+        "en": "",
+        "memoryAid": "Not = lange Töne oder Glocke."
+      }
+    },
+    {
+      "id": 1211,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Am Tag kennzeichnet das KREISEN EINER ROTEN FLAGGE ein in NOT befindliches Fahrzeug, das Hilfe herbeirufen will. Vergleichbar mit dem Schwenken am Mastkorb auf See.",
+        "en": "",
+        "memoryAid": "Rote Flagge kreisen = Hilfe!"
+      }
+    },
+    {
+      "id": 1212,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Ein Segelsurfer kann nicht ohne Weiteres Flaggen oder Signalpistolen führen. Das Notsignal ist das KREISFÖRMIGE SCHWENKEN DER ARME oder eines Gegenstandes — einfach und sichtbar.",
+        "en": "",
+        "memoryAid": "Surfer: Arme kreisen."
+      }
+    },
+    {
+      "id": 1213,
+      "topic": "Umwelt",
+      "explanation": {
+        "de": "Abfälle werden an Bord gesammelt und an LAND in den entsprechenden Abfallsammelbehältern umweltgerecht entsorgt. Nicht über Bord, nicht an beliebiger Liegestelle abstellen, nicht nur an Schleusen.",
+        "en": "",
+        "memoryAid": "An Bord sammeln, an Land entsorgen."
+      }
+    },
+    {
+      "id": 1214,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Der Schiffsführer darf das Ruder einer Person überlassen, die MINDESTENS 16 JAHRE alt und körperlich/geistig geeignet ist. Ein eigener Führerschein ist nicht nötig, weil der Schiffsführer die Verantwortung behält.",
+        "en": "",
+        "memoryAid": "Rudergänger ab 16, geeignet, kein Schein."
+      }
+    },
+    {
+      "id": 1215,
+      "topic": "Umwelt",
+      "explanation": {
+        "de": "Es dürfen KEINERLEI Abfälle ins Wasser gelangen. Fäkalien und Öle MÜSSEN an Land entsorgt werden — Einleitung ab irgendeinem Uferabstand ist nicht erlaubt.",
+        "en": "",
+        "memoryAid": "Null Abfall ins Wasser."
+      }
+    },
+    {
+      "id": 1216,
+      "topic": "Umwelt",
+      "explanation": {
+        "de": "Bei Antifouling-Arbeiten: Arbeitsbereich GROSSZÜGIG ABDECKEN, der anfallende Abfall ist SONDERMÜLL und muss entsprechend entsorgt werden. Antifouling-Partikel sind hoch gewässertoxisch.",
+        "en": "",
+        "memoryAid": "Abdecken, als Sondermüll entsorgen."
+      }
+    },
+    {
+      "id": 1217,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Bei Sturmwarnung auf größerem Gewässer: RETTUNGSWESTE ANLEGEN (nicht nur bereithalten!), SEGEL BERGEN, Hafen oder geschützte Bucht anlaufen. Alle Segel setzen oder Mitte des Gewässers anlaufen wäre gefährlich.",
+        "en": "",
+        "memoryAid": "Weste an, Segel ab, Hafen suchen."
+      }
+    },
+    {
+      "id": 1218,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Ein Talfahrer (stromab) hat die LINKE Fahrrinnenseite an seiner Backbordseite, gekennzeichnet durch GRÜNE SPITZTONNEN. Erklärung: links/rechts werden stets von der Quelle aus betrachtet, der Talfahrer schaut in Richtung Mündung — da liegt das linke Ufer links.",
+        "en": "",
+        "memoryAid": "Talfahrer: linkes Ufer links = grün spitz."
+      }
+    },
+    {
+      "id": 1219,
+      "topic": "Wetter",
+      "explanation": {
+        "de": "Schnell und stetig fallender Luftdruck kündigt SCHLECHTES WETTER, Starkwind oder Sturm an. Je rascher der Fall, desto heftiger die kommende Front.",
+        "en": "",
+        "memoryAid": "Schneller Druckfall = Sturm."
+      }
+    },
+    {
+      "id": 1220,
+      "topic": "Wetter",
+      "explanation": {
+        "de": "Langsam aber stetig STEIGENDER Luftdruck deutet auf besseres Wetter und Sonne hin — Hochdruckeinfluss setzt sich durch. Temperaturänderung ist nicht die primäre Prognose.",
+        "en": "",
+        "memoryAid": "Langsamer Druckanstieg = Sonne."
+      }
+    },
+    {
+      "id": 1221,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Wasserski ist auf Binnenschifffahrtsstraßen NUR in durch Tafelzeichen freigegebenen Bereichen erlaubt — nicht überall, wo es nicht stört. Grund: hohe Gefährdung anderer.",
+        "en": "",
+        "memoryAid": "Nur wo's die Tafel sagt."
+      }
+    },
+    {
+      "id": 1222,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Wasserski darf nur zwischen SONNENAUFGANG UND -UNTERGANG und bei Sichtweiten von 1 000 m und mehr gefahren werden. Dämmerung und reduzierte Sicht sind zu gefährlich.",
+        "en": "",
+        "memoryAid": "Tag + 1 km Sicht."
+      }
+    },
+    {
+      "id": 1223,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Beim Vorbeifahren muss der Wasserskiläufer im KIELWASSER des Zugbootes bleiben — nicht ausscheren. Grund: kontrollierter Spurradius, keine Gefährdung Dritter.",
+        "en": "",
+        "memoryAid": "Im Kielwasser bleiben."
+      }
+    },
+    {
+      "id": 1224,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Außerhalb der für Wassermotorräder ausgewiesenen Strecken darf nur bei TOUREN- UND WANDERFAHRTEN MIT KLAREM GERADEAUSKURS gefahren werden — also keine Kurven, kein Hin und Her.",
+        "en": "",
+        "memoryAid": "Nur Touren, gerade Linie."
+      }
+    },
+    {
+      "id": 1225,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Der Führer eines Wassermotorrades (Jetski) muss außerhalb ausgewiesener Bereiche einen KLAREN GERADEAUSKURS fahren. Hin und Her, enge Kurven oder bestimmte Abstandsregeln gelten als unzulässig.",
+        "en": "",
+        "memoryAid": "Gerade aus, keine Mätzchen."
+      }
+    },
+    {
+      "id": 1226,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Für Sportboote UNTER SEGEL ist ein spezieller Fahrerlaubnis-Nachweis nur auf bestimmten Wasserstraßen in BERLIN UND BRANDENBURG erforderlich — eine regionale Besonderheit, keine bundesweite Pflicht.",
+        "en": "",
+        "memoryAid": "Segelschein nur in BE/BB."
+      }
+    },
+    {
+      "id": 1227,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Vor dem Befahren fremder Gewässer müssen die dort geltenden Vorschriften ermittelt werden, um sie EINHALTEN ZU KÖNNEN. Es geht um Rechtssicherheit, nicht um Höheninformationen oder prinzipielle Unterschiede.",
+        "en": "",
+        "memoryAid": "Wissen, um einzuhalten."
+      }
+    },
+    {
+      "id": 1228,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Auf dem Rhein darf ein Sportboot bis 25 m Länge mit dem SPORTPATENT geführt werden — oberhalb des SBF-Binnen (der bis unter 20 m gilt). Zwischen 20 und 25 m benötigt der Rhein das Sportpatent.",
+        "en": "",
+        "memoryAid": "Rhein 20-25 m = Sportpatent."
+      }
+    },
+    {
+      "id": 1229,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Auf Binnenschifffahrtsstraßen (außerhalb des Rheins) berechtigt für 20-25 m Länge entweder das SPORTSCHIFFERZEUGNIS oder das SPORTPATENT. Der Rhein hat eine Sonderregelung (Q1228).",
+        "en": "",
+        "memoryAid": "Nicht-Rhein 20-25 m: Zeugnis oder Patent."
+      }
+    },
+    {
+      "id": 1230,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Umfangreiche Hinweise auf die Binnenschifffahrtsstraßen und deren Grenzen stehen im TEIL II der BinSchStrO — dort sind die Wasserstraßen konkret aufgelistet. Teil I enthält die allgemeinen Regeln.",
+        "en": "",
+        "memoryAid": "Wasserstraßen-Liste = BinSchStrO Teil II."
+      }
+    },
+    {
+      "id": 1231,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Auf Gewässern außerhalb der Bundeswasserstraßen ist ggf. die Genehmigung des EIGENTÜMERS einzuholen sowie die jeweilige BEFAHRENSORDNUNG zu beachten. BinSchStrO gilt auf Bundeswasserstraßen, nicht hier.",
+        "en": "",
+        "memoryAid": "Fremdes Gewässer: Eigentümer + Befahrensordnung."
+      }
+    },
+    {
+      "id": 1232,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Es gibt AMTLICHE Kennzeichen (vom Wasserstraßen- und Schifffahrtsamt zugeteilt) und AMTLICH ANERKANNTE Kennzeichen (z. B. von Vereinen wie DMYV/DSV, die staatlich anerkannt sind). CE-Zeichen ist kein Kennzeichen.",
+        "en": "",
+        "memoryAid": "Amtlich oder amtlich anerkannt — beides zählt."
+      }
+    },
+    {
+      "id": 1233,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Für amtliche Kennzeichen von Sportbooten ist das WASSERSTRASSEN- UND SCHIFFFAHRTSAMT zuständig — jedes WSA kann ein Kennzeichen zuteilen. DMYV, DSV, ADAC vergeben hingegen amtlich anerkannte Kennzeichen (Q1235).",
+        "en": "",
+        "memoryAid": "Amtliches Kennzeichen = WSA."
+      }
+    },
+    {
+      "id": 1234,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Amtlich anerkannte Kennzeichen bestehen aus der Nummer des INTERNATIONALEN BOOTSSCHEINS, gefolgt vom Kennbuchstaben der ausstellenden Organisation (z. B. 'DMYV', 'DSV').",
+        "en": "",
+        "memoryAid": "IBS-Nummer + Verbands-Kennbuchstabe."
+      }
+    },
+    {
+      "id": 1235,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Amtlich anerkannte Kennzeichen werden vergeben vom Deutschen Motoryachtverband (DMYV), Deutschen Segler-Verband (DSV) und Allgemeinen Deutschen Automobilclub (ADAC). Alle drei sind staatlich anerkannte Organisationen.",
+        "en": "",
+        "memoryAid": "DMYV, DSV, ADAC."
+      }
+    },
+    {
+      "id": 1236,
+      "topic": "Dokumente",
+      "explanation": {
+        "de": "Ein Wassersportfahrzeug muss ab 10 cbm (10 m³) WASSERVERDRÄNGUNG in das Binnenschiffsregister eingetragen werden. Bei kleineren Booten ist die Eintragung freiwillig.",
+        "en": "",
+        "memoryAid": "Ab 10 m³ Verdrängung registerpflichtig."
+      }
+    },
+    {
+      "id": 1237,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Bei Hochwasser: Geschwindigkeit anpassen und soweit möglich in der FAHRWASSERMITTE bleiben (dort ist die geringste Strömung und wenigste Hindernisgefahr), sowie besondere Geschwindigkeitsbegrenzungen und Fahrtbeschränkungen beachten.",
+        "en": "",
+        "memoryAid": "Hochwasser: Mitte halten, Limits beachten."
+      }
+    },
+    {
+      "id": 1238,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Bei Erreichen der Hochwassermarke II muss die Fahrt UNVERZÜGLICH EINGESTELLT werden — unabhängig von Funkausrüstung oder Tageszeit. Siehe auch Q1093.",
+        "en": "",
+        "memoryAid": "HWM II = sofort stoppen."
+      }
+    },
+    {
+      "id": 1239,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Eine rote Tonne markiert die RECHTE Fahrrinnenseite (von der Quelle aus gesehen). Ein Talfahrer schaut Richtung Mündung — das rechte Ufer liegt also rechts, die Tonne auf seiner Steuerbordseite.",
+        "en": "",
+        "memoryAid": "Talfahrer: rote Tonne = Steuerbord."
+      }
+    },
+    {
+      "id": 1240,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Eine rote Tonne liegt auf der RECHTEN Fahrrinnenseite. Ein Bergfahrer schaut Richtung Quelle — das rechte Ufer liegt also LINKS vor ihm, die Tonne passiert er an BACKBORD.",
+        "en": "",
+        "memoryAid": "Bergfahrer: rote Tonne = Backbord."
+      }
+    },
+    {
+      "id": 1241,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Eine grüne Tonne markiert die LINKE Fahrrinnenseite. Fahrt gegen den Strom (Bergfahrt): der Bergfahrer schaut Richtung Quelle — das linke Ufer liegt dann RECHTS vor ihm, die Tonne passiert er an STEUERBORD.",
+        "en": "",
+        "memoryAid": "Bergfahrer: grüne Tonne = Steuerbord."
+      }
+    },
+    {
+      "id": 1242,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "GELBE Tonnen mit Radarreflektor vor Brückenpfeilern machen die Pfeiler AUF DEM RADARSCHIRM sichtbar — besonders wichtig bei unsichtigem Wetter, wenn die Pfeiler optisch kaum erkennbar sind.",
+        "en": "",
+        "memoryAid": "Gelbe Radartonne = Pfeiler im Radar sichtbar."
+      }
+    },
+    {
+      "id": 1243,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Die Tafeln kombinieren zwei Informationen: EMPFOHLENE Durchfahrt MIT Gegenverkehr UND seitliche Begrenzung des erlaubten Brückenbereichs — also Durchfahrt nur zwischen den Tafeln, in beide Richtungen zulässig.",
+        "en": "",
+        "memoryAid": "Empfohlen + Gegenverkehr + begrenzt."
+      }
+    },
+    {
+      "id": 1244,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Das Tafelzeichen (rotes Quadrat, durchgestrichen) an einer Brückendurchfahrt bedeutet VERBOT der Durchfahrt und SPERRUNG der Schifffahrt — vollständig, keine Ausnahme für Kleinfahrzeuge.",
+        "en": "",
+        "memoryAid": "Rotes Verbotszeichen = komplett gesperrt."
+      }
+    },
+    {
+      "id": 1245,
+      "topic": "Seemannschaft",
+      "explanation": {
+        "de": "Autoreifen sind NICHT SCHWIMMFÄHIG — gehen verloren sie über Bord, versenken sie und können in Schleusenventilen oder -toren erhebliche Störungen verursachen. Deshalb nur zugelassene Fender benutzen.",
+        "en": "",
+        "memoryAid": "Autoreifen sinken = Schleusenstörung."
+      }
+    },
+    {
+      "id": 1246,
+      "topic": "Lichter",
+      "explanation": {
+        "de": "Ein Schubverband führt DREI weiße Topplichter IM DREIECK angeordnet, die Seitenlichter und DREI weiße Hecklichter WAAGERECHT NEBENEINANDER. Diese Kombination unterscheidet ihn von Einzelfahrzeugen und Schleppverbänden.",
+        "en": "",
+        "memoryAid": "3 oben dreieckig + 3 hinten waagerecht = Schubverband."
+      }
+    },
+    {
+      "id": 1247,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Ein roter Wimpel am Bug kennzeichnet ein Fahrzeug mit VORRANG BEIM SCHLEUSEN — es darf vor anderen Fahrzeugen in die Schleuse einfahren. Nicht zu verwechseln mit Gefahrgutzeichen (siehe Q1126–1131).",
+        "en": "",
+        "memoryAid": "Roter Wimpel vorn = Schleusenvorrang."
+      }
+    },
+    {
+      "id": 1248,
+      "topic": "BinnenSchO",
+      "explanation": {
+        "de": "Ein Sportboot gilt als Kleinfahrzeug auf Binnenschifffahrtsstraßen, wenn seine Länge WENIGER ALS 20 M beträgt. Ab 20 m ist es kein Kleinfahrzeug mehr (siehe Q1137).",
+        "en": "",
+        "memoryAid": "Kleinfahrzeug: <20 m."
+      }
+    },
+    {
+      "id": 1249,
+      "topic": "Schifffahrtszeichen",
+      "explanation": {
+        "de": "Eine rot-weiße Flagge kennzeichnet ein SCHUTZBEDÜRFTIGES Fahrzeug — Geschwindigkeit vermindern UND Sog und Wellenschlag vermeiden. Beide Maßnahmen zusammen.",
+        "en": "",
+        "memoryAid": "Rot-weiß = langsam + keine Welle."
+      }
+    },
+    {
+      "id": 1250,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Tags kann statt vier kurzer Töne (Manövrierunfähigkeit, Q1160) eine ROTE FLAGGE im UNTEREN HALBKREIS geschwenkt werden — von unten nach seitlich-tief, gut sichtbar aus niedriger Perspektive.",
+        "en": "",
+        "memoryAid": "Tag: rote Flagge, unten schwenken."
+      }
+    },
+    {
+      "id": 1251,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Nachts/bei unsichtigem Wetter kann statt vier kurzer Töne ein ROTES LICHT im UNTEREN HALBKREIS geschwenkt werden — dasselbe Prinzip wie bei der Flagge am Tag (Q1250).",
+        "en": "",
+        "memoryAid": "Nacht: rotes Licht, unten schwenken."
+      }
+    },
+    {
+      "id": 1252,
+      "topic": "Funk",
+      "explanation": {
+        "de": "Für den Binnenschifffahrtsfunk ist das UKW-SPRECHFUNKZEUGNIS FÜR DEN BINNENSCHIFFFAHRTSFUNK erforderlich. SRC (Short Range Certificate) ist für Seefunk; CB-Funk hat kein offizielles Zeugnis.",
+        "en": "",
+        "memoryAid": "UKW-Binnen-Funkzeugnis."
+      }
+    },
+    {
+      "id": 1253,
+      "topic": "Navigation",
+      "explanation": {
+        "de": "Radarfahrt ist definiert als eine Fahrt bei UNSICHTIGEM WETTER MIT RADAR — nicht einfach Nachtfahrt oder Fahrt mit Radar generell. Der Begriff greift nur bei reduzierter Sicht.",
+        "en": "",
+        "memoryAid": "Radarfahrt = Radar + unsichtiges Wetter."
+      }
+    },
+    {
+      "id": 2254,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Ein 'Kimmkieler' ist eine Yacht mit ZWEI SEITENKIELEN (statt einem zentralen) — dadurch kann sie aufrecht trocken fallen. Nicht zu verwechseln mit Zweischwerter oder Tandem-Kiel.",
+        "en": "",
+        "memoryAid": "Kimmkieler = zwei Seitenkiele."
+      }
+    },
+    {
+      "id": 2255,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Der Hauptvorteil eines Kimmkielers: er kann PROBLEMLOS AUFRECHT TROCKEN FALLEN — bei Tidengewässern oder niedrigem Wasserstand bleibt die Yacht stabil stehen, statt umzukippen.",
+        "en": "",
+        "memoryAid": "Kimmkieler: aufrecht trocken fallen."
+      }
+    },
+    {
+      "id": 2256,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Eine Kielschwertyacht hat einen FLACHGEHENDEN BALLASTKIEL (feste Gewichtstabilität) UND ein zusätzliches AUFHOLBARES SCHWERT (reduziert Tiefgang bei Bedarf). Kombination aus Stabilität und Flexibilität.",
+        "en": "",
+        "memoryAid": "Fester Ballast + bewegliches Schwert."
+      }
+    },
+    {
+      "id": 2257,
+      "topic": "Seemannschaft",
+      "explanation": {
+        "de": "Bodenlenzventile unterhalb der Wasserlinie funktionieren durch den SOG, der bei Fahrt durchs Wasser entsteht — der Venturi-Effekt saugt Wasser aus der Bilge nach außen. Daher wirken sie nur in Fahrt.",
+        "en": "",
+        "memoryAid": "Fahrt-Sog saugt leer."
+      }
+    },
+    {
+      "id": 2258,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Formstabilität = Fähigkeit eines Schiffes, durch seine RUMPFFORM (breiter, flacher Rumpf) der Krängung entgegenzuwirken. Nicht Selbstaufrichtung nach Kenterung, nicht Kurshaltefähigkeit.",
+        "en": "",
+        "memoryAid": "Formstabil = breiter Rumpf hält aufrecht."
+      }
+    },
+    {
+      "id": 2259,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Gewichtsstabilität = Fähigkeit eines Schiffes, durch TIEF LIEGENDEN BALLAST (Kiel) der Krängung entgegenzuwirken. Das Gewicht hängt unten, wirkt als Hebel.",
+        "en": "",
+        "memoryAid": "Gewichtsstabil = tiefer Kiel-Ballast."
+      }
+    },
+    {
+      "id": 2260,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "KIELYACHTEN sind vorwiegend gewichtsstabil — ihr schwerer, tief liegender Ballastkiel wirkt als Krängungshemmer. Jollen, Katamarane, Trimarane sind formstabil.",
+        "en": "",
+        "memoryAid": "Kielyacht = Gewicht unten = gewichtsstabil."
+      }
+    },
+    {
+      "id": 2261,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "JOLLEN sind vorwiegend formstabil — kein tiefer Ballast, die Stabilität kommt aus dem breiten Rumpf und dem Crewgewicht (Ausreiten). Kielyachten, Kimmkieler, Kielschwertyachten sind gewichtsstabil.",
+        "en": "",
+        "memoryAid": "Jolle = Form, kein Gewicht."
+      }
+    },
+    {
+      "id": 2262,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Bei formstabilen Booten (Jollen) wird bei viel Wind die Stabilität durch AUSREITEN bzw. die TRAPEZEINRICHTUNG erhöht — die Crew nutzt ihr Körpergewicht als zusätzliches Luvmoment.",
+        "en": "",
+        "memoryAid": "Wind: raus und ins Trapez."
+      }
+    },
+    {
+      "id": 2263,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Das aufrichtende Kraftmoment einer Jolle nimmt bei Krängung ZUERST ZU bis zu einem Maximum, dann WIEDER AB bis Auftriebs- und Gewichtsschwerpunkt übereinander liegen — danach KENTERT die Jolle, weil keine Rückstellkraft mehr da ist.",
+        "en": "",
+        "memoryAid": "Jolle: zu, Max, ab, kentert."
+      }
+    },
+    {
+      "id": 2264,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Bei Kielyachten NIMMT das aufrichtende Moment zuerst ZU, erreicht nach dem Maximum erst bei ÜBER 90° den kritischen Winkel — wegen des tief liegenden Ballasts. Deshalb können Kielyachten auch stark krängen, ohne zu kentern.",
+        "en": "",
+        "memoryAid": "Kieler: kritisch erst jenseits 90°."
+      }
+    },
+    {
+      "id": 2265,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Bei Ruderbruch: NOTRUDER oder PADDEL als Ersatz, FAHRWASSER VERLASSEN (nicht behindern), sich als MANÖVRIERUNFÄHIG zu erkennen geben (4 kurze Töne / rote Flagge/Licht schwenken).",
+        "en": "",
+        "memoryAid": "Paddel, raus aus Fahrwasser, Signal setzen."
+      }
+    },
+    {
+      "id": 2266,
+      "topic": "Seemannschaft",
+      "explanation": {
+        "de": "Ein PINNENAUSLEGER (verlängert die Pinne über die Luvkante) erlaubt sichere Steuerung auch bei starker Krängung — der Steuermann sitzt dann außerhalb des Cockpits (im Trapez oder ausgerietet), aber die Pinne bleibt in Reichweite.",
+        "en": "",
+        "memoryAid": "Pinnenausleger = Steuern von luv."
+      }
+    },
+    {
+      "id": 2267,
+      "topic": "Seemannschaft",
+      "explanation": {
+        "de": "Aufgeschossenes (ordentlich aufgewickeltes) Tauwerk liegt im Gebrauchsfall KLAR — es kann sofort und ohne Knoten ausgerauscht werden. UV- und Rotte-Schutz sind sekundär.",
+        "en": "",
+        "memoryAid": "Aufschießen = klar ziehen."
+      }
+    },
+    {
+      "id": 2268,
+      "topic": "Seemannschaft",
+      "explanation": {
+        "de": "Aufgeschossene FALLEN (Leinen zum Hissen der Segel) können bei Bedarf SCHNELL UND SICHER GEFIERT werden — z. B. bei Sturm oder Überlast. Ein Knoten in der Falle wäre fatal.",
+        "en": "",
+        "memoryAid": "Fall klar aufgeschossen = schnelles Fieren."
+      }
+    },
+    {
+      "id": 2269,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Die ECKEN eines Segels: KOPF (oben), HALS (vorne unten), SCHOTHORN (hinten unten). Vorliek/Unterliek/Achterliek sind die Kanten, nicht die Ecken (siehe Q2270).",
+        "en": "",
+        "memoryAid": "Ecken: Kopf, Hals, Schothorn."
+      }
+    },
+    {
+      "id": 2270,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Die KANTEN eines Segels: VORLIEK (vorne), UNTERLIEK (unten), ACHTERLIEK (hinten). Die Ecken sind Kopf, Hals, Schothorn (Q2269). Vorstag/Unterwant/Achterstag sind Teile des stehenden Guts.",
+        "en": "",
+        "memoryAid": "Kanten: Vor-, Unter-, Achterliek."
+      }
+    },
+    {
+      "id": 2271,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Segellatten dienen der FORMGEBUNG UND AUSSTEIFUNG des Segels — sie halten das Achterliek flach und erhalten das Profil. Nicht direkt zum Reffen oder gegen Killen.",
+        "en": "",
+        "memoryAid": "Latten = Form halten."
+      }
+    },
+    {
+      "id": 2272,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Killen (Flattern) im Wind SCHÄDIGT das Segeltuch und lässt NÄHTE AUFGEHEN — Material-Verschleiß durch Mikrobewegungen. Deshalb Segel nie lange killen lassen.",
+        "en": "",
+        "memoryAid": "Killen zerreibt Stoff und Nähte."
+      }
+    },
+    {
+      "id": 2273,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Kleine Schäden am Segel müssen SOFORT repariert werden, weil unter Winddruck daraus schnell GROSSE Schäden werden — ein kleiner Riss weitet sich in Minuten zu einem unbrauchbaren Loch aus.",
+        "en": "",
+        "memoryAid": "Kleiner Riss wächst — sofort flicken."
+      }
+    },
+    {
+      "id": 2274,
+      "topic": "Wetter",
+      "explanation": {
+        "de": "Der WAHRE Wind (ohne Fahrtwind-Anteil) wird an stationären Objekten erkannt — Flaggen oder Rauchfahnen AN LAND. Wolkenbewegung ist Höhenwind. Nationalflagge am Heck zeigt den SCHEINBAREN Wind.",
+        "en": "",
+        "memoryAid": "Wahrer Wind = Flaggen an Land."
+      }
+    },
+    {
+      "id": 2275,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Stander und Verklicker AM BOOT zeigen den SCHEINBAREN Wind — die Kombination aus wahrem Wind und Fahrtwind, die das Boot tatsächlich spürt. Nur stationäre Objekte zeigen den wahren Wind.",
+        "en": "",
+        "memoryAid": "Am Boot = scheinbarer Wind."
+      }
+    },
+    {
+      "id": 2276,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Auf VORWINDKURS (Wind direkt von achtern) kommen wahrer und scheinbarer Wind aus derselben Richtung — beide von hinten. Fahrtwind wirkt genau in die Gegenrichtung des wahren Windes.",
+        "en": "",
+        "memoryAid": "Vorwind: beide Winde von achtern."
+      }
+    },
+    {
+      "id": 2277,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Auf Vorwindkurs wird der wahre Wind um den ENTGEGENSTEHENDEN Fahrtwind VERMINDERT — das Boot läuft 'mit' dem Wind weg, daher spürt es weniger. Je schneller die Jolle, desto schwächer der scheinbare Wind.",
+        "en": "",
+        "memoryAid": "Vorwind: wahrer - Fahrt = schwächer."
+      }
+    },
+    {
+      "id": 2278,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Auf Amwindkurs ADDIEREN sich wahrer Wind und Fahrtwind sowohl in Stärke als auch (teilweise) in Richtung — der scheinbare Wind ist stärker als der wahre. Deshalb wirkt die Kreuz oft deutlich windiger als sie real ist.",
+        "en": "",
+        "memoryAid": "Am Wind: wahrer + Fahrt = stärker."
+      }
+    },
+    {
+      "id": 2279,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Ein gleiches Boot auf Gegenkurs (Raumschot/Vorwind) spürt WENIGER scheinbaren Wind als auf Amwindkurs — daher muss nicht gerefft werden. Die Kreuz braucht ein Reff, der Raumschoter nicht.",
+        "en": "",
+        "memoryAid": "Am Wind reffen, raum nicht."
+      }
+    },
+    {
+      "id": 2280,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Bei einer Bö auf Amwindkurs bleibt der FAHRTWIND zunächst gleich, der WAHRE Wind nimmt zu — das vektorielle Ergebnis (scheinbarer Wind) zeigt mehr aus achterlicher Richtung, also RAUMT. Die Koreoliskraft spielt auf Boots-Skala keine Rolle.",
+        "en": "",
+        "memoryAid": "Bö raumt scheinbar — Vektor-Effekt."
+      }
+    },
+    {
+      "id": 2281,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Raumt der scheinbare Wind in einer Bö auf der Kreuz, kann MITGELUVT werden — das Boot gewinnt dadurch zusätzliche Höhe am Wind, während die Bö noch da ist. Nicht abfallen oder fieren.",
+        "en": "",
+        "memoryAid": "Bö + Mitluven = Höhengewinn."
+      }
+    },
+    {
+      "id": 2282,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Auf Vorwindkurs sollte das Schwert AUFGEHOLT werden — reduziert den Reibungswiderstand (keine Abdrift zu kompensieren, kein Lateralplan nötig) und MINIMIERT das Kenterrisiko bei unfreiwilliger Halse (das Schwert würde die Hebelwirkung verstärken).",
+        "en": "",
+        "memoryAid": "Vorwind: Schwert hoch, Halsengefahr runter."
+      }
+    },
+    {
+      "id": 2283,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Wird das Schwert auf Amwindkurs AUFGEHOLT, nimmt die ABDRIFT ZU (weniger Lateralfläche) und die KRÄNGUNG NIMMT AB (weniger Hebelarm für den Winddruck). Geschwindigkeit sinkt wegen Abdrift.",
+        "en": "",
+        "memoryAid": "Schwert hoch: Abdrift ↑, Krängung ↓."
+      }
+    },
+    {
+      "id": 2284,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Eine Jolle wird MÖGLICHST AUFRECHT gesegelt — sonst nehmen ABDRIFT und LUVGIERIGKEIT zu. Krängung reduziert die wirksame Segelfläche und verschiebt den Lateralplan.",
+        "en": "",
+        "memoryAid": "Jolle aufrecht = schnellste Linie."
+      }
+    },
+    {
+      "id": 2285,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Ein zu dicht geholtes Großsegel auf Halbwindkurs erzeugt zu viel Winddruck quer zum Boot: KRÄNGUNG NIMMT ZU, Geschwindigkeit NIMMT AB (durch zunehmenden Wasserwiderstand durch tiefer liegende Lee-Rumpfpartie und Abdrift).",
+        "en": "",
+        "memoryAid": "Zu dicht Groß: krängt + langsam."
+      }
+    },
+    {
+      "id": 2286,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Ein Holepunkt zu weit vorn: das UNTERLIEK killt (lose, da Zug nach vorn fehlt), das ACHTERLIEK wird übermäßig gereckt (zu starker Zug nach unten). Falsche Lastverteilung im Segelzuschnitt.",
+        "en": "",
+        "memoryAid": "Vorn: Unten killt, Hinten gereckt."
+      }
+    },
+    {
+      "id": 2287,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Ein Holepunkt zu weit achtern: das ACHTERLIEK killt (lose), das UNTERLIEK wird übermäßig gereckt. Spiegelbild zu Q2286.",
+        "en": "",
+        "memoryAid": "Hinten: Hinten killt, Unten gereckt."
+      }
+    },
+    {
+      "id": 2288,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Bei LEICHTEM Wind soll das Segel BAUCHIG stehen — mehr Profiltiefe = mehr Luftumlenkung = mehr Vortrieb bei schwachem Wind. Flach wäre für starken Wind.",
+        "en": "",
+        "memoryAid": "Leichter Wind = bauchig."
+      }
+    },
+    {
+      "id": 2289,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Bei STARKEM Wind soll das Segel FLACH getrimmt werden — weniger Profiltiefe reduziert Krängung und Luvgierigkeit, bei hohem Winddruck braucht man keinen zusätzlichen Vortrieb.",
+        "en": "",
+        "memoryAid": "Starker Wind = flach."
+      }
+    },
+    {
+      "id": 2290,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Der Unterliekstrecker beeinflusst den UNTEREN Teil des GROSSSEGELS: Zug nach hinten/unten streckt das Unterliek und flacht den unteren Teil ab; Lockerung macht ihn bauchiger. Nicht Vorsegel.",
+        "en": "",
+        "memoryAid": "Unterliekstrecker = unteres Groß."
+      }
+    },
+    {
+      "id": 2291,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Pinne muss immer stark von Segel weggezogen werden = Boot ist zu LUVGIERIG. Fix: Großsegel FLACHER (weniger Druck) + Gewicht nach ACHTERN (Druckpunkt ändert sich).",
+        "en": "",
+        "memoryAid": "Luvgierig: Groß flach + Gewicht ran achtern."
+      }
+    },
+    {
+      "id": 2292,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Pinne muss immer stark zum Segel hingedrückt werden = Boot ist LEEGIERIG. Fix: Großsegel BAUCHIGER (mehr Druck achtern) + Gewicht nach VORN.",
+        "en": "",
+        "memoryAid": "Leegierig: Groß bauchig + Gewicht nach vorn."
+      }
+    },
+    {
+      "id": 2293,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Ein leicht luvgieriges Boot schießt im NOTFALL (Pinne loslassen) von selbst in den Wind — Segel killen, Boot wird langsamer, sicherer. Ein leegieriges Boot würde beschleunigen und abfallen.",
+        "en": "",
+        "memoryAid": "Luvgierig = safe im Notfall."
+      }
+    },
+    {
+      "id": 2294,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Zunehmende Krängung erhöht die LUVGIERIGKEIT — der Lateralpunkt wandert nach vorn (Lee-Rumpfpartie taucht tiefer ein) während der Angriffspunkt des Segels gleich bleibt. Je mehr Krängung, desto stärker luvgierig.",
+        "en": "",
+        "memoryAid": "Krängung ↑ = Luvgierigkeit ↑."
+      }
+    },
+    {
+      "id": 2295,
+      "topic": "Segeln",
+      "explanation": {
+        "de": "Die Manöver in der Reihenfolge: 1 WENDE (durch den Wind), 2 HALSE (mit dem Wind durch), 3 Q-WENDE (90°-Wende ohne Kurswechsel durch den Wind). Reihenfolge laut Skizze eindeutig lesbar.",
+        "en": "",
+        "memoryAid": "Wende → Halse → Q-Wende."
+      }
+    },
+    {
+      "id": 2296,
+      "topic": "Seemannschaft",
+      "explanation": {
+        "de": "An einer Boje liegen gelassen: SCHWERT UND RUDERBLATT AUFHOLEN, damit das Boot FREI SCHWOJEN kann (sich im Wind drehen, ohne durch Schwert/Ruder blockiert zu werden) und keine Hebelkräfte aufbaut.",
+        "en": "",
+        "memoryAid": "Beides hoch = frei schwojen."
+      }
+    },
+    {
+      "id": 2297,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Eine Patenthalse (unfreiwillige Halse) ist gefährlich, weil der Baum unkontrolliert mit voller Wucht herumschlägt — kann zu VERLETZUNGEN der Crew, RIGGSCHÄDEN und zur KENTERUNG führen.",
+        "en": "",
+        "memoryAid": "Patenthalse: Baum schlägt, Mensch, Mast, Boot."
+      }
+    },
+    {
+      "id": 2298,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Luvwant gebrochen am Wind: das LUVWANT stützt den Mast gegen den Winddruck vom Luv. Bei Bruch droht der Mast nach Lee zu fallen. Eine WENDE bringt das intakte (jetzt neue Luv-)Want in die Stützfunktion.",
+        "en": "",
+        "memoryAid": "Luvwant weg = sofort wenden."
+      }
+    },
+    {
+      "id": 2299,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Vorstag gebrochen: der Mast droht nach ACHTERN zu fallen, da das vordere Stützelement fehlt. Sofort ABFALLEN AUF VORWINDKURS — das Großsegel stützt dann den Mast nach vorn (Druck von achtern). Anluven würde das Problem verschärfen.",
+        "en": "",
+        "memoryAid": "Vorstag weg = sofort auf Vorwind."
+      }
+    },
+    {
+      "id": 2300,
+      "topic": "Notfall",
+      "explanation": {
+        "de": "Als Notersatz für ein gebrochenes Vorstag kann die FOCK (am Vorliek hochgezogen und als Stag nutzbar) ODER EIN FALL (zur Mastspitze befestigt und vorn festgemacht) dienen. Schot/Reffleine sind zu dünn und falsch positioniert.",
+        "en": "",
+        "memoryAid": "Ersatz-Vorstag: Fock oder Fall."
       }
     }
   ]

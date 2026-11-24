@@ -1,5 +1,5 @@
 import appJson from '../../../data/catalogue.app.json'
-import { CATALOGUE, joinedQuestions } from '../../data/catalogue'
+import { CATALOGUE, joinedQuestionsForMode } from '../../data/catalogue'
 import { computeCoverage } from '../../engine/coverage'
 import { bookmarkedQueue } from '../../engine/learning'
 import { masterySummary } from '../../engine/learning'
@@ -12,20 +12,27 @@ import {
 } from '../../engine/achievements'
 import { exportBackup, importBackup } from '../../services/backup'
 import { loadState, saveState } from '../../services/persistence'
-import type { AppCatalogue } from '../../data/types'
+import { currentMode, MODE_LABELS, MOCK_COMPOSITION, setMode } from '../../services/mode'
+import type { AppCatalogue, Mode } from '../../data/types'
+import { MODES } from '../../data/types'
 import { show } from '../router'
 import { setQuizMode } from './quiz'
 
 export function renderHome(): void {
   const state = loadState()
+  const mode = currentMode()
   const cov = computeCoverage(CATALOGUE, appJson as AppCatalogue)
   const rank = rankForXp(state.xp)
   const progress = xpProgressInCurrentRank(state.xp)
-  const all = joinedQuestions()
-  const summary = masterySummary(all, state)
-  const readiness = computeReadiness(all, state, cov)
-  const bookmarkCount = bookmarkedQueue(all, state).total()
+  const modeQuestions = joinedQuestionsForMode(mode)
+  const summary = masterySummary(modeQuestions, state)
+  const readiness = computeReadiness(modeQuestions, state, cov, {
+    coverageApplies: mode === 'see',
+  })
+  const bookmarkCount = bookmarkedQueue(modeQuestions, state).total()
   const bilgeCount = summary.weak
+  const comp = MOCK_COMPOSITION[mode]
+  const modeTotal = modeQuestions.length
 
   // Refresh today's missions (rolls over at local midnight)
   const dailyMissions = ensureTodayMissions(state.dailyMissions as never)
@@ -38,9 +45,24 @@ export function renderHome(): void {
   const root = document.getElementById('home')
   if (!root) return
   root.innerHTML = `
+    <div class="mode-tabs" role="tablist" aria-label="Licence mode">
+      ${MODES.map((m) => {
+        const active = m === mode
+        const lbl = MODE_LABELS[m]
+        return `
+          <button
+            role="tab"
+            aria-selected="${active}"
+            class="mode-tab${active ? ' active' : ''}"
+            data-mode="${m}"
+          >${lbl.icon} ${lbl.short}</button>
+        `
+      }).join('')}
+    </div>
+
     <div class="top">
       <div>
-        <small class="muted">SBF SEE • CAPTAIN TRAINER</small>
+        <small class="muted">${MODE_LABELS[mode].long.toUpperCase()} • CAPTAIN TRAINER</small>
         <h1>⚓ Your Bridge / Deine Brücke</h1>
       </div>
       <div class="row" style="gap:8px">
@@ -60,15 +82,21 @@ export function renderHome(): void {
         ${readiness.cappedByCoverage ? '· (capped by content coverage)' : ''}
       </p>
       <div class="coverage">
-        <div class="stat pill ${cov.officialTotal === 285 ? 'ok' : 'warn'}">
-          <b>${cov.officialTotal} / 285</b> official catalogue
+        <div class="stat pill ok">
+          <b>${modeTotal}</b> questions in ${MODE_LABELS[mode].short}
         </div>
+        ${mode === 'see' ? `
         <div class="stat pill ${cov.translatedPct === 100 ? 'ok' : 'warn'}">
           <b>${cov.translated} / ${cov.officialTotal}</b> translated
         </div>
         <div class="stat pill ${cov.explainedPct === 100 ? 'ok' : 'warn'}">
           <b>${cov.explained} / ${cov.officialTotal}</b> explained
         </div>
+        ` : `
+        <div class="stat pill ok">
+          <b>DE</b> German-only
+        </div>
+        `}
       </div>
     </div>
 
@@ -90,14 +118,20 @@ export function renderHome(): void {
       </div>
       <div class="card">
         <h3>📝 Mock exam</h3>
-        <p class="muted">60 min · 7 Basis · 23 See · 9 nav</p>
+        <p class="muted">60 min · ${comp.basis} Basis · ${comp.specific} ${
+          mode === 'see' ? 'See' : 'Binnen'
+        }${comp.segeln ? ` · ${comp.segeln} Segeln` : ''}${
+          comp.navigation ? ` · ${comp.navigation} nav` : ''
+        }</p>
         <button data-action="mock">Captain's Challenge</button>
       </div>
+      ${mode === 'see' ? `
       <div class="card">
         <h3>🧭 Navigation Academy</h3>
         <p class="muted">Structured written answers + Exam Desk mode.</p>
         <button data-action="nav">Open chart room</button>
       </div>
+      ` : ''}
     </div>
 
     <div class="card">
@@ -137,7 +171,7 @@ export function renderHome(): void {
     </div>
 
     <div class="card">
-      <h3>📊 Mastery breakdown</h3>
+      <h3>📊 Mastery breakdown (${MODE_LABELS[mode].short})</h3>
       <div class="coverage">
         <div class="stat pill">
           <b>${summary.unseen}</b> unseen
@@ -185,6 +219,14 @@ export function renderHome(): void {
     } catch (e) {
       alert('Invalid backup: ' + (e as Error).message)
     }
+  })
+
+  root.querySelectorAll<HTMLButtonElement>('[data-mode]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const m = btn.dataset.mode as Mode
+      setMode(m)
+      renderHome()
+    })
   })
 
   root.querySelectorAll<HTMLButtonElement>('[data-action]').forEach((btn) => {

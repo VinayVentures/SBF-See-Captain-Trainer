@@ -26,7 +26,7 @@ const APP_PATH = join(ROOT, 'data/catalogue.app.json')
 
 interface OfficialQuestion {
   id: number
-  category: 'basis' | 'see'
+  category: 'basis' | 'see' | 'binnen' | 'segeln'
   de: { question: string; answers: [string, string, string, string] }
   officialCorrectIndex: 0
 }
@@ -124,12 +124,63 @@ const OUTPUT_SCHEMA = {
   ],
 } as const
 
+// Binnen/Segeln variant: German-only. No translation. Different topic enum
+// tuned for inland-navigation content.
+const BINNEN_SYSTEM_PROMPT = `Du erstellst deutsche Lernhilfen für den offiziellen Fragenkatalog des SBF-Binnen (Sportbootführerschein Binnen, inkl. Segeln). Dein Output ist klar als *app-authored study aid* gekennzeichnet, nicht als offizieller Prüfungstext.
+
+REGELN:
+1. Erklärung: 1–3 Sätze auf Deutsch, die erklären, WARUM die richtige Antwort (Index 0 / Antwort a) korrekt ist. Wenn hilfreich, kurz auf einen oder zwei falsche Distraktoren eingehen. Sachlich und pädagogisch — erfinde KEINE Paragraphen oder Regelungen, bei denen du dir nicht sicher bist.
+2. Memory-Aid: OPTIONALE einzeilige deutsche Eselsbrücke. Nur aufnehmen, wenn es wirklich einen hilfreichen Merksatz gibt — Feld sonst weglassen. Keine Floskeln wie "Das sollte man sich merken."
+3. Topic: wähle GENAU EIN Topic aus dieser festen Liste — BinnenSchO, KVO-Binnen, Seemannschaft, Navigation, Motor, Schifffahrtszeichen, Signale, Lichter, Umwelt, Sicherheit, Notfall, Ankern, Festmachen, Funk, Dokumente, Wetter, Segeln.
+4. Erfinde KEINE englische Übersetzung, KEINE englische Erklärung.
+
+AUSGABEFORMAT — strikt und ohne Ausnahme:
+
+Gib NUR ein rohes JSON-Objekt mit GENAU diesen Top-Level-Keys zurück:
+
+{
+  "topic": "<eines der Topics>",
+  "explanation_de": "<deutsche Erklärung>",
+  "memory_aid": "<optionale Eselsbrücke, Feld weglassen wenn keine>"
+}
+
+- KEINE verschachtelten Objekte
+- KEINE Extra-Keys
+- KEINE Markdown-Codefences
+- KEIN Fließtext vor oder nach dem JSON — die Antwort muss mit { beginnen und mit } enden
+- Erklärung unter 500 Zeichen`
+
+const BINNEN_OUTPUT_SCHEMA = {
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    topic: {
+      type: 'string',
+      enum: [
+        'BinnenSchO', 'KVO-Binnen', 'Seemannschaft', 'Navigation', 'Motor',
+        'Schifffahrtszeichen', 'Signale', 'Lichter', 'Umwelt', 'Sicherheit',
+        'Notfall', 'Ankern', 'Festmachen', 'Funk', 'Dokumente', 'Wetter',
+        'Segeln',
+      ],
+    },
+    explanation_de: { type: 'string' },
+    memory_aid: { type: 'string' },
+  },
+  required: ['topic', 'explanation_de'],
+} as const
+
 interface GeneratedContent {
   topic: string
   question_en: string
   answers_en: [string, string, string, string]
   explanation_de: string
   explanation_en: string
+  memory_aid?: string
+}
+
+interface BinnenGeneratedContent {
+  topic: string
+  explanation_de: string
   memory_aid?: string
 }
 
@@ -151,7 +202,10 @@ function saveApp(app: AppCatalogue): void {
   writeFileSync(APP_PATH, JSON.stringify(app, null, 2) + '\n', 'utf-8')
 }
 
-function isComplete(q: AppQuestion): boolean {
+function isComplete(q: AppQuestion, germanOnly: boolean): boolean {
+  if (germanOnly) {
+    return Boolean(q.topic && q.explanation?.de)
+  }
   return Boolean(
     q.topic &&
       q.en?.question &&
@@ -190,6 +244,84 @@ function stripFences(s: string): string {
 }
 
 async function generateOne(
+  client: Anthropic,
+  q: OfficialQuestion,
+): Promise<AppQuestion> {
+  const germanOnly = q.category === 'binnen' || q.category === 'segeln'
+  return germanOnly ? generateBinnen(client, q) : generateSee(client, q)
+}
+
+async function generateBinnen(
+  client: Anthropic,
+  q: OfficialQuestion,
+): Promise<AppQuestion> {
+  const userPrompt = `Q${q.id} [${q.category}]
+
+DE Frage:
+${q.de.question}
+
+DE Antworten (Index 0 = richtig):
+a. ${q.de.answers[0]}
+b. ${q.de.answers[1]}
+c. ${q.de.answers[2]}
+d. ${q.de.answers[3]}
+
+Gib das JSON-Objekt zurück.`
+
+  const response = await client.messages.create({
+    model: MODEL,
+    max_tokens: 2048,
+    system: [
+      {
+        type: 'text',
+        text: BINNEN_SYSTEM_PROMPT,
+        cache_control: { type: 'ephemeral' },
+      },
+    ],
+    output_config: {
+      format: { type: 'json_schema', schema: BINNEN_OUTPUT_SCHEMA },
+    },
+    messages: [{ role: 'user', content: userPrompt }],
+  })
+
+  const textBlock = response.content.find(
+    (b): b is Anthropic.TextBlock => b.type === 'text',
+  )
+  if (!textBlock) throw new Error(`Q${q.id}: no text block in response`)
+
+  let parsed: BinnenGeneratedContent
+  try {
+    parsed = JSON.parse(stripFences(textBlock.text)) as BinnenGeneratedContent
+  } catch (err) {
+    throw new Error(
+      `Q${q.id}: JSON parse failed (${(err as Error).message}). Raw:\n${textBlock.text.slice(0, 500)}`,
+    )
+  }
+  if (!parsed.topic || !parsed.explanation_de) {
+    throw new Error(
+      `Q${q.id}: missing required fields. Parsed:\n${JSON.stringify(parsed, null, 2)}`,
+    )
+  }
+
+  const app: AppQuestion = {
+    id: q.id,
+    topic: parsed.topic,
+    explanation: {
+      de: parsed.explanation_de,
+      en: '', // German-only tab; keep field present but blank for schema stability.
+      ...(parsed.memory_aid ? { memoryAid: parsed.memory_aid } : {}),
+    },
+  }
+  const usage = response.usage
+  const cachedIn = usage.cache_read_input_tokens ?? 0
+  console.log(
+    `  Q${q.id.toString().padStart(4, ' ')} [${parsed.topic.padEnd(14, ' ')}] ` +
+      `in=${usage.input_tokens}+${cachedIn}c out=${usage.output_tokens}`,
+  )
+  return app
+}
+
+async function generateSee(
   client: Anthropic,
   q: OfficialQuestion,
 ): Promise<AppQuestion> {
@@ -316,7 +448,8 @@ async function main(): Promise<void> {
   if (!FORCE) {
     candidates = candidates.filter((q) => {
       const existing = byId.get(q.id)
-      return !existing || !isComplete(existing)
+      const germanOnly = q.category === 'binnen' || q.category === 'segeln'
+      return !existing || !isComplete(existing, germanOnly)
     })
   }
   if (LIMIT) candidates = candidates.slice(0, LIMIT)

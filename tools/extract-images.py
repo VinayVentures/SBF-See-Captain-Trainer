@@ -1,12 +1,21 @@
 #!/usr/bin/env python3
 """
-Extract embedded images from the ELWIS SBF-See PDF and associate each
-image with its question by vertical position on the page.
+Extract embedded images from the ELWIS SBF-See AND SBF-Binnen PDFs and
+associate each image with its catalogue question by vertical position on the
+page.
 
 Output:
-- Images written to data/images/ (named qNNN[-slot].png)
-- data/catalogue.official.json is updated: each question that has at
-  least one image gets an `images: ['qNNN.png', ...]` field.
+- See images written to data/images/ as qNNN[-slot].png
+- Binnen images written to data/images/ as bNNN[-slot].png (NNN is the ELWIS
+  displayId, so b073..b253 for Binnen-specific, b254..b300 for Segeln)
+- data/catalogue.official.json is updated: each question that has at least one
+  image gets an `images: ['qNNN.png', ...]` or `['bNNN.png', ...]` field.
+
+Image-to-catalogue-id mapping:
+  See PDF   n (1..300)        -> catalogue id n       (nav templates 286..300)
+  Binnen    n (1..72, Basis)  -> SKIPPED (Basis is sourced from See pass)
+  Binnen    n (73..253)        -> catalogue id 1000 + n (binnen-specific)
+  Binnen    n (254..300)       -> catalogue id 2000 + n (segeln-specific)
 
 Run after import-elwis.py (which produces the catalogue). Idempotent.
 """
@@ -26,7 +35,8 @@ except ImportError:
 
 
 ROOT = Path(__file__).resolve().parent.parent
-PDF = ROOT / "data" / "raw" / "elwis-see-2023.pdf"
+SEE_PDF = ROOT / "data" / "raw" / "elwis-see-2023.pdf"
+BINNEN_PDF = ROOT / "data" / "raw" / "elwis-binnen-2023.pdf"
 CATALOGUE = ROOT / "data" / "catalogue.official.json"
 IMAGES_DIR = ROOT / "data" / "images"
 
@@ -138,47 +148,32 @@ def associate_images(doc) -> dict[int, list[tuple[int, int, bytes, int, int]]]:
     return out
 
 
-def main() -> int:
-    if not PDF.exists():
-        sys.stderr.write(f"Missing: {PDF}\n")
-        return 2
-    if not CATALOGUE.exists():
-        sys.stderr.write(f"Run import-elwis.py first — missing {CATALOGUE}\n")
-        return 2
-
-    doc = fitz.open(PDF)
+def _process_pdf(
+    pdf_path: Path,
+    catalogue: dict,
+    text_by_id: dict[int, str],
+    *,
+    filename_prefix: str,
+    pdf_id_to_catalogue_id,  # callable: int -> int | None  (None = skip this pdf-id)
+    pdf_id_to_display_id,    # callable: int -> int         (for filename numbering)
+) -> dict:
+    """Pair images in one PDF to catalogue questions and write them out."""
+    doc = fitz.open(pdf_path)
     assoc = associate_images(doc)
-
-    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
-    # Wipe any previous output
-    for existing in IMAGES_DIR.glob("q*.png"):
-        existing.unlink()
-
-    catalogue = json.loads(CATALOGUE.read_text(encoding="utf-8"))
-    questions = catalogue["questions"]
-    nav_templates = catalogue.get("navTemplates", [])
-
-    # Build a quick lookup of question text
-    text_by_id: dict[int, str] = {}
-    for q in questions:
-        text_by_id[q["id"]] = q["de"]["question"]
-    for t in nav_templates:
-        text_by_id[t["id"]] = t["de"]
 
     counts = {"questions_with_images": 0, "images_written": 0, "banners_dropped": 0}
 
-    # Clear previous imageRefs
-    for q in questions:
-        q.pop("images", None)
-    for t in nav_templates:
-        t.pop("images", None)
+    questions = catalogue["questions"]
+    nav_templates = catalogue.get("navTemplates", [])
 
-    # Deduplicate by xref within a question, and filter banner-shaped images
-    # from questions whose text does not indicate they need a visual.
-    for qid, entries in assoc.items():
-        text = text_by_id.get(qid, "")
+    for pdf_qid, entries in assoc.items():
+        cat_qid = pdf_id_to_catalogue_id(pdf_qid)
+        if cat_qid is None:
+            continue
+        text = text_by_id.get(cat_qid, "")
         needs_visual = bool(IMAGE_REF_PATTERNS.search(text))
 
+        display_n = pdf_id_to_display_id(pdf_qid)
         seen_xrefs: set[int] = set()
         files: list[str] = []
         for xref, idx, data, width, height in entries:
@@ -186,23 +181,24 @@ def main() -> int:
                 continue
             seen_xrefs.add(xref)
             aspect = width / max(1, height)
-            # Drop banner-shaped images from questions that don't call for one
             if aspect > BANNER_ASPECT and height <= BANNER_MAX_HEIGHT and not needs_visual:
                 counts["banners_dropped"] += 1
                 continue
             slot = len(files)
-            name = f"q{qid:03d}.png" if slot == 0 else f"q{qid:03d}-{slot}.png"
+            name = (
+                f"{filename_prefix}{display_n:03d}.png"
+                if slot == 0
+                else f"{filename_prefix}{display_n:03d}-{slot}.png"
+            )
             (IMAGES_DIR / name).write_bytes(data)
             files.append(name)
             counts["images_written"] += 1
         if not files:
             continue
-        # Write imageRef onto either an MCQ or a nav template
-        target = next((q for q in questions if q["id"] == qid), None)
+        target = next((q for q in questions if q["id"] == cat_qid), None)
         if target is None:
-            target = next((t for t in nav_templates if t["id"] == qid), None)
+            target = next((t for t in nav_templates if t["id"] == cat_qid), None)
         if target is None:
-            # orphan image — leave on disk, ignore
             for f in files:
                 (IMAGES_DIR / f).unlink(missing_ok=True)
             counts["images_written"] -= len(files)
@@ -210,14 +206,84 @@ def main() -> int:
         target["images"] = files
         counts["questions_with_images"] += 1
 
+    doc.close()
+    return counts
+
+
+def main() -> int:
+    missing = [p for p in [SEE_PDF, BINNEN_PDF] if not p.exists()]
+    if missing:
+        for p in missing:
+            sys.stderr.write(f"Missing: {p}\n")
+        return 2
+    if not CATALOGUE.exists():
+        sys.stderr.write(f"Run import-elwis.py first — missing {CATALOGUE}\n")
+        return 2
+
+    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+    # Wipe any previous output from both prefixes.
+    for pattern in ("q*.png", "b*.png"):
+        for existing in IMAGES_DIR.glob(pattern):
+            existing.unlink()
+
+    catalogue = json.loads(CATALOGUE.read_text(encoding="utf-8"))
+    questions = catalogue["questions"]
+    nav_templates = catalogue.get("navTemplates", [])
+
+    text_by_id: dict[int, str] = {}
+    for q in questions:
+        text_by_id[q["id"]] = q["de"]["question"]
+    for t in nav_templates:
+        text_by_id[t["id"]] = t["de"]
+
+    # Clear previous imageRefs
+    for q in questions:
+        q.pop("images", None)
+    for t in nav_templates:
+        t.pop("images", None)
+
+    # Pass 1: See PDF — numbers map 1:1 to catalogue ids (1..300).
+    see_counts = _process_pdf(
+        SEE_PDF,
+        catalogue,
+        text_by_id,
+        filename_prefix="q",
+        pdf_id_to_catalogue_id=lambda n: n if 1 <= n <= 300 else None,
+        pdf_id_to_display_id=lambda n: n,
+    )
+
+    # Pass 2: Binnen PDF — Basis (1..72) is sourced from See pass, so skip it
+    # here to avoid overwriting. Binnen-specific 73..253 maps to catalogue id
+    # 1000+n; Segeln 254..300 maps to 2000+n. Filenames use the ELWIS display
+    # number (73..300) so they remain intuitive on disk.
+    def binnen_map(n: int) -> int | None:
+        if 73 <= n <= 253:
+            return 1000 + n
+        if 254 <= n <= 300:
+            return 2000 + n
+        return None
+
+    binnen_counts = _process_pdf(
+        BINNEN_PDF,
+        catalogue,
+        text_by_id,
+        filename_prefix="b",
+        pdf_id_to_catalogue_id=binnen_map,
+        pdf_id_to_display_id=lambda n: n,
+    )
+
     CATALOGUE.write_text(
         json.dumps(catalogue, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    total_imgs = see_counts["images_written"] + binnen_counts["images_written"]
+    total_qs = see_counts["questions_with_images"] + binnen_counts["questions_with_images"]
+    total_banners = see_counts["banners_dropped"] + binnen_counts["banners_dropped"]
     print(
-        f"{counts['images_written']} images written for "
-        f"{counts['questions_with_images']} questions "
-        f"({counts['banners_dropped']} banner-shaped images dropped)"
+        f"{total_imgs} images written for {total_qs} questions "
+        f"({total_banners} banner-shaped images dropped)\n"
+        f"  See:    {see_counts['images_written']} images / {see_counts['questions_with_images']} questions\n"
+        f"  Binnen: {binnen_counts['images_written']} images / {binnen_counts['questions_with_images']} questions"
     )
     return 0
 

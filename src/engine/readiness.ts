@@ -34,9 +34,11 @@ export function computeReadiness(
   allQuestions: readonly JoinedQuestion[],
   userState: UserState,
   coverage: Coverage,
+  options: { coverageApplies?: boolean } = {},
 ): ReadinessBreakdown {
   const summary = masterySummary(allQuestions, userState)
   const total = allQuestions.length || 1
+  const coverageApplies = options.coverageApplies ?? true
 
   const masteryPct = (summary.mastered / total) * 100
   const bilgePct = Math.max(0, 100 - (summary.weak / total) * 400) // 25% weak → 0
@@ -58,16 +60,21 @@ export function computeReadiness(
     ? (userState.correct / userState.answered) * 100
     : 0
 
+  // Coverage contributes 0.10 and caps the total only in modes that use the
+  // app's bilingual content. Binnen modes ship German-only; opt them out.
+  const covTranslatedPct = coverageApplies ? coverage.translatedPct : 100
+  const covExplainedPct = coverageApplies ? coverage.explainedPct : 100
+
   const raw =
     masteryPct * 0.35 +
     bilgePct * 0.10 +
     mockPct * 0.35 +
     accuracyPct * 0.10 +
-    coverage.translatedPct * 0.05 +
-    coverage.explainedPct * 0.05
+    covTranslatedPct * 0.05 +
+    covExplainedPct * 0.05
 
-  const coverageCap = Math.min(coverage.translatedPct, coverage.explainedPct)
-  const cappedByCoverage = raw > coverageCap
+  const coverageCap = Math.min(covTranslatedPct, covExplainedPct)
+  const cappedByCoverage = coverageApplies && raw > coverageCap
   const overall = Math.round(Math.min(raw, coverageCap))
 
   return {

@@ -7,6 +7,7 @@ import type { Coverage } from '../src/engine/coverage'
 function mkCatalogue(n: number): JoinedQuestion[] {
   return Array.from({ length: n }, (_, i) => ({
     id: i + 1,
+    displayId: String(i + 1),
     category: 'basis' as const,
     de: { question: '', answers: ['a', 'b', 'c', 'd'] as [string, string, string, string] },
     officialCorrectIndex: 0 as const,
@@ -65,8 +66,8 @@ describe('readiness', () => {
     const qs = mkCatalogue(10)
     const state = emptyState()
     state.mocks = [
-      { at: '2026-01-01', score: { basis: 7, see: 23, navigation: 9 },
-        passed: true, passedBasis: true, passedSee: true, passedNavigation: true,
+      { at: '2026-01-01', score: { basis: 7, specific: 23, navigation: 9 },
+        passed: true, passedBasis: true, passedSpecific: true, passedNavigation: true,
         overallPct: 100 },
     ]
     const r = computeReadiness(qs, state, fullCoverage(10))

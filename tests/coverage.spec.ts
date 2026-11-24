@@ -5,7 +5,7 @@ import type { AppCatalogue } from '../src/data/types'
 import appJson from '../data/catalogue.app.json' assert { type: 'json' }
 
 describe('honest coverage computation', () => {
-  it('reports 0/285 translated and 0/285 explained on the empty app catalogue', () => {
+  it('coverage is scoped to See content (285), not the full catalogue (513)', () => {
     const empty: AppCatalogue = { questions: [] }
     const c = computeCoverage(CATALOGUE, empty)
     expect(c.officialTotal).toBe(285)
@@ -14,7 +14,7 @@ describe('honest coverage computation', () => {
     expect(c.isExamReady).toBe(false)
   })
 
-  it('flags exam-ready only at full translation + explanation coverage', () => {
+  it('flags exam-ready at 285/285 translated + explained (Binnen not required)', () => {
     const app: AppCatalogue = {
       questions: CATALOGUE.questions.map((q) => ({
         id: q.id,
@@ -28,6 +28,22 @@ describe('honest coverage computation', () => {
     expect(c.isExamReady).toBe(true)
   })
 
+  it('translations for Binnen/Segeln questions are ignored', () => {
+    const binnenAndSegeln = CATALOGUE.questions.filter(
+      (q) => q.category === 'binnen' || q.category === 'segeln',
+    )
+    const app: AppCatalogue = {
+      questions: binnenAndSegeln.map((q) => ({
+        id: q.id,
+        en: { question: 'x', answers: ['a', 'b', 'c', 'd'] },
+        explanation: { de: 'de', en: 'en' },
+      })),
+    }
+    const c = computeCoverage(CATALOGUE, app)
+    expect(c.translated).toBe(0)
+    expect(c.explained).toBe(0)
+  })
+
   it('rejects whitespace-only translations as untranslated', () => {
     const app: AppCatalogue = {
       questions: [
@@ -38,7 +54,7 @@ describe('honest coverage computation', () => {
     expect(c.translated).toBe(0)
   })
 
-  it('shipped catalogue.app.json is fully populated (all 285)', () => {
+  it('shipped catalogue.app.json is fully populated (all 285 See IDs)', () => {
     const c = computeCoverage(CATALOGUE, appJson as AppCatalogue)
     expect(c.translated).toBe(285)
     expect(c.explained).toBe(285)

@@ -2,7 +2,7 @@ import appJson from '../../../data/catalogue.app.json'
 import { CATALOGUE } from '../../data/catalogue'
 import { resolveImageUrl } from '../../data/images'
 import { computeCoverage } from '../../engine/coverage'
-import { MOCK_COUNTS, MOCK_DURATION_MINUTES, MOCK_THRESHOLDS } from '../../engine/exam'
+import { countsFor, MOCK_DURATION_MINUTES, thresholdsFor } from '../../engine/exam'
 import {
   grade,
   newMockSession,
@@ -13,9 +13,10 @@ import {
 import { applyPermutation } from '../../engine/randomiser'
 import { XP_PER_RANK } from '../../engine/xp'
 import { ACHIEVEMENTS } from '../../engine/achievements'
-import { joinedQuestions } from '../../data/catalogue'
+import { joinedQuestionsForMode } from '../../data/catalogue'
 import { checkAchievements } from '../../engine/achievements'
 import { loadState, saveState } from '../../services/persistence'
+import { currentMode, MODE_LABELS, onModeChange } from '../../services/mode'
 import type { AppCatalogue, NavTemplate, OfficialQuestion } from '../../data/types'
 import { show } from '../router'
 
@@ -32,6 +33,12 @@ interface ViewState {
 
 let view: ViewState = { phase: 'intro', currentIndex: 0, navSelfGrades: {} }
 
+// Abandon any in-flight mock when the licence mode changes.
+onModeChange(() => {
+  if (view.timerHandle) window.clearInterval(view.timerHandle)
+  view = { phase: 'intro', currentIndex: 0, navSelfGrades: {} }
+})
+
 interface OrderedItem {
   kind: 'mcq' | 'nav'
   question?: OfficialQuestion
@@ -41,7 +48,8 @@ interface OrderedItem {
 function orderedItems(session: MockSession): OrderedItem[] {
   return [
     ...session.paper.basis.map((q) => ({ kind: 'mcq' as const, question: q })),
-    ...session.paper.see.map((q) => ({ kind: 'mcq' as const, question: q })),
+    ...session.paper.specific.map((q) => ({ kind: 'mcq' as const, question: q })),
+    ...session.paper.segeln.map((q) => ({ kind: 'mcq' as const, question: q })),
     ...session.paper.navigation.map((t) => ({ kind: 'nav' as const, navTemplate: t })),
   ]
 }
@@ -73,8 +81,17 @@ function renderIntro(): void {
   if (!root) return
   const cov = computeCoverage(CATALOGUE, appJson as AppCatalogue)
   const state = loadState()
-  const canStart = cov.translatedPct === 100 && cov.explainedPct === 100
+  const mode = currentMode()
+  const canStart = mode === 'see'
+    ? (cov.translatedPct === 100 && cov.explainedPct === 100)
+    : true  // Binnen modes are German-only — no translation gate.
   const recentMocks = state.mocks.slice(-5).reverse()
+  const counts = countsFor(mode)
+  const thr = thresholdsFor(mode)
+  const specificLabel = mode === 'see' ? 'See' : 'Binnen'
+  const thirdLabel = counts.navigation > 0 ? 'Nav' : counts.segeln > 0 ? 'Segeln' : ''
+  const thirdCount = counts.navigation || counts.segeln
+  const thirdThr = counts.navigation ? thr.navigation : thr.segeln
 
   root.innerHTML = `
     <div class="top">
@@ -82,23 +99,30 @@ function renderIntro(): void {
       <span class="pill ${canStart ? 'ok' : 'warn'}">📝 Mock exam ${canStart ? '' : '— LOCKED'}</span>
     </div>
     <div class="hero">
-      <h2>Captain's Challenge — ${MOCK_DURATION_MINUTES} min mock exam</h2>
+      <h2>Captain's Challenge — ${MODE_LABELS[mode].long}</h2>
+      <p class="muted" style="margin:4px 0 12px">${MOCK_DURATION_MINUTES} minutes</p>
       <p>
-        7 Basis (pass ≥ ${MOCK_THRESHOLDS.basis}/${MOCK_COUNTS.basis}) ·
-        23 See (pass ≥ ${MOCK_THRESHOLDS.see}/${MOCK_COUNTS.see}) ·
-        9 navigation (pass ≥ ${MOCK_THRESHOLDS.navigation}/${MOCK_COUNTS.navigation})
+        ${counts.basis} Basis (pass ≥ ${thr.basis}/${counts.basis}) ·
+        ${counts.specific} ${specificLabel} (pass ≥ ${thr.specific}/${counts.specific})${
+          thirdCount
+            ? ` · ${thirdCount} ${thirdLabel} (pass ≥ ${thirdThr}/${thirdCount})`
+            : ''
+        }
       </p>
       <p class="muted">
         During the exam: no explanations, no mastery indicators, no XP popups.
-        Navigation answers are self-graded on submission (spec §19 Exam Desk mode).
+        ${counts.navigation > 0
+          ? 'Navigation answers are self-graded on submission (spec §19 Exam Desk mode).'
+          : ''}
       </p>
     </div>
 
+    ${mode === 'see' ? `
     <div class="card">
       <h3>Content coverage</h3>
       <div class="coverage">
-        <div class="stat pill ${cov.officialTotal === 285 ? 'ok' : 'warn'}">
-          <b>${cov.officialTotal} / 285</b> catalogue
+        <div class="stat pill ok">
+          <b>${cov.officialTotal}</b> See catalogue total
         </div>
         <div class="stat pill ${cov.translatedPct === 100 ? 'ok' : 'warn'}">
           <b>${cov.translated} / ${cov.officialTotal}</b> translated
@@ -114,21 +138,31 @@ function renderIntro(): void {
       </p>
       <button data-action="start"${canStart ? '' : ' disabled'}>Start mock exam</button>
     </div>
+    ` : `
+    <div class="card">
+      <p class="muted" style="margin:0 0 12px">
+        German-only — no translation gate. Start when you have 60 uninterrupted minutes.
+      </p>
+      <button data-action="start">Start mock exam</button>
+    </div>
+    `}
 
     ${recentMocks.length > 0 ? `
     <div class="card">
       <h3>Recent mocks</h3>
       <table style="width:100%;border-collapse:collapse">
         <thead><tr style="text-align:left;color:var(--muted)">
-          <th>Date</th><th>Basis</th><th>See</th><th>Nav</th><th>Overall</th><th>Result</th>
+          <th>Date</th><th>Basis</th><th>${specificLabel}</th>${thirdCount ? `<th>${thirdLabel}</th>` : ''}<th>Overall</th><th>Result</th>
         </tr></thead>
         <tbody>
           ${recentMocks.map((m) => `
             <tr>
               <td>${new Date(m.at).toLocaleDateString()}</td>
-              <td>${m.score.basis}/${MOCK_COUNTS.basis}${m.passedBasis ? ' ✓' : ''}</td>
-              <td>${m.score.see}/${MOCK_COUNTS.see}${m.passedSee ? ' ✓' : ''}</td>
-              <td>${m.score.navigation}/${MOCK_COUNTS.navigation}${m.passedNavigation ? ' ✓' : ''}</td>
+              <td>${m.score.basis}/${counts.basis}${m.passedBasis ? ' ✓' : ''}</td>
+              <td>${m.score.specific}/${counts.specific}${m.passedSpecific ? ' ✓' : ''}</td>
+              ${thirdCount
+                ? `<td>${m.score.navigation ?? 0}/${thirdCount}${m.passedNavigation ? ' ✓' : ''}</td>`
+                : ''}
               <td>${Math.round(m.overallPct)}%</td>
               <td><b class="${m.passed ? 'gold' : ''}">${m.passed ? 'PASSED' : 'not yet'}</b></td>
             </tr>
@@ -148,7 +182,9 @@ function renderIntro(): void {
     .querySelector<HTMLButtonElement>('[data-action=start]')!
     .addEventListener('click', () => {
       if (!canStart) return
-      const session = newMockSession(CATALOGUE.questions, CATALOGUE.navTemplates)
+      const mode = currentMode()
+      const pool = joinedQuestionsForMode(mode)
+      const session = newMockSession(mode, pool, CATALOGUE.navTemplates)
       view = { phase: 'running', session, currentIndex: 0, navSelfGrades: {} }
       renderMock()
     })
@@ -243,12 +279,12 @@ function drawItem(item: OrderedItem): void {
     const imagesHtml = (q.images ?? [])
       .map((filename) => {
         const url = resolveImageUrl(filename)
-        return url ? `<img src="${url}" alt="Figure for Q${q.id}" loading="lazy" />` : ''
+        return url ? `<img src="${url}" alt="Figure for Q${q.displayId}" loading="lazy" />` : ''
       })
       .join('')
     body.innerHTML = `
       <div class="pane">
-        <small>${q.category.toUpperCase()} • Q${q.id}</small>
+        <small>${q.category.toUpperCase()} • Q${q.displayId}</small>
         <h2>${escapeHtml(q.de.question)}</h2>
         ${imagesHtml ? `<div class="qimages">${imagesHtml}</div>` : ''}
         <div class="answers">
@@ -301,6 +337,15 @@ function renderReviewing(): void {
   const gradeResult = view.gradeResult ?? grade(session, view.navSelfGrades)
   view.gradeResult = gradeResult
   const cov = computeCoverage(CATALOGUE, appJson as AppCatalogue)
+  const mode = session.paper.mode
+  const counts = countsFor(mode)
+  const thr = thresholdsFor(mode)
+  const specificLabel = mode === 'see' ? 'See' : 'Binnen'
+  const thirdLabel = counts.navigation > 0 ? 'Navigation' : 'Segeln'
+  const thirdCount = counts.navigation || counts.segeln
+  const thirdThr = counts.navigation ? thr.navigation : thr.segeln
+  const thirdCorrect = gradeResult.correctByCategory.navigation
+    || gradeResult.correctByCategory.segeln
 
   root.innerHTML = `
     <div class="top">
@@ -313,20 +358,23 @@ function renderReviewing(): void {
       <h2>${Math.round(gradeResult.record.overallPct)}% overall</h2>
       <div class="coverage">
         <div class="stat pill ${gradeResult.record.passedBasis ? 'ok' : 'warn'}">
-          <b>${gradeResult.record.score.basis} / ${MOCK_COUNTS.basis}</b>
-          Basis (need ${MOCK_THRESHOLDS.basis})
+          <b>${gradeResult.record.score.basis} / ${counts.basis}</b>
+          Basis (need ${thr.basis})
         </div>
-        <div class="stat pill ${gradeResult.record.passedSee ? 'ok' : 'warn'}">
-          <b>${gradeResult.record.score.see} / ${MOCK_COUNTS.see}</b>
-          See (need ${MOCK_THRESHOLDS.see})
+        <div class="stat pill ${gradeResult.record.passedSpecific ? 'ok' : 'warn'}">
+          <b>${gradeResult.record.score.specific} / ${counts.specific}</b>
+          ${specificLabel} (need ${thr.specific})
         </div>
+        ${thirdCount ? `
         <div class="stat pill ${gradeResult.record.passedNavigation ? 'ok' : 'warn'}">
-          <b>${gradeResult.record.score.navigation} / ${MOCK_COUNTS.navigation}</b>
-          Navigation (need ${MOCK_THRESHOLDS.navigation})
+          <b>${thirdCorrect} / ${thirdCount}</b>
+          ${thirdLabel} (need ${thirdThr})
         </div>
+        ` : ''}
       </div>
     </div>
 
+    ${counts.navigation > 0 ? `
     <div class="card">
       <h3>Navigation self-grading</h3>
       <p class="muted">
@@ -345,17 +393,18 @@ function renderReviewing(): void {
         </div>
       `).join('')}
     </div>
+    ` : ''}
 
     <div class="card">
       <h3>MCQ review</h3>
-      ${[...session.paper.basis, ...session.paper.see].map((q) => {
+      ${[...session.paper.basis, ...session.paper.specific, ...session.paper.segeln].map((q) => {
         const perm = permutationFor(session, q.id)
         const displaySlot = session.answers[q.id]
         const correctSlot = perm.indexOf(0)
         const gotIt = displaySlot === correctSlot
         return `
           <div class="pane" style="margin:8px 0;border-left:4px solid ${gotIt ? 'var(--ok)' : 'var(--bad)'}">
-            <small>${q.category.toUpperCase()} • Q${q.id} · ${gotIt ? '✓ correct' : '✕ wrong'}</small>
+            <small>${q.category.toUpperCase()} • Q${q.displayId} · ${gotIt ? '✓ correct' : '✕ wrong'}</small>
             <p><b>${escapeHtml(q.de.question)}</b></p>
             <p class="muted">
               You picked: ${displaySlot === undefined ? '(blank)' : escapeHtml(applyPermutation(q.de.answers, perm)[displaySlot]!)}
@@ -423,15 +472,15 @@ function persistResult(): void {
   }
   // XP: 5 per correct, +200 pass bonus, +50 partial-pass bonus.
   const g = view.gradeResult
-  const totalCorrect = g.record.score.basis + g.record.score.see + g.record.score.navigation
-  const passBonus = g.record.passed ? 200 : (g.record.passedBasis || g.record.passedSee || g.record.passedNavigation) ? 50 : 0
+  const totalCorrect = g.record.score.basis + g.record.score.specific + (g.record.score.navigation ?? 0)
+  const passBonus = g.record.passed ? 200 : (g.record.passedBasis || g.record.passedSpecific || g.record.passedNavigation) ? 50 : 0
   state.xp += totalCorrect * 5 + passBonus
   // Counters
   state.answered += totalCorrect + view.gradeResult.wrongMcqIds.length
   state.correct += totalCorrect
 
   // Achievements check post-mock (First Voyage, catalogue milestones, etc.)
-  const all = joinedQuestions()
+  const all = joinedQuestionsForMode(currentMode())
   const unlocked = checkAchievements(all, state)
   state.achievements = state.achievements ?? {}
   for (const id of unlocked) {

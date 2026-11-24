@@ -1,4 +1,13 @@
-export type Category = 'basis' | 'see' | 'navigation'
+export type Category = 'basis' | 'see' | 'binnen' | 'segeln' | 'navigation'
+
+/**
+ * A `Mode` is one of the three licences the app supports as a top-level tab.
+ * Each question's `category` determines which modes it appears in — see
+ * `licencesOf()` in `src/data/catalogue.ts`.
+ */
+export type Mode = 'see' | 'binnen-motor' | 'binnen-segeln'
+
+export const MODES: readonly Mode[] = ['see', 'binnen-motor', 'binnen-segeln']
 
 export type AnswerShape =
   | 'course'
@@ -17,6 +26,13 @@ export interface OfficialSource {
 
 export interface OfficialQuestion {
   id: number
+  /**
+   * User-facing ELWIS question number. Equal to `String(id)` for See content
+   * and Basis; for Binnen-specific questions it drops the +1000 offset
+   * (e.g. internal id 1073 has displayId "73"), and similarly for Segeln
+   * with the +2000 offset. Always use this in the UI; never render `id`.
+   */
+  displayId: string
   category: Exclude<Category, 'navigation'>
   de: {
     question: string

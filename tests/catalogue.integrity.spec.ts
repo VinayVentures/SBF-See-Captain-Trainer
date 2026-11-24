@@ -2,22 +2,32 @@ import { describe, expect, it } from 'vitest'
 import { CATALOGUE } from '../src/data/catalogue'
 
 describe('official catalogue integrity', () => {
-  it('has 285 MCQ + 15 nav templates + 8 nav scenarios', () => {
-    expect(CATALOGUE.questions).toHaveLength(285)
+  it('has 513 MCQ + 15 nav templates + 8 nav scenarios', () => {
+    expect(CATALOGUE.questions).toHaveLength(513)
     expect(CATALOGUE.navTemplates).toHaveLength(15)
     expect(CATALOGUE.navScenarios).toHaveLength(8)
   })
 
-  it('has 72 Basis + 213 See', () => {
+  it('has 72 Basis + 213 See + 181 Binnen + 47 Segeln', () => {
     const basis = CATALOGUE.questions.filter((q) => q.category === 'basis')
     const see = CATALOGUE.questions.filter((q) => q.category === 'see')
+    const binnen = CATALOGUE.questions.filter((q) => q.category === 'binnen')
+    const segeln = CATALOGUE.questions.filter((q) => q.category === 'segeln')
     expect(basis).toHaveLength(72)
     expect(see).toHaveLength(213)
+    expect(binnen).toHaveLength(181)
+    expect(segeln).toHaveLength(47)
   })
 
-  it('has contiguous IDs 1..285', () => {
+  it('every question id is globally unique', () => {
     const ids = CATALOGUE.questions.map((q) => q.id)
-    expect(ids).toEqual(Array.from({ length: 285 }, (_, i) => i + 1))
+    expect(new Set(ids).size).toBe(ids.length)
+  })
+
+  it('every question has a non-empty displayId', () => {
+    for (const q of CATALOGUE.questions) {
+      expect(q.displayId).toMatch(/^\d{1,3}$/)
+    }
   })
 
   it('every MCQ has 4 non-empty DE answers and officialCorrectIndex 0', () => {
@@ -56,10 +66,18 @@ describe('official catalogue integrity', () => {
     expect(withImages.length).toBeGreaterThan(50)
     for (const q of withImages) {
       for (const filename of q.images!) {
-        expect(filename).toMatch(/^q\d{3}(-\d+)?\.png$/)
-        // filename should reference its own question id
-        const prefix = `q${q.id.toString().padStart(3, '0')}`
-        expect(filename.startsWith(prefix)).toBe(true)
+        // See images: q{displayId}.png; Binnen/Segeln images: b{displayId}.png
+        expect(filename).toMatch(/^[qb]\d{3}(-\d+)?\.png$/)
+        // filename must reference this question's own displayId
+        const expectedPrefix = (filename.startsWith('b') ? 'b' : 'q')
+          + q.displayId.padStart(3, '0')
+        expect(filename.startsWith(expectedPrefix)).toBe(true)
+        // See-source questions use q-prefix; Binnen/Segeln use b-prefix
+        if (q.category === 'binnen' || q.category === 'segeln') {
+          expect(filename.startsWith('b')).toBe(true)
+        } else {
+          expect(filename.startsWith('q')).toBe(true)
+        }
       }
     }
   })
